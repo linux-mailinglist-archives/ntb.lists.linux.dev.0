@@ -1,18 +1,18 @@
-Return-Path: <ntb+bounces-2-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-1-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
-Received: from sjc.edge.kernel.org (sjc.edge.kernel.org [147.75.69.165])
-	by mail.lfdr.de (Postfix) with ESMTPS id 603284A6057
-	for <lists+linux-ntb@lfdr.de>; Tue,  1 Feb 2022 16:44:13 +0100 (CET)
+Received: from ewr.edge.kernel.org (ewr.edge.kernel.org [147.75.197.195])
+	by mail.lfdr.de (Postfix) with ESMTPS id C815C4A6056
+	for <lists+linux-ntb@lfdr.de>; Tue,  1 Feb 2022 16:44:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sjc.edge.kernel.org (Postfix) with ESMTPS id 857853E0F91
-	for <lists+linux-ntb@lfdr.de>; Tue,  1 Feb 2022 15:44:11 +0000 (UTC)
+	by ewr.edge.kernel.org (Postfix) with ESMTPS id E1A091C0A8E
+	for <lists+linux-ntb@lfdr.de>; Tue,  1 Feb 2022 15:44:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E54C3FE3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D9122CA9;
 	Tue,  1 Feb 2022 15:44:05 +0000 (UTC)
-X-Original-To: ntb@lists.linux.dev
+X-Original-To: ntb+subscribe@lists.linux.dev
 Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
