@@ -1,82 +1,62 @@
-Return-Path: <ntb+bounces-1-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-3-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
 Received: from ewr.edge.kernel.org (ewr.edge.kernel.org [147.75.197.195])
-	by mail.lfdr.de (Postfix) with ESMTPS id C815C4A6056
-	for <lists+linux-ntb@lfdr.de>; Tue,  1 Feb 2022 16:44:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4074A4A793D
+	for <lists+linux-ntb@lfdr.de>; Wed,  2 Feb 2022 21:14:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ewr.edge.kernel.org (Postfix) with ESMTPS id E1A091C0A8E
-	for <lists+linux-ntb@lfdr.de>; Tue,  1 Feb 2022 15:44:06 +0000 (UTC)
+	by ewr.edge.kernel.org (Postfix) with ESMTPS id 7BDEA1C0AD2
+	for <lists+linux-ntb@lfdr.de>; Wed,  2 Feb 2022 20:14:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D9122CA9;
-	Tue,  1 Feb 2022 15:44:05 +0000 (UTC)
-X-Original-To: ntb+subscribe@lists.linux.dev
-Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B601E2CA5;
+	Wed,  2 Feb 2022 20:14:00 +0000 (UTC)
+X-Original-To: ntb@lists.linux.dev
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA8E2CA7;
-	Tue,  1 Feb 2022 15:44:03 +0000 (UTC)
-Received: by mail-vs1-f42.google.com with SMTP id t20so16594621vsq.12;
-        Tue, 01 Feb 2022 07:44:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=bIkL3j1SUti+mxRknWXsGzjEHfZ++LfAOrCAj6OvBfk=;
-        b=XlaBX5xf2kC2PYFh91EO4ufBvcLkfsBOS665OsIpRa9DQkpb7u+LxrdpNGJzxoAnJ0
-         6Zrb97yEFwak4wNM5a0BjH3AdPWqIlAwjxrNKkSzysr8CFAIoYhUPvJm6Qcznt67FGJa
-         7c9Sj9fxgdbh2vhCp424CZvvJ1UrpoZyojJwNagTfy7FdayiBCXf6mVeEEvxUs5vhht/
-         f371R1RqGkTBAQFf/gEHEAhojKs0nS5FarjH5vHJG+n5BYFkMvHQorqXLR+d0iWDZ/HK
-         EHDUCIDj5zcbSEABUPNFWoSmIlD5wghMJe3kzeG7eFpipQf7kXFiZVWg4C44VU3TC3nw
-         cf+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=bIkL3j1SUti+mxRknWXsGzjEHfZ++LfAOrCAj6OvBfk=;
-        b=VoiuUQv6uJvoFKVho9mcAeJnGxtDrBv9hhJwxxPinM/3uIEO7pH+fpYb5fB2SNof6C
-         r5MLzBizMzlyOJ7g8D9NFJJA2nCFY/IrnKFjKG5AjOqLNzz8ybEkJEeZqNAp2YfbfStx
-         wxEzy4dJqzBgNIn0WHfSIinL5fx1EWwvxHYOIszWyVAv/8M4mqh2PfukFirEdLGdmCIV
-         qRvvOj56lV1tj42u6obZb/yMnDj5EUXKwHvz4y7LL75GPqS+1H9lU2mRjvtYuIvaWpuk
-         QxzMRGLKAV4Lf6yixo+ArFmGxdZtVnA7fYEV2n2jgeBereCLWzN0fZv625l1xlNqkFHJ
-         XrGg==
-X-Gm-Message-State: AOAM532kW8OIVB8m8M08se5cU+WPm8i1heVWVbFuZFR+XXPYLO4AVN+Z
-	I8bioyNFKwqtsdCpSV2RECHg4lYL9DJ31tW/q00=
-X-Google-Smtp-Source: ABdhPJwhlWLLV81lekh4LZE/fQYhJPXbW4owMGw7muEEAo0II3hymR3KzIUfuse9+LlQjTToAGFxAtsFrBNFhnqhg+w=
-X-Received: by 2002:a67:ca0d:: with SMTP id z13mr10443702vsk.9.1643730242915;
- Tue, 01 Feb 2022 07:44:02 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D592F23
+	for <ntb@lists.linux.dev>; Wed,  2 Feb 2022 20:13:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1643832839; x=1675368839;
+  h=message-id:date:mime-version:to:from:subject:
+   content-transfer-encoding;
+  bh=YkLsVOb1RUGIXQzJMKGfzQDxVPSJbJxaLL1azJItlMo=;
+  b=dIqgow0bn3fjCciq469iGqULIYF7MSDUzogQ9emLTFWEv7jUStxzDz8I
+   h4tKhDBYxfmGB6fwVK/UKM/18/39pT2yS27aiIgQi0AOtmzvvWj11oiK9
+   HziJVpL1gcL7zrNOeqIRie1eFWo1VaJ45KlaRwUoVhWkDh6beZDvd+gai
+   8PUlXoFm/VQ4S7xBfowi1AJBCQZ3vT3jxlXjUrbNvlt8ANBekdE2sxdoD
+   2/d7Pc8ibblYqHlSJENR6CCQJdu5eb7jjyOWkXW7d85IB4P25rCVl2c7x
+   l1g5mvImZ5reZKS2OOM20mHRfa7qFjGzoBk4wlrGQoj2Jqn3MfVt7W5VN
+   A==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10246"; a="334370844"
+X-IronPort-AV: E=Sophos;i="5.88,337,1635231600"; 
+   d="scan'208";a="334370844"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Feb 2022 12:13:58 -0800
+X-IronPort-AV: E=Sophos;i="5.88,337,1635231600"; 
+   d="scan'208";a="538448978"
+Received: from djiang5-mobl1.amr.corp.intel.com (HELO [10.209.184.227]) ([10.209.184.227])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Feb 2022 12:13:58 -0800
+Message-ID: <e49bfda5-6f90-38c7-628e-365c61502487@intel.com>
+Date: Wed, 2 Feb 2022 13:13:57 -0700
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
 List-Subscribe: <mailto:ntb+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: sanita retan <sanitaretan@gmail.com>
-Date: Tue, 1 Feb 2022 16:43:50 +0100
-Message-ID: <CABLemWhTUqqM=_vEScEc6i=rEAnhtUrQm6-XQOgAxrr3A8p5Qg@mail.gmail.com>
-Subject: subscribe
-To: sanitaretan@gmail.com
-Cc: chrome-platform+subscribe@lists.linux.dev, chrome-platform@lists.linux.dev, 
-	connman+subscribe@lists.linux.dev, connman@lists.linux.dev, 
-	containers+subscribe@lists.linux.dev, containers@lists.linux.dev, 
-	ell+subscribe@lists.linux.dev, ell@lists.linux.dev, 
-	iwd+subscribe@lists.linux.dev, iwd@lists.linux.dev, 
-	ksummit+subscribe@lists.linux.dev, ksummit@lists.linux.dev, 
-	landlock+subscribe@lists.linux.dev, landlock@lists.linux.dev, 
-	linux-coco+subscribe@lists.linux.dev, linux-coco@lists.linux.dev, 
-	linux-staging+subscribe@lists.linux.dev, linux-staging@lists.linux.dev, 
-	linux-sunxi+subscribe@lists.linux.dev, linux-sunxi@lists.linux.dev, 
-	llvm+subscribe@lists.linux.dev, llvm@lists.linux.dev, 
-	mhi+subscribe@lists.linux.dev, mhi@lists.linux.dev, 
-	mptcp+subscribe@lists.linux.dev, mptcp@lists.linux.dev, 
-	ntb+subscribe@lists.linux.dev, ntb@lists.linux.dev, 
-	ntfs3+subscribe@lists.linux.dev, ntfs3@lists.linux.dev, 
-	nvdimm+subscribe@lists.linux.dev, nvdimm@lists.linux.dev, 
-	ofono+subscribe@lists.linux.dev, ofono@lists.linux.dev, 
-	patches+subscribe@lists.linux.dev, patches@lists.linux.dev, 
-	regressions+subscribe@lists.linux.dev, regressions@lists.linux.dev, 
-	linux-somesuch@lists.linux.dev, postmaster@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Content-Language: en-US
+To: ntb@lists.linux.dev
+From: Dave Jiang <dave.jiang@intel.com>
+Subject: testing list posting
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-subscribe
+test 1 2 3
+
 
