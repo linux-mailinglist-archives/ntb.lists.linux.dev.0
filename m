@@ -1,144 +1,120 @@
-Return-Path: <ntb+bounces-308-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-304-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81C775EDAE1
-	for <lists+linux-ntb@lfdr.de>; Wed, 28 Sep 2022 13:01:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 503D05EDAD9
+	for <lists+linux-ntb@lfdr.de>; Wed, 28 Sep 2022 13:00:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20BEE280C4D
-	for <lists+linux-ntb@lfdr.de>; Wed, 28 Sep 2022 11:01:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F3A3C280C46
+	for <lists+linux-ntb@lfdr.de>; Wed, 28 Sep 2022 11:00:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5296EC1;
-	Wed, 28 Sep 2022 11:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB30EEC0;
+	Wed, 28 Sep 2022 11:00:41 +0000 (UTC)
 X-Original-To: ntb@lists.linux.dev
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CC77B
-	for <ntb@lists.linux.dev>; Wed, 28 Sep 2022 11:01:07 +0000 (UTC)
-Received: by mail-pg1-f172.google.com with SMTP id q9so11878843pgq.8
-        for <ntb@lists.linux.dev>; Wed, 28 Sep 2022 04:01:07 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05FFD7B
+	for <ntb@lists.linux.dev>; Wed, 28 Sep 2022 11:00:39 +0000 (UTC)
+Received: by mail-lf1-f51.google.com with SMTP id bu25so17903210lfb.3
+        for <ntb@lists.linux.dev>; Wed, 28 Sep 2022 04:00:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance-com.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=12/QEQF+BwVobS753asE5bo7My6pu++XkhjihYluM/U=;
-        b=ylUBkOHrXVCiVDYNqzAecj5Tgjkvw+cE0/9EzW/8OorIK+wmHOBe8s2mZthiecCoX7
-         h2/znTxFcnRx1Nd1XLNOyLjS8dp6D4viq8TT+w+/KQXEKMg1AF9g++loERZl4xUIQuoS
-         9FtlFH4BhKrKdWwxrCWW3glFzJGOIbOHGntC4fsKQr6dfZINu5DDsKgf9EvDDybZA7vz
-         dATUqdYROGnnMWPHihePzFxkNakt/lRZnLQrwXM88NPWR+5UwKFaXAMGOQtuqqQMn3Vw
-         w28H/DeHTXlnfmUoCScy658oVXmxhhLtBLPC4I67dUiSQliSKD++W7do0TlzH+omeuzb
-         gkAQ==
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=OcX91QSmfcORtUJuhjxsYlI4jDkm84+aPMTKqsh2mFg=;
+        b=B22A+5wg/gpUg3toqo4rJeKFnUzSSnLoGxNGs8VRO3g0wdmQbtK6mgG/i3q14yO2vo
+         gQKY919BK1PBejNcNheYfn98WzgaSHM15ncLgQfaiSv2DhBcSYTHuRUVylsKvh8oVAxq
+         bAr9bG39yRRyRQIQG8hcT29xbgJhsghWNtUnP6zh6Nh2y3Y6R23E2SKY3OnbiNrlV9Hv
+         vBzjNHfwCIT+m791PM9xrvBJbhxLMcthuomHcNynvO/4FmtiwC+48v2C+CtK/9rKShPn
+         uZFVYF2G1sUIX2kXFCxThLI5i9YqGPzJtxXnhlK+hNJPnXFPNX51P8567jqadv01p1Cm
+         ahoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=12/QEQF+BwVobS753asE5bo7My6pu++XkhjihYluM/U=;
-        b=5iOIsBiuKMWzbMmYc4QcGZ3WhKvSCcH5djOj/SDX3+h9rIesWQNeNxz+m7w7Eiv7DB
-         nrC2fOsX2+hZqMMqUsbhgkxHBYI+vcZPUr/eC4uRXXEJrfDKnrzqkW2QyT/kFcGyUILB
-         IRMyhHTDoCzULYI4AQIVc10FcOAuxx+gPlzuI/rdXtH1kK0Vj1WLqfe9rULs8IDlC5cl
-         REA59pXHNHL1kwe9SxDC6QvmbLswKic+3RC0tALnZp9CxquZkCkujbfCAKArL9hJF9bL
-         83Qc0uGIesDsCrXzNinhgyIwZuN1jAc3UGSNX75wCHB8ovnw1tnQeuSJjRi48CvGlBrh
-         dMOA==
-X-Gm-Message-State: ACrzQf2Mnr6pQOrxWKD4DFkYLCivkF9bjqVWoAdIDyVlKFLHHkrA2XOR
-	N5PkqSHHTgwS8M8KhmWKxcAQmA==
-X-Google-Smtp-Source: AMsMyM50BCiH86ggXPLWUfIQc+gUAX+cRHE9ayEwYUTUJi+KXbUWt9yJvjCgEoBpJZOSC2QNZgXdrA==
-X-Received: by 2002:a63:4f19:0:b0:43b:ddc9:387c with SMTP id d25-20020a634f19000000b0043bddc9387cmr28159950pgb.333.1664362867464;
-        Wed, 28 Sep 2022 04:01:07 -0700 (PDT)
-Received: from C02F63J9MD6R.bytedance.net ([61.120.150.77])
-        by smtp.gmail.com with ESMTPSA id b13-20020a170902d50d00b00177efb56475sm1539524plg.85.2022.09.28.04.01.01
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Sep 2022 04:01:07 -0700 (PDT)
-From: Zhuo Chen <chenzhuo.1@bytedance.com>
-To: sathyanarayanan.kuppuswamy@linux.intel.com,
-	bhelgaas@google.com,
-	ruscur@russell.cc,
-	oohall@gmail.com,
-	fancer.lancer@gmail.com,
-	jdmason@kudzu.us,
-	dave.jiang@intel.com,
-	allenbh@gmail.com,
-	james.smart@broadcom.com,
-	dick.kennedy@broadcom.com,
-	jejb@linux.ibm.com,
-	martin.petersen@oracle.com
-Cc: chenzhuo.1@bytedance.com,
-	linuxppc-dev@lists.ozlabs.org,
-	linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	ntb@lists.linux.dev,
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=OcX91QSmfcORtUJuhjxsYlI4jDkm84+aPMTKqsh2mFg=;
+        b=pzKBFNGFkJK9YxMZDhKTkZXiz50SC9OfOUd2QTlWq5niAMvghxYlwJRd4/Dq3Sbsgv
+         0gLtB6wxKjh4MlCoBCTQU4qUQNuENtlSMhrV7IbV8MKBOzEctMmGk6FeNFzcHS3jnIrl
+         e2oCP5I1a8uDab6pDz4AFXHF8gu3MHn2OD+sOPh1YejxlZMBGrGMYpRuz6eTqutmwPKV
+         isfETFetjhGkUPrehG67ao3FByb8wWoobLXnixoqzoOgdwVPnvO2ahtolYUPQZqymrKc
+         0wvvU/GNlmvt6Lh2iw758kCtxRKC64njOuFKJPPxuBCooZtANm70PoZx41ZTazIduzCs
+         2N6A==
+X-Gm-Message-State: ACrzQf2AUmwdSxc5PB3cjoFrDi/1btL2tyYaF3Q47B/8Ako4S/6NGtTf
+	TptBf0ix/mzC2fzRmtQ4WL4=
+X-Google-Smtp-Source: AMsMyM7JGXbsNz0x5dE7UU8ItndkkQoelLZGntJ1miWPln8EohyuyG9V5ZZNjSRdJrKF5P6xSXVViQ==
+X-Received: by 2002:a05:6512:12c8:b0:49b:8005:1d9d with SMTP id p8-20020a05651212c800b0049b80051d9dmr13713891lfg.489.1664362838099;
+        Wed, 28 Sep 2022 04:00:38 -0700 (PDT)
+Received: from mobilestation ([95.79.140.178])
+        by smtp.gmail.com with ESMTPSA id z18-20020a19f712000000b00494a11c5f52sm442697lfe.256.2022.09.28.04.00.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Sep 2022 04:00:37 -0700 (PDT)
+Date: Wed, 28 Sep 2022 14:00:35 +0300
+From: Serge Semin <fancer.lancer@gmail.com>
+To: Zhuo Chen <chenzhuo.1@bytedance.com>
+Cc: bhelgaas@google.com, ruscur@russell.cc, oohall@gmail.com,
+	jdmason@kudzu.us, dave.jiang@intel.com, allenbh@gmail.com,
+	james.smart@broadcom.com, dick.kennedy@broadcom.com,
+	jejb@linux.ibm.com, martin.petersen@oracle.com,
+	linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, ntb@lists.linux.dev,
 	linux-scsi@vger.kernel.org
-Subject: [PATCH v3 9/9] PCI/AER: Refine status clearing process with api
-Date: Wed, 28 Sep 2022 18:59:46 +0800
-Message-Id: <20220928105946.12469-10-chenzhuo.1@bytedance.com>
-X-Mailer: git-send-email 2.30.1 (Apple Git-130)
-In-Reply-To: <20220928105946.12469-1-chenzhuo.1@bytedance.com>
-References: <20220928105946.12469-1-chenzhuo.1@bytedance.com>
+Subject: Re: [PATCH v2 3/9] NTB: Change to use
+ pci_aer_clear_uncorrect_error_status()
+Message-ID: <20220928110035.ehbdxvpzkitbomoe@mobilestation>
+References: <20220927153524.49172-1-chenzhuo.1@bytedance.com>
+ <20220927153524.49172-4-chenzhuo.1@bytedance.com>
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
 List-Subscribe: <mailto:ntb+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220927153524.49172-4-chenzhuo.1@bytedance.com>
 
-Statements clearing status in aer_enable_rootport() is functionally
-equivalent with pcie_clear_device_status() and pci_aer_clear_status().
-So replace them, which has no functional changes.
+On Tue, Sep 27, 2022 at 11:35:18PM +0800, Zhuo Chen wrote:
+> Status bits for ERR_NONFATAL errors only are cleared in
+> pci_aer_clear_nonfatal_status(), but we want clear uncorrectable
+> error status in idt_init_pci(), so we change to use
+> pci_aer_clear_uncorrect_error_status().
 
-After commit 20e15e673b05 ("PCI/AER: Add pci_aer_raw_clear_status()
-to unconditionally clear Error Status"), pci_aer_raw_clear_status()
-is only used by the EDR path, so we add note in function comment.
+Have the modification changed since:
+https://lore.kernel.org/linux-pci/20220901181634.99591-2-chenzhuo.1@bytedance.com/
+?
+AFAICS it hasn't. Then my ab-tag should have been preserved on v2.
+One more time:
+Acked-by: Serge Semin <fancer.lancer@gmail.com>
 
-Signed-off-by: Zhuo Chen <chenzhuo.1@bytedance.com>
----
- drivers/pci/pcie/aer.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+Don't forget to add it should you have some more patchset re-spins.
 
-diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
-index a6d29269ccf2..bd5ecfa4860f 100644
---- a/drivers/pci/pcie/aer.c
-+++ b/drivers/pci/pcie/aer.c
-@@ -306,6 +306,8 @@ EXPORT_SYMBOL_GPL(pci_aer_clear_uncorrect_error_status);
-  * Clearing AER error status registers unconditionally, regardless of
-  * whether they're owned by firmware or the OS.
-  *
-+ * Used only by the EDR path. Other paths should use pci_aer_clear_status().
-+ *
-  * Returns 0 on success, or negative on failure.
-  */
- int pci_aer_raw_clear_status(struct pci_dev *dev)
-@@ -1277,24 +1279,17 @@ static void aer_enable_rootport(struct aer_rpc *rpc)
- {
- 	struct pci_dev *pdev = rpc->rpd;
- 	int aer = pdev->aer_cap;
--	u16 reg16;
- 	u32 reg32;
- 
- 	/* Clear PCIe Capability's Device Status */
--	pcie_capability_read_word(pdev, PCI_EXP_DEVSTA, &reg16);
--	pcie_capability_write_word(pdev, PCI_EXP_DEVSTA, reg16);
-+	pcie_clear_device_status(pdev);
- 
- 	/* Disable system error generation in response to error messages */
- 	pcie_capability_clear_word(pdev, PCI_EXP_RTCTL,
- 				   SYSTEM_ERROR_INTR_ON_MESG_MASK);
- 
- 	/* Clear error status */
--	pci_read_config_dword(pdev, aer + PCI_ERR_ROOT_STATUS, &reg32);
--	pci_write_config_dword(pdev, aer + PCI_ERR_ROOT_STATUS, reg32);
--	pci_read_config_dword(pdev, aer + PCI_ERR_COR_STATUS, &reg32);
--	pci_write_config_dword(pdev, aer + PCI_ERR_COR_STATUS, reg32);
--	pci_read_config_dword(pdev, aer + PCI_ERR_UNCOR_STATUS, &reg32);
--	pci_write_config_dword(pdev, aer + PCI_ERR_UNCOR_STATUS, reg32);
-+	pci_aer_clear_status(pdev);
- 
- 	/*
- 	 * Enable error reporting for the root port device and downstream port
--- 
-2.30.1 (Apple Git-130)
+-Sergey
 
+> 
+> Signed-off-by: Zhuo Chen <chenzhuo.1@bytedance.com>
+> ---
+>  drivers/ntb/hw/idt/ntb_hw_idt.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/ntb/hw/idt/ntb_hw_idt.c b/drivers/ntb/hw/idt/ntb_hw_idt.c
+> index 0ed6f809ff2e..d5f0aa87f817 100644
+> --- a/drivers/ntb/hw/idt/ntb_hw_idt.c
+> +++ b/drivers/ntb/hw/idt/ntb_hw_idt.c
+> @@ -2657,8 +2657,8 @@ static int idt_init_pci(struct idt_ntb_dev *ndev)
+>  	ret = pci_enable_pcie_error_reporting(pdev);
+>  	if (ret != 0)
+>  		dev_warn(&pdev->dev, "PCIe AER capability disabled\n");
+> -	else /* Cleanup nonfatal error status before getting to init */
+> -		pci_aer_clear_nonfatal_status(pdev);
+> +	else /* Cleanup uncorrectable error status before getting to init */
+> +		pci_aer_clear_uncorrect_error_status(pdev);
+>  
+>  	/* First enable the PCI device */
+>  	ret = pcim_enable_device(pdev);
+> -- 
+> 2.30.1 (Apple Git-130)
+> 
 
