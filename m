@@ -1,86 +1,83 @@
-Return-Path: <ntb+bounces-540-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-542-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A8EC78129A
-	for <lists+linux-ntb@lfdr.de>; Fri, 18 Aug 2023 20:11:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DA26784690
+	for <lists+linux-ntb@lfdr.de>; Tue, 22 Aug 2023 18:08:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 943881C21011
-	for <lists+linux-ntb@lfdr.de>; Fri, 18 Aug 2023 18:11:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD99F1C20A5E
+	for <lists+linux-ntb@lfdr.de>; Tue, 22 Aug 2023 16:08:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CF2A19BC0;
-	Fri, 18 Aug 2023 18:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BE5F1DA5F;
+	Tue, 22 Aug 2023 16:08:16 +0000 (UTC)
 X-Original-To: ntb@lists.linux.dev
-Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3C61AA8A
-	for <ntb@lists.linux.dev>; Fri, 18 Aug 2023 18:11:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
-	MIME-Version:Date:Message-ID:content-disposition;
-	bh=vDSJRNpNnS7N5ZQbCKJsuXiMKKbdfYD4dQkej2dk2NA=; b=W3C6LHUC9vMCcgg0CrMENEvhnf
-	UnXbmRl0VccvHrsZTWyPiI8lGta4WdXYzMzR8ipRhQmqaSBPq4ecAmps1vFd2xZQ9QJqRxKaCHfsn
-	iQiiJAD1XhyO5kHa5Vaik4Nd1vf05FjENxfWXe42DA1/1fxIbl4YBhLFwMBrr24r/FrMIAHBE+Mfr
-	fd7rA5XJCkvttIPCUsQXz9XoObqNOdPd/7h9spJfS40YNUDYaf1+1Hgmaz/PEaid+/xP5JfwRZcLn
-	YlT0+D/+C5fMdfA6q8RQWqDIAJBOOFPTWAWfY59+5flKFGpCXuVRLz3Ic5xyj7FgUz4DHL/j/RCqq
-	J4RgF6jA==;
-Received: from guinness.priv.deltatee.com ([172.16.1.162])
-	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.94.2)
-	(envelope-from <logang@deltatee.com>)
-	id 1qX3wg-00Ezkf-2S; Fri, 18 Aug 2023 12:11:38 -0600
-Message-ID: <0dee7234-6a4c-751c-01fb-db9b6427bd01@deltatee.com>
-Date: Fri, 18 Aug 2023 12:11:35 -0600
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DDB1CA1F
+	for <ntb@lists.linux.dev>; Tue, 22 Aug 2023 16:08:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1692720494; x=1724256494;
+  h=subject:from:to:cc:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=b6c6R9Y7VLkGHBNgKyhp7c+OEEh8gC7EXAvfaGp2Trk=;
+  b=Tfvr+N56GuT65nRcb0cY1Jw6Mp/o1ARKZKnp2vMBzbKVZahALfYINXAd
+   mL/BcA/YVKDBojjLrxqfRB21RgtuSadn/59x13iOpi/5AYdCBcMNG5HI5
+   8idxOor01QfVycdlTObHxk2gmvZilK7B2Mr/rmoBgQLs613tvD9eJ3asM
+   DIX1Tkd0CG/HADdqa6mkz4+m3ROrjnCpZ2UqprrOyyxlGfmJ+lobD6As0
+   S0d5baQxxE1kggELEFXbSEY1HQuU4+DvjsEHhQvT6LEN237lUU+JiVSd4
+   ZdlD4dYHqCrDD6UATn1JDvXbIPzGzIAu68o0PLD/+rO1g/5Mj90SnM4en
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10809"; a="358909768"
+X-IronPort-AV: E=Sophos;i="6.01,193,1684825200"; 
+   d="scan'208";a="358909768"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Aug 2023 09:04:41 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10809"; a="850681111"
+X-IronPort-AV: E=Sophos;i="6.01,193,1684825200"; 
+   d="scan'208";a="850681111"
+Received: from jpjenkin-mobl.amr.corp.intel.com (HELO [192.168.1.177]) ([10.212.85.240])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Aug 2023 09:04:40 -0700
+Subject: [PATCH v2 0/4] ntb: Clean up tx tail index on link down
+From: Dave Jiang <dave.jiang@intel.com>
+To: jdmason@kudzu.us, allenbh@gmail.com
+Cc: Yuan Y Lu <yuan.y.lu@intel.com>, Logan Gunthorpe <logang@deltatee.com>,
+ renlonglong <ren.longlong@h3c.com>, ntb@lists.linux.dev
+Date: Tue, 22 Aug 2023 09:04:39 -0700
+Message-ID: <169272009288.9948.16284771919634911796.stgit@djiang5-mobl3>
+User-Agent: StGit/1.5
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
 List-Subscribe: <mailto:ntb+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Content-Language: en-CA
-To: Dave Jiang <dave.jiang@intel.com>, jdmason@kudzu.us, allenbh@gmail.com
-Cc: renlonglong <ren.longlong@h3c.com>, Yuan Y Lu <yuan.y.lu@intel.com>,
- ntb@lists.linux.dev
-References: <169238013566.3961033.4879718723608456809.stgit@djiang5-mobl3>
-From: Logan Gunthorpe <logang@deltatee.com>
-In-Reply-To: <169238013566.3961033.4879718723608456809.stgit@djiang5-mobl3>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 172.16.1.162
-X-SA-Exim-Rcpt-To: dave.jiang@intel.com, jdmason@kudzu.us, allenbh@gmail.com, ren.longlong@h3c.com, yuan.y.lu@intel.com, ntb@lists.linux.dev
-X-SA-Exim-Mail-From: logang@deltatee.com
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on ale.deltatee.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-10.2 required=5.0 tests=ALL_TRUSTED,BAYES_00,
-	MYRULES_FREE,NICE_REPLY_A autolearn=ham autolearn_force=no
-	version=3.4.6
-Subject: Re: [PATCH 0/4] ntb: ntb_transport fixes from link up/down testing
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
+
+v2:
+- Add Logan's review tag
+- Add check to qp->remote_rx_info before reset entry (1/4) since it could be NULL. (longlong)
+
+Several ntb_transport fixes after doing long term continous netdev up/down
+testing.
+
+---
+
+Dave Jiang (4):
+      ntb: Clean up tx tail index on link down
+      ntb: Drop packets when qp link is down
+      ntb: Fix calculation ntb_transport_tx_free_entry()
+      ntb: Check tx descriptors outstanding instead of head/tail for tx queue
 
 
+ drivers/ntb/ntb_transport.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-On 2023-08-18 11:37, Dave Jiang wrote:
-> Several ntb_transport fixes after doing long term continous netdev up/down
-> testing.
-> 
-> ---
-> 
-> Dave Jiang (4):
->       ntb: Clean up tx tail index on link down
->       ntb: Drop packets when qp link is down
->       ntb: Fix calculation ntb_transport_tx_free_entry()
->       ntb: Check tx descriptors outstanding instead of head/tail for tx queue
-> 
+--
 
-All four patches look good to me, thanks.
-
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-
-Logan
 
