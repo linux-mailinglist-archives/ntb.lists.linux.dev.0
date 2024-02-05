@@ -1,119 +1,79 @@
-Return-Path: <ntb+bounces-615-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-625-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FFFC84A098
-	for <lists+linux-ntb@lfdr.de>; Mon,  5 Feb 2024 18:24:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7775F84A475
+	for <lists+linux-ntb@lfdr.de>; Mon,  5 Feb 2024 20:54:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 72AA41C222AE
-	for <lists+linux-ntb@lfdr.de>; Mon,  5 Feb 2024 17:24:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A586D1C238D9
+	for <lists+linux-ntb@lfdr.de>; Mon,  5 Feb 2024 19:54:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 792C140BF4;
-	Mon,  5 Feb 2024 17:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9A9F14FF87;
+	Mon,  5 Feb 2024 19:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lgrgw6m9"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJzvcSM6"
 X-Original-To: ntb@lists.linux.dev
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FD441748
-	for <ntb@lists.linux.dev>; Mon,  5 Feb 2024 17:24:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1D214F9EF;
+	Mon,  5 Feb 2024 19:03:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707153850; cv=none; b=JeeaANTN8Lv2w0aeH3pv+sAsqelxmvFiqP4u3XJ45BEG6s+xRgjWpE5QqpPSQb8ZLmPY6hB63Bph5EtCTtrZZI3dpY+e3+oSOUZNg2WBgoCmmjR6X/5hRBAlatZOg6jaIOVtikC4/WI/TOVOdHVlQZL/Fp4hZ5V5JjvsKZRz4hM=
+	t=1707159832; cv=none; b=WSSW3KYt8Gmqf62ftFluMYU1gmw0xjFeWOEEVHxKNOODtz876mL+26YWsLkZ1993OTJVAxhXg2iiw08uM0jszE+1Bb/o+lLzlZFZFX6TW1bKX5A2A9JIhpFGTMCMKbWIhwznqq1l+eUXzM7xjJ+8B1+GvuZgwUXgXmc4XPGIUIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707153850; c=relaxed/simple;
-	bh=sopnj/yEtbs+QAK7lhST6HyHux4gyYacZ32KJZMZj2c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SbAiEzmbyjZoqGbbEr0yzcJ7ShphkcW6sPjy2ojNyFZMA/yFt0MO1q+BYaOhCcLFdUtuUhCxbgerRanh1D4dsyYEpCUUfdfp8kvjqib0d+EQnQ8KjprdoCc2UDQ7E5w1LbPI/i16Vcy5K5R2ZMd7liJjsUeunMaruh4c2r26XlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lgrgw6m9; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1707153848; x=1738689848;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=sopnj/yEtbs+QAK7lhST6HyHux4gyYacZ32KJZMZj2c=;
-  b=lgrgw6m9kyKbAlJ+juSLrCSixxTedl02qr3kAqpOmAWtUaNi5994SFAP
-   1CRXN2jm4k2tH1XBJdMcSVGn8qx9VtKWRX/zGWGNMvZlVl0QG5lLzCcnf
-   fQhg/lgBUDm4yjyP5TO3Pe7QkEPnumtTUWLW58aJWsJzDaa9EP8scbvZG
-   e8OSMm0UQXw5JAOo6vccM9HLGV5ToOZepFCNno5xmlhhnI6LazgUS9vx9
-   5saTrTl2KhQp9IsnzaMuLXRETLN8xmos7U6M/wIm0MFbfCch0RX8KFlJ9
-   DT3g73PsUNeCE2l3/K7moqw64fKaOWYLuKebDR4tgFwfjB+S7GNuQ3F9T
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10975"; a="11304233"
-X-IronPort-AV: E=Sophos;i="6.05,245,1701158400"; 
-   d="scan'208";a="11304233"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2024 09:24:03 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,245,1701158400"; 
-   d="scan'208";a="5391174"
-Received: from djiang5-mobl3.amr.corp.intel.com (HELO [10.246.112.181]) ([10.246.112.181])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2024 09:24:02 -0800
-Message-ID: <62e2f525-4178-432e-9732-b886e0fcf65c@intel.com>
-Date: Mon, 5 Feb 2024 10:24:02 -0700
+	s=arc-20240116; t=1707159832; c=relaxed/simple;
+	bh=enzvkJrZvs3n5pWxdWktechxKDk4+Wgewr4aMoQPZwc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WMM0jeu2/stm6nwqBXiflt3cGcX4Pp9efROwHiz4PzwXduYxGobJdMRwu/EuwcrMeaiAy4e4PHGBcvnBRvfAykLmxw4rJQdHujTmhLDN6bukA6xxQWyyXfA0LVFns9Sj2YHQpufvDEVUX4X56FZzeqvM5a4pWSKZeDngZItsCuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJzvcSM6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE36AC433A6;
+	Mon,  5 Feb 2024 19:03:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1707159832;
+	bh=enzvkJrZvs3n5pWxdWktechxKDk4+Wgewr4aMoQPZwc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GJzvcSM63C0Y5xiYdTwKIooFcErJRPSrHnrHPDSGWJCke6zoOd0Y/7Dd+GQcEdQKy
+	 MdS3oCc4aVpqgH67vdynUBTHvs5VlxRqbaATa6YXIOWrAs7U8M7JGLV0yUGJUPJCeo
+	 zV+9VglyHYi9FeJxdEX6kHJbworudXgskoqUpi2c=
+Date: Mon, 5 Feb 2024 04:49:55 -0800
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: "Ricardo B. Marliere" <ricardo@marliere.net>
+Cc: Jon Mason <jdmason@kudzu.us>, Dave Jiang <dave.jiang@intel.com>,
+	Allen Hubbe <allenbh@gmail.com>, ntb@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] ntb: struct bus_type cleanup
+Message-ID: <2024020550-protract-deviator-0b35@gregkh>
+References: <20240204-bus_cleanup-ntb-v1-0-155184f60d5f@marliere.net>
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
 List-Subscribe: <mailto:ntb+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] ntb: core: make ntb_bus const
-Content-Language: en-US
-To: "Ricardo B. Marliere" <ricardo@marliere.net>, Jon Mason
- <jdmason@kudzu.us>, Allen Hubbe <allenbh@gmail.com>
-Cc: ntb@lists.linux.dev, linux-kernel@vger.kernel.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-References: <20240204-bus_cleanup-ntb-v1-0-155184f60d5f@marliere.net>
- <20240204-bus_cleanup-ntb-v1-2-155184f60d5f@marliere.net>
-From: Dave Jiang <dave.jiang@intel.com>
-In-Reply-To: <20240204-bus_cleanup-ntb-v1-2-155184f60d5f@marliere.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240204-bus_cleanup-ntb-v1-0-155184f60d5f@marliere.net>
 
-
-
-On 2/4/24 9:22 AM, Ricardo B. Marliere wrote:
-> Now that the driver core can properly handle constant struct bus_type,
-> move the ntb_bus variable to be a constant structure as well,
-> placing it into read-only memory which can not be modified at runtime.
+On Sun, Feb 04, 2024 at 01:21:59PM -0300, Ricardo B. Marliere wrote:
+> This series is part of an effort to cleanup the users of the driver
+> core, as can be seen in many recent patches authored by Greg across the
+> tree (e.g. [1]). Specifically, this series is part of the task of
+> splitting one of his TODOs [2].
+> 
+> ---
+> [1]: https://lore.kernel.org/lkml/?q=f%3Agregkh%40linuxfoundation.org+s%3A%22make%22+and+s%3A%22const%22
+> [2]: https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/driver-core.git/commit/?h=bus_cleanup&id=26105f537f0c60eacfeb430abd2e05d7ddcdd8aa
 > 
 > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
-
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-
+> 
 > ---
->  drivers/ntb/core.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/ntb/core.c b/drivers/ntb/core.c
-> index 27dd93deff6e..f32b77c7e00d 100644
-> --- a/drivers/ntb/core.c
-> +++ b/drivers/ntb/core.c
-> @@ -72,7 +72,7 @@ MODULE_VERSION(DRIVER_VERSION);
->  MODULE_AUTHOR(DRIVER_AUTHOR);
->  MODULE_DESCRIPTION(DRIVER_DESCRIPTION);
->  
-> -static struct bus_type ntb_bus;
-> +static const struct bus_type ntb_bus;
->  static void ntb_dev_release(struct device *dev);
->  
->  int __ntb_register_client(struct ntb_client *client, struct module *mod,
-> @@ -292,7 +292,7 @@ static void ntb_dev_release(struct device *dev)
->  	complete(&ntb->released);
->  }
->  
-> -static struct bus_type ntb_bus = {
-> +static const struct bus_type ntb_bus = {
->  	.name = "ntb",
->  	.probe = ntb_probe,
->  	.remove = ntb_remove,
-> 
+> Ricardo B. Marliere (2):
+>       ntb: ntb_transport: make ntb_transport_bus const
+>       ntb: core: make ntb_bus const
+
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
