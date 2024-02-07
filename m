@@ -1,79 +1,104 @@
-Return-Path: <ntb+bounces-622-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-637-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BBD284A472
-	for <lists+linux-ntb@lfdr.de>; Mon,  5 Feb 2024 20:54:29 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E6FD84D57A
+	for <lists+linux-ntb@lfdr.de>; Wed,  7 Feb 2024 23:10:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3CC3128D00A
-	for <lists+linux-ntb@lfdr.de>; Mon,  5 Feb 2024 19:54:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CAC98B27FA9
+	for <lists+linux-ntb@lfdr.de>; Wed,  7 Feb 2024 22:10:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99AC514F9E5;
-	Mon,  5 Feb 2024 19:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D31A712FF62;
+	Wed,  7 Feb 2024 21:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJzvcSM6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sI92Qjji"
 X-Original-To: ntb@lists.linux.dev
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711C414F9CB;
-	Mon,  5 Feb 2024 19:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DE91384B4;
+	Wed,  7 Feb 2024 21:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707159832; cv=none; b=WSSW3KYt8Gmqf62ftFluMYU1gmw0xjFeWOEEVHxKNOODtz876mL+26YWsLkZ1993OTJVAxhXg2iiw08uM0jszE+1Bb/o+lLzlZFZFX6TW1bKX5A2A9JIhpFGTMCMKbWIhwznqq1l+eUXzM7xjJ+8B1+GvuZgwUXgXmc4XPGIUIs=
+	t=1707342020; cv=none; b=D4/pFEIGQs1HsPapQx3Z/x4KmfQjoGnwY47HHMrietBM8j8L+nlV/1PBo0OggF7Z3iEY3Ktu5/8dr9J4gHR4f5EttM61BZPSvUrpzxPP2jBrXKAPLRxr8b7FEH4OmlZ33jks0dMaGO10u2WY/Zf/0/rS4aozdgcHB+oXPShcSUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707159832; c=relaxed/simple;
-	bh=enzvkJrZvs3n5pWxdWktechxKDk4+Wgewr4aMoQPZwc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WMM0jeu2/stm6nwqBXiflt3cGcX4Pp9efROwHiz4PzwXduYxGobJdMRwu/EuwcrMeaiAy4e4PHGBcvnBRvfAykLmxw4rJQdHujTmhLDN6bukA6xxQWyyXfA0LVFns9Sj2YHQpufvDEVUX4X56FZzeqvM5a4pWSKZeDngZItsCuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJzvcSM6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE38FC43330;
-	Mon,  5 Feb 2024 19:03:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707159832;
-	bh=enzvkJrZvs3n5pWxdWktechxKDk4+Wgewr4aMoQPZwc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GJzvcSM63C0Y5xiYdTwKIooFcErJRPSrHnrHPDSGWJCke6zoOd0Y/7Dd+GQcEdQKy
-	 MdS3oCc4aVpqgH67vdynUBTHvs5VlxRqbaATa6YXIOWrAs7U8M7JGLV0yUGJUPJCeo
-	 zV+9VglyHYi9FeJxdEX6kHJbworudXgskoqUpi2c=
-Date: Mon, 5 Feb 2024 04:49:55 -0800
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: "Ricardo B. Marliere" <ricardo@marliere.net>
-Cc: Jon Mason <jdmason@kudzu.us>, Dave Jiang <dave.jiang@intel.com>,
-	Allen Hubbe <allenbh@gmail.com>, ntb@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] ntb: struct bus_type cleanup
-Message-ID: <2024020550-protract-deviator-0b35@gregkh>
-References: <20240204-bus_cleanup-ntb-v1-0-155184f60d5f@marliere.net>
+	s=arc-20240116; t=1707342020; c=relaxed/simple;
+	bh=eKNi9/iUHM6VsVGx5Z2q5lCG+YAb9c+WYYd2aydu50A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KxYkuSZVbyQQ23lkHIonAfH/psYuorH0g38s1nwVVh/HVDeGIhuI8uNMx5Lni3Qj35jYfMKfQIGv8rYmx5mf/n/Wrc/KqNEPdV3P3urYxrKDffp7+0Gt40dLTFlDtrCpmo9h6nzhp0o4/nVbBIFC1t/1mFKP4nMShps9tBSUxxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sI92Qjji; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87363C433F1;
+	Wed,  7 Feb 2024 21:40:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707342020;
+	bh=eKNi9/iUHM6VsVGx5Z2q5lCG+YAb9c+WYYd2aydu50A=;
+	h=From:To:Cc:Subject:Date:From;
+	b=sI92QjjiqE84gIGr2Ia7Vbv+zr4/keYPJ2Wkxv8HGpT+alOvgvcdBn2/8R167Wkoo
+	 5jGHPQwbY5U+9D80DW3UOsAzpDbm1nfvXagZilKh6hWh1RGQMZxdbwV2mnuZxN0Zxa
+	 zTJsXek6pJwljIrLo9pWNUrfceXfHetrBI4w7SG467FtncWhfEiURcotEa8z5s/CB0
+	 5dql35ISLwwXB8DSr0MuSJv5LxUnQnPRnvQBzLrbvLRRjduG8hqjjSCeQVH9S8NOYE
+	 xL/ZgDDvTITfJv6qdWtXqSpzLGVGYXtAG4wSXmd7wN7WrkaDjnQIsBpriUooRMj0FO
+	 clxbHMNk3FUSg==
+From: Niklas Cassel <cassel@kernel.org>
+To: Jon Mason <jdmason@kudzu.us>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Allen Hubbe <allenbh@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Cc: Damien Le Moal <dlemoal@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	ntb@lists.linux.dev,
+	linux-pci@vger.kernel.org
+Subject: [PATCH v2 0/4] pci_epf_alloc_space() cleanups
+Date: Wed,  7 Feb 2024 22:39:13 +0100
+Message-ID: <20240207213922.1796533-1-cassel@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
 List-Subscribe: <mailto:ntb+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240204-bus_cleanup-ntb-v1-0-155184f60d5f@marliere.net>
+Content-Transfer-Encoding: 8bit
 
-On Sun, Feb 04, 2024 at 01:21:59PM -0300, Ricardo B. Marliere wrote:
-> This series is part of an effort to cleanup the users of the driver
-> core, as can be seen in many recent patches authored by Greg across the
-> tree (e.g. [1]). Specifically, this series is part of the task of
-> splitting one of his TODOs [2].
-> 
-> ---
-> [1]: https://lore.kernel.org/lkml/?q=f%3Agregkh%40linuxfoundation.org+s%3A%22make%22+and+s%3A%22const%22
-> [2]: https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/driver-core.git/commit/?h=bus_cleanup&id=26105f537f0c60eacfeb430abd2e05d7ddcdd8aa
-> 
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
-> 
-> ---
-> Ricardo B. Marliere (2):
->       ntb: ntb_transport: make ntb_transport_bus const
->       ntb: core: make ntb_bus const
+Hello all,
 
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Here comes some cleanups related to pci_epf_alloc_space().
+
+Changes since v1:
+-Picked up Reviewed-by tags.
+-Fixed kdoc param name to match the actual param name in patch 1/4.
+-Split patch "improve pci_epf_alloc_space()" into one patch changing
+ pci-epf-core.c (patch 2/4 in V2) and pci-epf-test (patch 3/4 in V2).
+-Perform the alignment even for fixed size BARs. We need this since:
+ 1) Some platforms have fixed_size_bars that are smaller than the
+    iATU MIN REGION.
+ 2) No longer doing so would be a functional change and not a cleanup.
+
+
+Kind regards,
+Niklas
+
+
+Niklas Cassel (4):
+  PCI: endpoint: refactor pci_epf_alloc_space()
+  PCI: endpoint: improve pci_epf_alloc_space()
+  PCI: endpoint: pci-epf-test: remove superfluous checks
+  PCI: endpoint: pci-epf-vntb: remove superfluous checks
+
+ drivers/pci/endpoint/functions/pci-epf-ntb.c  |  2 +-
+ drivers/pci/endpoint/functions/pci-epf-test.c | 13 ++-----------
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 15 ++-------------
+ drivers/pci/endpoint/pci-epf-core.c           | 15 +++++++++++++--
+ include/linux/pci-epf.h                       |  4 +++-
+ 5 files changed, 21 insertions(+), 28 deletions(-)
+
+-- 
+2.43.0
+
 
