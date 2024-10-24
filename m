@@ -1,133 +1,130 @@
-Return-Path: <ntb+bounces-914-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-915-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D702A9AEE5B
-	for <lists+linux-ntb@lfdr.de>; Thu, 24 Oct 2024 19:39:13 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C08D9AEE70
+	for <lists+linux-ntb@lfdr.de>; Thu, 24 Oct 2024 19:46:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F3111F2589F
-	for <lists+linux-ntb@lfdr.de>; Thu, 24 Oct 2024 17:39:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6BCCB1C212D0
+	for <lists+linux-ntb@lfdr.de>; Thu, 24 Oct 2024 17:46:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 739BD1FE109;
-	Thu, 24 Oct 2024 17:39:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eGJW06Fj"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2A881F80B9;
+	Thu, 24 Oct 2024 17:46:07 +0000 (UTC)
 X-Original-To: ntb@lists.linux.dev
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD1F1FC7D8;
-	Thu, 24 Oct 2024 17:38:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAE51D63E8;
+	Thu, 24 Oct 2024 17:46:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.154.21.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729791540; cv=none; b=M7OHD/f9U91WuTTx61LuwwgIsfR3W28iTwuAIvFlSeiW1YqkQWb0iryGaPWkKF9iSTJx4V+0RI5eyPuLo/nPgVRlwfYLLpNuPX1D5WVGO+X47ekQ7AnAjGKhvLzZiREvZeJkboS5IHSLi15JV/GK8SubhOvjs3w+hRocP5S7Bzc=
+	t=1729791967; cv=none; b=lInlnErrEdTmVro7e76ram9WLCaGRmkfh6AiLBckz7BaFUs1qBLcswirIwm6dv2xu88FXFC37DWowcKw0IhqlDQZe4weBPqmq39kBGOz+6vAMMRqOZu2yI8aORsOTIoSPSoAb3vB/bo1rNPIaGeuJ9ohdGAkKFSXA8XOOXFUfb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729791540; c=relaxed/simple;
-	bh=8WJnbrt2+eyPMiVYG09me24q/mcBtJcn+Lsz0IxKsZc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n+xQA5VwtxQ16haexufUJxFmQldaea3HHsZFoxV1hAOvJzhW0ejIKw2ZWzh6jdavG0V5ud/JzhbCBR0iC/7APQYzffZ9Q+PhnibebJxMo/TbPYcjW2s9wCGu2hHwSCD9MPxLxlCT1QVATTPoP8gPyWJZOV4QFHq3wCly5Cis8ME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eGJW06Fj; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-539fe76e802so1554601e87.1;
-        Thu, 24 Oct 2024 10:38:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729791536; x=1730396336; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8WJnbrt2+eyPMiVYG09me24q/mcBtJcn+Lsz0IxKsZc=;
-        b=eGJW06FjJT9N7NNV5xEzc3o6ZevPbyApq8plU0X6hdhCU8ZvLRiPrOvr82n4OfFWG+
-         xFZwPr7kl7S0n+Z7jAgoxY3oH7G/UJ9GSqmA7WFV3VMSSu08aXM6/jqIDfT4OTKaA/t0
-         X04BGR5YEQUwvwlk+p+3/Uwgwmf2IKCfxwM35KJSv+pXHgbMvC36eywr0mbX0+hQNam/
-         L4p5GsCL6Wd5Z6swh13EIDT6zLtW/nCdchdi50UoxHcqYqBM1OYrI7VGIzefVzDJQ026
-         O1dLc8SeAMwZesF0CBjGFyuPhnZSgeljlv2jqV2dNW9EEd7yl+JGrhRZiB4/hA57QTmz
-         /sSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729791536; x=1730396336;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8WJnbrt2+eyPMiVYG09me24q/mcBtJcn+Lsz0IxKsZc=;
-        b=KLld7f9vb/5BWSeE0/vOQOb5BazEprEVNpPEd91qQJ9nwNyNka3qY7hs/cyJ4sProp
-         /+9zsgR7tKB3C8yu+PjC7OCR5VMGaKJBSqPaRwn7DwVr7ltGaS6wTEgWUZb3cEmj0EC/
-         54VJBBgNwfPQUaWypaedmOQEFixBBT8OyWm65bl1GppQIIWQrH66PoxQgq/nj7+NNF5m
-         vXOPZHJFGjHIwYI1h8U5oxCyBbZNTcKNCgn8gfz5hK6/jlnxIhqya/Gb0OuCw07B6lt4
-         /o8q4QTO8Fam7qXyaHdseDIE3+sBS6/WT1IshWgPe5JYJmU0cLGXrAc8H1PpnJFiBOLd
-         ejZg==
-X-Forwarded-Encrypted: i=1; AJvYcCU4n9L9CB/nDwqNbj8Iyz9zMqMdgoeWjHJXpY7db9hD8KSi/4BW3fkpBE3Y9rpmbfskDPGnnwHpqQ==@lists.linux.dev, AJvYcCXKyCFffojOxab2bz0FWQk1cWt87Jhm3ppclC7w1JNJLuFUA4W8Kvrrk/u6iUouI8yXlio=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxBqrlnuZUt74t0kBQ1YcjsCD+c4R8QxEORxU5fUpMi2av9C2ng
-	8d8rwuthcphYIVDkctyEgN+aC8DQH/XFmnlUDNBFuan9CZYIkvfb
-X-Google-Smtp-Source: AGHT+IHBgp08+X7VDah7A1PXK+oh2J53hxr+ZwxrWtWH2iwrLcyRGNg7D7RBAUjcie/LivvlgLDo6g==
-X-Received: by 2002:a05:6512:3a96:b0:539:e436:f1cd with SMTP id 2adb3069b0e04-53b1a306993mr4517544e87.16.1729791536088;
-        Thu, 24 Oct 2024 10:38:56 -0700 (PDT)
-Received: from seven-swords.. ([2a03:d000:2:9006:4eed:fbff:fe72:e806])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a2242024csm1417428e87.121.2024.10.24.10.38.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Oct 2024 10:38:55 -0700 (PDT)
-From: Ivan Epifanov <isage.dna@gmail.com>
-To: linux@roeck-us.net
-Cc: andriy.shevchenko@intel.com,
-	aospan@netup.ru,
-	conor.dooley@microchip.com,
-	ddrokosov@sberdevices.ru,
-	dmaengine@vger.kernel.org,
-	dushistov@mail.ru,
-	fancer.lancer@gmail.com,
-	geert@linux-m68k.org,
-	gregkh@linuxfoundation.org,
-	hoan@os.amperecomputing.com,
-	ink@jurassic.park.msu.ru,
-	isage.dna@gmail.com,
-	jeffbai@aosc.io,
-	kexybiscuit@aosc.io,
-	linux-alpha@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-fpga@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-hwmon@vger.kernel.org,
-	linux-ide@vger.kernel.org,
-	linux-iio@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	linux-mips@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-spi@vger.kernel.org,
-	manivannan.sadhasivam@linaro.org,
-	mattst88@gmail.com,
-	netdev@vger.kernel.org,
-	nikita@trvn.ru,
-	ntb@lists.linux.dev,
-	patches@lists.linux.dev,
-	richard.henderson@linaro.org,
-	s.shtylyov@omp.ru,
-	serjk@netup.ru,
-	shc_work@mail.ru,
-	torvalds@linux-foundation.org,
-	torvic9@mailbox.org,
-	tsbogend@alpha.franken.de,
-	v.georgiev@metrotek.ru,
-	wangyuli@uniontech.com,
-	wsa+renesas@sang-engineering.com,
-	xeb@mail.ru
-Subject: Re: [PATCH] Revert "MAINTAINERS: Remove some entries due to various compliance requirements."
-Date: Thu, 24 Oct 2024 20:38:51 +0300
-Message-ID: <20241024173851.245260-1-isage.dna@gmail.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <68e35542-d360-4a37-9ff1-16fe76594b6f@roeck-us.net>
-References: <68e35542-d360-4a37-9ff1-16fe76594b6f@roeck-us.net>
+	s=arc-20240116; t=1729791967; c=relaxed/simple;
+	bh=I9Q4P1XK4E+Wu/v/AH+WHEDOhWLlmc7Q+i47sR0qHAE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Eq1AmU3HVy9YgkmjIs/NOg1+CDkWp/CBNOETSTK2n3mXDRxsYHhJlYiTzAdDAg3+mT59OhODJc4Cww2kCnzdBVJ5ph7r6lvoHBFqMXbC2CrAK2ub1lZpx/eG37X9obTI0C31meq+m92p0FQqWZF5T60u0aNeYtTVFB7qHzI8CH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru; spf=pass smtp.mailfrom=omp.ru; arc=none smtp.client-ip=90.154.21.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=omp.ru
+Received: from [192.168.2.102] (213.87.90.120) by msexch01.omp.ru
+ (10.188.4.12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Thu, 24 Oct
+ 2024 20:45:45 +0300
+Message-ID: <884de5fe-9f3b-4720-8be6-88972d8fc897@omp.ru>
+Date: Thu, 24 Oct 2024 20:45:44 +0300
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
 List-Subscribe: <mailto:ntb+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Revert "MAINTAINERS: Remove some entries due to various
+ compliance requirements."
+To: Ivan Epifanov <isage.dna@gmail.com>, <andriy.shevchenko@intel.com>
+CC: <aospan@netup.ru>, <conor.dooley@microchip.com>,
+	<ddrokosov@sberdevices.ru>, <dmaengine@vger.kernel.org>, <dushistov@mail.ru>,
+	<fancer.lancer@gmail.com>, <geert@linux-m68k.org>,
+	<gregkh@linuxfoundation.org>, <hoan@os.amperecomputing.com>,
+	<ink@jurassic.park.msu.ru>, <jeffbai@aosc.io>, <kexybiscuit@aosc.io>,
+	<linux-alpha@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-fpga@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+	<linux-hwmon@vger.kernel.org>, <linux-ide@vger.kernel.org>,
+	<linux-iio@vger.kernel.org>, <linux-media@vger.kernel.org>,
+	<linux-mips@vger.kernel.org>, <linux-renesas-soc@vger.kernel.org>,
+	<linux-spi@vger.kernel.org>, <manivannan.sadhasivam@linaro.org>,
+	<mattst88@gmail.com>, <netdev@vger.kernel.org>, <nikita@trvn.ru>,
+	<ntb@lists.linux.dev>, <patches@lists.linux.dev>,
+	<richard.henderson@linaro.org>, <serjk@netup.ru>, <shc_work@mail.ru>,
+	<torvalds@linux-foundation.org>, <torvic9@mailbox.org>,
+	<tsbogend@alpha.franken.de>, <v.georgiev@metrotek.ru>,
+	<wangyuli@uniontech.com>, <wsa+renesas@sang-engineering.com>, <xeb@mail.ru>
+References: <Zxpqnf1M8rPTB4DN@black.fi.intel.com>
+ <20241024170743.241144-1-isage.dna@gmail.com>
+Content-Language: en-US
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
+Organization: Open Mobile Platform
+In-Reply-To: <20241024170743.241144-1-isage.dna@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: msexch01.omp.ru (10.188.4.12) To msexch01.omp.ru
+ (10.188.4.12)
+X-KSE-ServerInfo: msexch01.omp.ru, 9
+X-KSE-AntiSpam-Interceptor-Info: scan successful
+X-KSE-AntiSpam-Version: 6.1.0, Database issued on: 10/24/2024 17:32:48
+X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
+X-KSE-AntiSpam-Method: none
+X-KSE-AntiSpam-Rate: 19
+X-KSE-AntiSpam-Info: Lua profiles 188703 [Oct 24 2024]
+X-KSE-AntiSpam-Info: Version: 6.1.0.4
+X-KSE-AntiSpam-Info: Envelope from: s.shtylyov@omp.ru
+X-KSE-AntiSpam-Info: LuaCore: 40 0.3.40
+ cefee68357d12c80cb9cf2bdcf92256b1d238d22
+X-KSE-AntiSpam-Info: {rep_avail}
+X-KSE-AntiSpam-Info: {Tracking_arrow_text}
+X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
+X-KSE-AntiSpam-Info: {SMTP from is not routable}
+X-KSE-AntiSpam-Info: {Found in DNSBL: 213.87.90.120 in (user)
+ b.barracudacentral.org}
+X-KSE-AntiSpam-Info: {Found in DNSBL: 213.87.90.120 in (user)
+ dbl.spamhaus.org}
+X-KSE-AntiSpam-Info:
+	omp.ru:7.1.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;127.0.0.199:7.1.2
+X-KSE-AntiSpam-Info: FromAlignment: s
+X-KSE-AntiSpam-Info: ApMailHostAddress: 213.87.90.120
+X-KSE-AntiSpam-Info: {DNS response errors}
+X-KSE-AntiSpam-Info: Rate: 19
+X-KSE-AntiSpam-Info: Status: not_detected
+X-KSE-AntiSpam-Info: Method: none
+X-KSE-AntiSpam-Info: Auth:dmarc=temperror header.from=omp.ru;spf=temperror
+ smtp.mailfrom=omp.ru;dkim=none
+X-KSE-Antiphishing-Info: Clean
+X-KSE-Antiphishing-ScanningType: Heuristic
+X-KSE-Antiphishing-Method: None
+X-KSE-Antiphishing-Bases: 10/24/2024 17:35:00
+X-KSE-Antivirus-Interceptor-Info: scan successful
+X-KSE-Antivirus-Info: Clean, bases: 10/24/2024 2:57:00 PM
+X-KSE-Attachment-Filter-Triggered-Rules: Clean
+X-KSE-Attachment-Filter-Triggered-Filters: Clean
+X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
 
-> Yes, everyone should do that, and I did.
+On 10/24/24 8:07 PM, Ivan Epifanov wrote:
+[...]
 
-If you did, you'd knew that their defence ended in 1940 with peace treaty.
+>> $ git log --author="andriy.shevchenko@intel.com"
+>> $ 
+> 
+> Look who's talking
 
-Surely, Great Britain, Canada, Australia, New-Zealand and Union of South Africa delcared war on Finland in 1941, because Finland was "defending", right?
+$ git shortlog | grep "Andy Shevchenko"
+Andy Shevchenko (5564):
+[...]
+
+   Even I was surprised!
+
+MBR, Sergey
+
 
