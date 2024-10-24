@@ -1,141 +1,176 @@
-Return-Path: <ntb+bounces-968-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-969-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D67B9AF333
-	for <lists+linux-ntb@lfdr.de>; Thu, 24 Oct 2024 22:01:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D963A9AF47C
+	for <lists+linux-ntb@lfdr.de>; Thu, 24 Oct 2024 23:13:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 004D5B21C80
-	for <lists+linux-ntb@lfdr.de>; Thu, 24 Oct 2024 20:01:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0779F1C21663
+	for <lists+linux-ntb@lfdr.de>; Thu, 24 Oct 2024 21:13:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFF2A189F3E;
-	Thu, 24 Oct 2024 20:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D713219C86;
+	Thu, 24 Oct 2024 21:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dZ5MDmTo"
+	dkim=pass (2048-bit key) header.d=rosalinux.ru header.i=@rosalinux.ru header.b="JvCI2bpf"
 X-Original-To: ntb@lists.linux.dev
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.rosalinux.ru (mail.rosalinux.ru [195.19.76.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94B922B64B
-	for <ntb@lists.linux.dev>; Thu, 24 Oct 2024 20:01:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CED218304;
+	Thu, 24 Oct 2024 21:12:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.19.76.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729800110; cv=none; b=GKLUZsfWgW5n5+OFavw3Y6mFf78h3hb8lHkbjL139ZtbowhK487m06hJY8S94HIdyhAHoLwdPiKp49p8r8inooY1XYhNvxsXBSG+mFV6z0JfsvPxfK367udV+R//hxSUkdTlHZtmKSuy/VKVraKLKQsTFH3C/xDMn+HLej0zJjI=
+	t=1729804339; cv=none; b=KzNU3tEgS2KO1K8OLeyEIq/p85jqH0BhkHQklBBfdiltOAK8L7zNCr7T+kGzraxfBubmfhjjnA8Sbk/Sd2EpYNmJ1vzPsY42dhH9QQn9+HKKja4/Zk3nxL6xJ+Jux+kepnZDq9Sj+LvaiWv2/UH23C+EO+EvBz8kR18CFmWpNgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729800110; c=relaxed/simple;
-	bh=eBIPSKxTj4L55q8JXEMDBFoYpoOyhZ0BDvxuOtJ2jWQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cv5K4dejdNqNz3+mEJJzV9AQcI09aHZqBgUAJF8FAmWNQvE+sd37LKYCyWNka5csQTj5T0E4PQA8rYB3EAm+RpZus5GgcvYqHZjboe5+HcPonUWQ0t3JWj/bP097LWXDSEobSFZq9Jdlx0aIf6jmmCPXKTzK6uRfCRDiURKojck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dZ5MDmTo; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2e2d83f15f3so189186a91.0
-        for <ntb@lists.linux.dev>; Thu, 24 Oct 2024 13:01:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729800108; x=1730404908; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YIraNitrENzrz97ijmN+xBP2tly+1JEciLY9B2SGV94=;
-        b=dZ5MDmToT/wCd0Mm7kf4phs8gEKMaxhJsn0oNJYGqixLTyzzCmafNEbiNk08Mni0b+
-         ZFEhl2nonmI1az7I/GFvKzNzRSb/pbku6cIRUH50S5HKoE20Yh7a5PzwS6fmucSDTTDI
-         yu7s0HuHYwKrwTuWs0mZ8e+JUPPDKiMnDCwylkosxYL1ic65RvBzIHmW+dBjLJeivANL
-         ykGe+8T6f8yKch/afeEUx1IZSQsiXkfoDjlybV87WhE5x2K1BPCpKqAvRv3f6EQfMRe1
-         Ceo9pz32wuB2aExvmiYO3kZqOVd56Yon1h8ez1ZoOUw+YBUVlqh6tQwHstUeaCc+yif6
-         4O9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729800108; x=1730404908;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YIraNitrENzrz97ijmN+xBP2tly+1JEciLY9B2SGV94=;
-        b=DAk2nSg0JWn6XnsI1fuBZw9uprQF7RLzrqKvw5mHapG3gTHjEZxQKiwoBvLHGVpZRj
-         PjSHBUbufvaqrD8ZdVjWcneZJ9qS2MmfR99jWlNsM+Go5P/anrrhopCLVkL8jETtHB8u
-         nVigPs27+KyBExSURvXV3Mq4+fZhRhcEZiNkcUPKF8ZsroQ5qMdkixjNKCEfwG9sK54z
-         fcCyWrouvADj+6rjNiUYtVjVmKP1btEMcm3jo0rJOUwbm+RjzHnUEUP8Qo8f/+w/s1bU
-         ZsnXmEel/nvW9psCiFODueY/3LEAscC5eh2ttsNxRY3ahZU+Cmjw5jzj8fnigyjWOndS
-         8leQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWEpYNGQxSQX49t/RYSn3ZuzGf4/4ThUmq4agxxtYr7AxeIgkGkWQ8ig3FQTyiHopMstHU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxCmylxXI1EkK4JG+3+/C4eQ2/kW8NDngrhXAgzso4f8BR4S9mn
-	k2t+7mTiIpTHkee0TbAPUxG/+demTX2O8/Ci3osUDfBnPu5idLdKpk7wmT78V3WB+cVbEN0mE5N
-	TS5eVMraNRBmeavde1FX8u6Pxbvo=
-X-Google-Smtp-Source: AGHT+IEnjgfg/aT6yQAgrTdR83/TW/L0fkHcUWiZIccgc7uZM+RpEvNTF7mOftbuDo5SWQyG+GHyEYQwLQJDF3dcyr8=
-X-Received: by 2002:a17:90a:6286:b0:2e2:b20b:59de with SMTP id
- 98e67ed59e1d1-2e76b5e039bmr3727816a91.3.1729800108009; Thu, 24 Oct 2024
- 13:01:48 -0700 (PDT)
+	s=arc-20240116; t=1729804339; c=relaxed/simple;
+	bh=YFSCR7IfY9tTJHnomR8IWpjA3ksgmVsEmuV7YWqhDac=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=QgI5kmEPm6b329PxRu3G0EGWFIlDjFq46Bv/KXe7vaGoMVI99dVcdws4Nhd5zCa3pp0+fu+84q9nrplUOS3e33/i7e2cAOV9vy+ohwnm1AxtI22F5pg0unN58OY4SOgXf1/e1gtH+itNZ4HmaiY4IWYC/XZpvGR0eHWogwz3Rvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rosalinux.ru; spf=pass smtp.mailfrom=rosalinux.ru; dkim=pass (2048-bit key) header.d=rosalinux.ru header.i=@rosalinux.ru header.b=JvCI2bpf; arc=none smtp.client-ip=195.19.76.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rosalinux.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rosalinux.ru
+Received: from localhost (localhost [127.0.0.1])
+	by mail.rosalinux.ru (Postfix) with ESMTP id 7D26B1CE86E68;
+	Fri, 25 Oct 2024 00:01:25 +0300 (MSK)
+Received: from mail.rosalinux.ru ([127.0.0.1])
+	by localhost (mail.rosalinux.ru [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id 9oq4DAnOWm9h; Fri, 25 Oct 2024 00:01:25 +0300 (MSK)
+Received: from localhost (localhost [127.0.0.1])
+	by mail.rosalinux.ru (Postfix) with ESMTP id 291291CEA7786;
+	Fri, 25 Oct 2024 00:01:25 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.rosalinux.ru 291291CEA7786
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rosalinux.ru;
+	s=1D4BB666-A0F1-11EB-A1A2-F53579C7F503; t=1729803685;
+	bh=YFSCR7IfY9tTJHnomR8IWpjA3ksgmVsEmuV7YWqhDac=;
+	h=From:To:Date:Message-Id:MIME-Version;
+	b=JvCI2bpfYn6dddRZiFpXBEzWeMaIIIutw82nrEpFKELoHPE6QGlusc8ot6Pz2qsRl
+	 xgHZlg0ZN4qSjNTvX61QWUAB7GUVXTPMjDh1akMWR7Bv4mMuo14u26B5xrIwAhP7XR
+	 Zhx7eK353znte05A8c+mxDcOLCydBtTG2ls2w5c9/Mo4C87hbpDNzyXbRsAchC7Ks5
+	 XLwSg/4N1t2FVpz/nBcGXLz3qFrQp8PdasmrTypM0817oCh9kImIJI7nLBMD++8mIh
+	 k/jBTljV5jxoD21CpoJ1X8V5EyMSn2YqMYMoH55SN7eGLDRMqD3tW7zwRTBXHwT4Xf
+	 C3mBvJUzpSmNA==
+X-Virus-Scanned: amavisd-new at rosalinux.ru
+Received: from mail.rosalinux.ru ([127.0.0.1])
+	by localhost (mail.rosalinux.ru [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id DcLkSC7j36Ww; Fri, 25 Oct 2024 00:01:25 +0300 (MSK)
+Received: from hp-xfce (unknown [89.189.111.209])
+	by mail.rosalinux.ru (Postfix) with ESMTPSA id 21D671CE86E68;
+	Fri, 25 Oct 2024 00:01:24 +0300 (MSK)
+Received: from localhost (hp-xfce [local])
+	by hp-xfce (OpenSMTPD) with ESMTPA id eeebd703;
+	Thu, 24 Oct 2024 21:01:23 +0000 (UTC)
+From: Mikhail Novosyolov <m.novosyolov@rosalinux.ru>
+To: torvalds@linux-foundation.org
+Cc: aospan@netup.ru,
+	conor.dooley@microchip.com,
+	ddrokosov@sberdevices.ru,
+	dmaengine@vger.kernel.org,
+	dushistov@mail.ru,
+	fancer.lancer@gmail.com,
+	geert@linux-m68k.org,
+	gregkh@linuxfoundation.org,
+	hoan@os.amperecomputing.com,
+	ink@jurassic.park.msu.ru,
+	jeffbai@aosc.io,
+	kexybiscuit@aosc.io,
+	linux-alpha@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-fpga@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-hwmon@vger.kernel.org,
+	linux-ide@vger.kernel.org,
+	linux-iio@vger.kernel.org,
+	linux-media@vger.kernel.org,
+	linux-mips@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-spi@vger.kernel.org,
+	manivannan.sadhasivam@linaro.org,
+	mattst88@gmail.com,
+	netdev@vger.kernel.org,
+	nikita@trvn.ru,
+	ntb@lists.linux.dev,
+	patches@lists.linux.dev,
+	peter@typeblog.net,
+	richard.henderson@linaro.org,
+	s.shtylyov@omp.ru,
+	serjk@netup.ru,
+	shc_work@mail.ru,
+	torvic9@mailbox.org,
+	tsbogend@alpha.franken.de,
+	v.georgiev@metrotek.ru,
+	wangyuli@uniontech.com,
+	wsa+renesas@sang-engineering.com,
+	xeb@mail.ru,
+	m.novosyolov@rosalinux.ru
+Subject: Re: [PATCH] Revert "MAINTAINERS: Remove some entries due to various compliance requirements."
+Date: Fri, 25 Oct 2024 00:01:20 +0300
+Message-Id: <20241024210120.4126-1-m.novosyolov@rosalinux.ru>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <CAHk-=wjw0i-95S_3Wgk+rGu0TUs8r1jVyBv0L8qfsz+TJR8XTQ@mail.gmail.com>
+References: <CAHk-=wjw0i-95S_3Wgk+rGu0TUs8r1jVyBv0L8qfsz+TJR8XTQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
 List-Subscribe: <mailto:ntb+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241024173504.GN3204734@mit.edu> <20241024181917.1119-1-cxwdyx620@gmail.com>
- <20241024193729.GP3204734@mit.edu>
-In-Reply-To: <20241024193729.GP3204734@mit.edu>
-From: =?UTF-8?Q?Dragan_Milivojevi=C4=87?= <d.milivojevic@gmail.com>
-Date: Thu, 24 Oct 2024 22:01:36 +0200
-Message-ID: <CALtW_aiicDv89h-m0h4dO-QKjoopittMc5ZvF3wd2dg8Wc_WVA@mail.gmail.com>
-Subject: Re: linux: Goodbye from a Linux community volunteer
-To: "Theodore Ts'o" <tytso@mit.edu>
-Cc: Hantong Chen <cxwdyx620@gmail.com>, ajhalaney@gmail.com, allenbh@gmail.com, 
-	andrew@lunn.ch, andriy.shevchenko@linux.intel.com, andy@kernel.org, 
-	arnd@arndb.de, bhelgaas@google.com, bp@alien8.de, broonie@kernel.org, 
-	cai.huoqing@linux.dev, dave.jiang@intel.com, davem@davemloft.net, 
-	dlemoal@kernel.org, dmaengine@vger.kernel.org, dushistov@mail.ru, 
-	fancer.lancer@gmail.com, geert@linux-m68k.org, gregkh@linuxfoundation.org, 
-	ink@jurassic.park.msu.ru, james.bottomley@hansenpartnership.com, 
-	jdmason@kudzu.us, jiaxun.yang@flygoat.com, keguang.zhang@gmail.com, 
-	kory.maincent@bootlin.com, krzk@kernel.org, kuba@kernel.org, 
-	linux-edac@vger.kernel.org, linux-hwmon@vger.kernel.org, 
-	linux-ide@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-mips@vger.kernel.org, linux-pci@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org, linux-serial@vger.kernel.org, 
-	linux-spi@vger.kernel.org, linux@armlinux.org.uk, linux@roeck-us.net, 
-	manivannan.sadhasivam@linaro.org, netdev@vger.kernel.org, 
-	nikita.shubin@maquefel.me, nikita@trvn.ru, ntb@lists.linux.dev, 
-	olteanv@gmail.com, pabeni@redhat.com, paulburton@kernel.org, robh@kernel.org, 
-	s.shtylyov@omp.ru, sergio.paracuellos@gmail.com, shc_work@mail.ru, 
-	siyanteng@loongson.cn, tsbogend@alpha.franken.de, xeb@mail.ru, 
-	yoshihiro.shimoda.uh@renesas.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=y
+Content-Transfer-Encoding: quoted-printable
 
-> Hypothetically, if someone was a Russian Citizen, and there was a
-> Russian Law forbidding them to provide technical assistance to US
-> entities, then that person would be obliged to respect that law, and
-> not send any patches to US-based open source projects.  Depending on
-> how that law was worded, a Russian-based open source project might not
-> be allowed to accept changes from US entities, and again, if you were
-> a Russian open source project maintainer, you would be obliged to
-> follow that law --- or maybe you would be thrown into a Russian jail.
-> Whether you are a Russian patriot and are 100% behind the Russian law,
-> or think that perhaps it's not the best policy, doesn't really matter;
-> you are still obliged to follow the law one way or another.
+Linus, Greg,
 
-But they are not, neither is China and I only see blatant approved racism on
-the western side.
+First of all thanks to you for taking by far not the most harmful actions=
+ to achieve what your lawyers very kindly asked you to do.
 
-> In the ideal world, one country would't be invading another conutry,
-> and we wouldn't have these sanctions regimes.  But they were not
-> *caused* by the decisions of the LF and Linus.  The sanctions regimes
-> were enacted by multiple countries' legal governmnts, and now the
-> question is how can we best protect the Linux development comunity,
-> the operators of web and git servers that are redistributing Linux
-> kernel sources. etc.
+Unfortunately, already a lot of highly qualified people have started thin=
+king that you acted very badly. Of course, there are questions like why r=
+emoved maintainers were not properly notified and did not receive any add=
+itional explanations, but, to my mind, it is useless to try to find 100% =
+justice -- it is not possible. Overton windows has been opened a bit more=
+.
 
-In an ideal world the USA would not be a hegemon that invades, bombs
-and overthrows foreign governments, threatens the security of other nuclear
-powers, expands its hostile alliance and sanctions half of the world.
+Usually the first contribution is much harder to make then the following =
+ones. A big problem here is that now many people even will not try to con=
+tribute to the Linux kernel and other open source projects: their pride f=
+or themselves, their homeland, their colleagues has been severely hurt (w=
+e are ready to fight for all that).
 
-Anyway you fail to understand that is not the topic. The rage comes
-from LF actions
-and Linus words. All they had to do was to say: Thank you people for
-your contribution
-but we have no other choice, this is the law.
+It is not clear what to do with this problem. Any ideas?
 
-But they did quite the opposite and Linus showed his true ugly
-white western supremacy face for all to see.
-That is the cause of the rage.
-The real danger is the split in the open source community and the
-"software Iron Curtain" erected by the USA.
+I am sure that people from any country and of any nationality will have s=
+imilar feelings if you act with them or their colleagues in a similar way=
+.
+
+Thanks to people who were not afraid to say something against this action=
+. Chinese, Latin American, African and other people probably understand t=
+hat they may be the next ones to be dropped from maintainers. Hope that w=
+e will not have to form another Linux kernel upstream one day...
+
+I am sorry that you have to read a lot of text from people who you call t=
+rolls -- it is hard to keep calm.
+
+You know, you have really made it much harder to motivate people to contr=
+ibute into the kernel. There is such problem among developers of hardware=
+ that they do not feel comfortable enough to show their code, for example=
+ because they think that it is not perfect. Let=E2=80=99s take Baikal Ele=
+ctronics. They do publish their kernel code, but in a form of tarballs wi=
+thout git. They slowly, but constantly worked on contributing support of =
+their hardware into the upstream kernel, fixing not Baikal-related bugs b=
+y the way. One day someone told them that =E2=80=9Cwe are not comfortable=
+ with accepting your patches=E2=80=9D. And they stopped their work on ups=
+tream. Now that man has been removed from maintainers of previously contr=
+ibuted code (code for not Russian hardware, by the way).
+
+What do I suggest to do? Well, I don=E2=80=99t know, but I do not see dir=
+ect legal reasons why doing this was required and why patches from Baikal=
+ could not be accepted (the fact that I do not see does not mean that the=
+y do not exist, but please show them). Politicians and activists can be s=
+hown a finger in some places, by both developers and lawyers, at least to=
+ prevent them from being too ambitious, when they decide to break somethi=
+ng working next time... But maybe I do not know something about truly dem=
+ocratic regimes :-)
+
+Thanks for reading.
 
