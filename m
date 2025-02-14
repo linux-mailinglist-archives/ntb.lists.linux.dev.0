@@ -1,65 +1,53 @@
-Return-Path: <ntb+bounces-1079-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-1082-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 516ABA351BB
-	for <lists+linux-ntb@lfdr.de>; Thu, 13 Feb 2025 23:59:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D10E7A3539A
+	for <lists+linux-ntb@lfdr.de>; Fri, 14 Feb 2025 02:19:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D9BB1883C24
-	for <lists+linux-ntb@lfdr.de>; Thu, 13 Feb 2025 22:58:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8A7D716BF57
+	for <lists+linux-ntb@lfdr.de>; Fri, 14 Feb 2025 01:19:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AD282753F9;
-	Thu, 13 Feb 2025 22:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83D211E502;
+	Fri, 14 Feb 2025 01:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LvgwKNKp"
+	dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b="oPTNf2fp"
 X-Original-To: ntb@lists.linux.dev
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from ale.deltatee.com (ale.deltatee.com [204.191.154.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38CF2753EA
-	for <ntb@lists.linux.dev>; Thu, 13 Feb 2025 22:58:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C2A3C17;
+	Fri, 14 Feb 2025 01:19:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=204.191.154.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739487512; cv=none; b=iLEmddNnELsMKawGUX+4W5ivu80yuNgwvRQRW8L5do02GoX1AjdRKkw6n62vfucaESNS0wPSHMfvzWDJOmPQYNeQJ2jG+JwVniLp45a0IRtyx2nK5BRd6HbpguzJud4mPVUUyBujCHIeNmEbYGx/98Y+tu4b/6oYl1ukNVlPm34=
+	t=1739495953; cv=none; b=oZp49IGjRcM/fUeSGLB/DyUaGOFD0BW8pfl3OAcmBAkRr4/gBCX9qwTPIJQ3mCUB2z0ebXak3/ut2GBebNSs9VsQiRTv13hgMQ/rACW+nJzKj2s6iYq+oShnPy8ObJH2sJ8upRz3eTe+ZzpM2fdWezaewm41NoNz5lLmo8opNA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739487512; c=relaxed/simple;
-	bh=7dUyap4nhVN6BUSdVn02soddgeeDD0dWXxxKK4loDXg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZrbI9NkbuskrA7g3MBCikfXE+kxLhjSLElVg4An7u3uLJ23haV103DWhTf8q4Ns2Jgrg1c4O6s+fKCh7lZ40oJY+0E3GSYw3Ke/Msc5Yxy6Mmo/Goj/8sE/jsEL7h6CpchtJeVbO8MnY3gFf/iMKxeK5sQ33wXao7MkNVVOPOrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LvgwKNKp; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1739487511; x=1771023511;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=7dUyap4nhVN6BUSdVn02soddgeeDD0dWXxxKK4loDXg=;
-  b=LvgwKNKpEuS1qCjRacBMbp+G1v37/fnrcK5471D3pkuAB1ZgKUU3JVPf
-   4CPFYyFReP2JKVTU98wlmtgNjGnsBUZnkYnQiFhWMpYbVUW6jMCzBFPua
-   HSZkCWETzgG11bF4WqWtvn59fINQ49w+ARSA6ivWewmJuZYhP58yITmzX
-   F8pH/6DhWxl9pWERuP268P7t8oicMklq1rdx+z62q+PkWeJFSL7E8y78h
-   b7sYiMe4tRmEiHyF3kzebUSoH8sDF4dytCwBKJ2McgCKoI1yMeNJRw/MQ
-   HJGybkYpMVuyKhTXhw+JqFi+Saua0gCs7hxQirFsTlNd/BYNG8RUgLkHZ
-   Q==;
-X-CSE-ConnectionGUID: t1ZghAvpSeuR5u9FnMuqRg==
-X-CSE-MsgGUID: +jXedf/8RveZwiuc0jrleQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11344"; a="51619684"
-X-IronPort-AV: E=Sophos;i="6.13,284,1732608000"; 
-   d="scan'208";a="51619684"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 14:58:30 -0800
-X-CSE-ConnectionGUID: i+k3LtgHQ5CZyaHnK8WprA==
-X-CSE-MsgGUID: PdrRFwlbSqGPT5rwGLz1kg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="136518225"
-Received: from ldmartin-desk2.corp.intel.com (HELO [10.125.108.200]) ([10.125.108.200])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 14:58:30 -0800
-Message-ID: <81285c34-1819-4a01-bd49-c9ab319f2609@intel.com>
-Date: Thu, 13 Feb 2025 15:58:26 -0700
+	s=arc-20240116; t=1739495953; c=relaxed/simple;
+	bh=SYkpNCSTx2UkzzNin27ENo32K8px7iZPUMTcOSgJv9Q=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:From:In-Reply-To:
+	 Content-Type:Subject; b=Sf8CJsuAYi7PYiS/lDlfsoksMNLrUwPPYEXGQxZNzHJCZUR7s03wAR1i2GFzpNgRSaFsQaDcxfOd5jdFAu2Fi7UI5YTGlidHjl28rrIjoJa796bl7ukQhx7MtcALwoyJMgS1sW4wNGb9SjsDZHIOmWlcTykms7dK09B2UrXE4Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com; spf=pass smtp.mailfrom=deltatee.com; dkim=pass (2048-bit key) header.d=deltatee.com header.i=@deltatee.com header.b=oPTNf2fp; arc=none smtp.client-ip=204.191.154.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=deltatee.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=deltatee.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=deltatee.com; s=20200525; h=Subject:In-Reply-To:From:References:Cc:To:
+	MIME-Version:Date:Message-ID:content-disposition;
+	bh=g/ISVN0B6Jcdp0mrAl53NLh4YuAQL/kTyUuo7E9AozE=; b=oPTNf2fpGCo/Gvs+lWcIEg3qTf
+	+R1cZI1iw31/VqIxMf8WfToLae9kl/EYCYhRH9v5Strm7h50UqmeJTOQZCEkzJx5xhjJu2ts2JiN4
+	XMVzVPq6K1XOCx8A/mNA4f1rDECORqy89XvA3+Rl350uFs48mmiPfoDd4bCkG6SG+n9C4NR7otBsb
+	Yy2nQkYMdSijSv5jZuRswT3VvFL1m0Sr4/xn9y+P/h0NaS2/OpHkZkDm6rIO+InKcq3cT/RTKyDrp
+	VcmYzOHbBlMfYjMXeUeczV//8OnXNfjG3eCpxecPgOz8ZXYq/72Un3sfQDPSK1PuZCaAKhhiH2uMw
+	Bjj8VqBg==;
+Received: from d104-157-31-28.abhsia.telus.net ([104.157.31.28] helo=[192.168.1.250])
+	by ale.deltatee.com with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96)
+	(envelope-from <logang@deltatee.com>)
+	id 1tijtx-00EUQt-08;
+	Thu, 13 Feb 2025 17:49:50 -0700
+Message-ID: <ca475db2-87e5-4879-9951-68ccf9cf408e@deltatee.com>
+Date: Thu, 13 Feb 2025 17:49:44 -0700
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
@@ -67,21 +55,27 @@ List-Subscribe: <mailto:ntb+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] ntb_hw_switchtec enable 256 LUTs
 To: Maciej Grochowski <Maciej.Grochowski@sony.com>,
- kurt.schwemmer@microsemi.com, logang@deltatee.com
-Cc: jdmason@kudzu.us, allenbh@gmail.com, linux-pci@vger.kernel.org,
- ntb@lists.linux.dev
+ kurt.schwemmer@microsemi.com
+Cc: jdmason@kudzu.us, dave.jiang@intel.com, allenbh@gmail.com,
+ linux-pci@vger.kernel.org, ntb@lists.linux.dev
 References: <20250213225319.1965-1-Maciej.Grochowski@sony.com>
-Content-Language: en-US
-From: Dave Jiang <dave.jiang@intel.com>
+Content-Language: en-CA
+From: Logan Gunthorpe <logang@deltatee.com>
 In-Reply-To: <20250213225319.1965-1-Maciej.Grochowski@sony.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 104.157.31.28
+X-SA-Exim-Rcpt-To: Maciej.Grochowski@sony.com, kurt.schwemmer@microsemi.com, jdmason@kudzu.us, dave.jiang@intel.com, allenbh@gmail.com, linux-pci@vger.kernel.org, ntb@lists.linux.dev
+X-SA-Exim-Mail-From: logang@deltatee.com
+X-Spam-Level: 
+Subject: Re: [PATCH 0/3] ntb_hw_switchtec enable 256 LUTs
+X-SA-Exim-Version: 4.2.1 (built Wed, 06 Jul 2022 17:57:39 +0000)
+X-SA-Exim-Scanned: Yes (on ale.deltatee.com)
 
 
 
-On 2/13/25 3:53 PM, Maciej Grochowski wrote:
+On 2025-02-13 15:53, Maciej Grochowski wrote:
 > Microchip NTB devices support up to 512 LUTs shared across all NT
 > partitions. This short patch series increases MAX_MWS to 256 and also
 > address issues when the number of mw is equal to 0 or MAX_MWS
@@ -94,6 +88,8 @@ On 2/13/25 3:53 PM, Maciej Grochowski wrote:
 >  drivers/ntb/hw/mscc/ntb_hw_switchtec.c | 13 ++++++++++---
 >  1 file changed, 10 insertions(+), 3 deletions(-)
 > 
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-for the series
+
+All these patches look good to me. Thanks!
+
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
 
