@@ -1,81 +1,81 @@
-Return-Path: <ntb+bounces-1209-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-1211-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59F38A74D2C
-	for <lists+linux-ntb@lfdr.de>; Fri, 28 Mar 2025 15:54:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3F51A74D34
+	for <lists+linux-ntb@lfdr.de>; Fri, 28 Mar 2025 15:54:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0EE7A7A61DC
-	for <lists+linux-ntb@lfdr.de>; Fri, 28 Mar 2025 14:53:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4055B189922E
+	for <lists+linux-ntb@lfdr.de>; Fri, 28 Mar 2025 14:54:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A1B11CAA8E;
-	Fri, 28 Mar 2025 14:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FA011D0F5A;
+	Fri, 28 Mar 2025 14:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="YQyaglg8"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="qp6yiWOK"
 X-Original-To: ntb@lists.linux.dev
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4DB1C5D67
-	for <ntb@lists.linux.dev>; Fri, 28 Mar 2025 14:53:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEE419995B
+	for <ntb@lists.linux.dev>; Fri, 28 Mar 2025 14:53:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743173632; cv=none; b=k2NaAdbfjYSraOMBCuB6xzBQW0h5rizTlDmqPTHaD40Jr4VCFBxq2r9bQ0QNYaHvho4MB6tdyNkh6VpwLHuIWBloksaUVm+leJGG2L/Jq6Ed0+FEuNe5hgqZ2P9k4kj7erPWw+hNeOVuS4JNVZO+Pp/u1MS6btpMq1dNd32Gk9c=
+	t=1743173633; cv=none; b=SzRSrd7qgA747GQGRGyKr0mWFpzI0ol7vT5b3h/olO2yQgAr/kMhSr+8sn3wVjf4iHigm+7JVfFvc82hbvUCbJm4AC5Nm9K6jDlyDXpLto2j0aeWQvFQf6ruIGbQoRBPFssd3E8EUcl3YgUUqQFsTIJXzPnKlegL31aXk7spv9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743173632; c=relaxed/simple;
-	bh=gUEdTnXFrxQFCubyzkt8h7MkbAD/T1O1BvGuN2YMSZk=;
+	s=arc-20240116; t=1743173633; c=relaxed/simple;
+	bh=5oAHlbTAcauldOWi9cMUgYioWN6gScafeHZfYPLkyRw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mGbtP6ywropqm9/cV7emZ/uWNeKO+EeDZfwRXt+OnA4pImAAtGDK2XV0OM05s7O9SlnzAFaiG8PFAfqznIeSuxxdZMDi+xWAlSPvYDBpSCxE4wfsiq4woTXLxpapiv9uWMVrrjc1+2MDkKTCZuvfwBWc6BBah2sNbd9U5KwhAeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=YQyaglg8; arc=none smtp.client-ip=209.85.128.44
+	 In-Reply-To:To:Cc; b=JacecIgAL7dq7sN8hd7aFySbSpsUgz2yNphE4F2bI+nsS2NclG6ZIpI/PJSMhNht7bhxTf94hV1RVGMzerLGGijiA4ooFqhxsaQ6157PkaqSfOXZP/97Ho4iqRqrrECAO62mMvO9YzvGyb6mGiISD5ceuf5hSnI0c+X8T1o/5rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=qp6yiWOK; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43d0359b1fcso14594805e9.0
-        for <ntb@lists.linux.dev>; Fri, 28 Mar 2025 07:53:50 -0700 (PDT)
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3913b539aabso1323763f8f.2
+        for <ntb@lists.linux.dev>; Fri, 28 Mar 2025 07:53:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1743173629; x=1743778429; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hmbC5RFYydPYh642kyN0rQaa467lBDxTsawumsVo1Aw=;
-        b=YQyaglg8X/hH/cGJPKFvJCN+62w68rXBZ78BK7Qxb2sG8Amq7i3RFAovijR9fC5jwI
-         P9NLld0DO/Skh5xxg1W3Awzby0WN9TwYXiM8CQAVEvUhp8kmnvowdwvncRJWBjVRJ6zR
-         +D7JU7xbt5+IgvDoeD+RLga5qJysndEuakZw2JRb4PKI70H+ocg8AcKvDL70Vf1esS3e
-         l/t6sruvAhvaqMQGtLgHWQEg4dYabU0ZuaLHYQ0zDMRTmR6oi1Q1x35vlqP/IQbR1V2R
-         heKyOUesTtBf+XmFJbyKr/VQv79LlK3c/Kz8JtQdjc97VPCjUks7k+k7d8WtS+yYwPPk
-         CYZw==
+        bh=om5WJnI/3Srzz6KnBz+MWEytyGjHkNFH1uylSroKmIg=;
+        b=qp6yiWOKZNXcxlnlyTCAxVsMTRBOfsANq8m3QRV2yHas2jWTE/3NclKT/+GQ2IgF4S
+         syec3t2zpXJv37ZuUijTO69yOxzWPaxLqstpZYYdWC5XKOYnjJM2YPlXfqfno0z4NKfE
+         lMzbIgsFE5NzWLcdDAXiaKXNv4gjVr5evY172N9VUmQN6QVqK+UwKzWYIK/aHCvD1Wjh
+         ZzRpzompt3PTEgZfsRm/YNBkPLoorBSUCBr9LnntLaPwEkLu4aiIToL7ElshCE9J+QcL
+         tIfrBwfE0pAkJzRS+Nf8jeXZNit8viGIl+3Uz23av8yqKAck5IbqS0DHbsfdF6KSmXAg
+         kZcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1743173629; x=1743778429;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hmbC5RFYydPYh642kyN0rQaa467lBDxTsawumsVo1Aw=;
-        b=wNCCbTO91FgJ3pG2cDQQI6bF00Z3SVCTiGeoPsWmUWMtXglYXxcBx584aspEmlX1Bd
-         YR1iB9zUS9cwLddzIcCqPv5AxfSkehAv0jZ8geAeJY/EKWh+w/wfIEj3iyCq/sp/rRS/
-         mUFAV3sDORKPGneWCT91uLZlY+Gi8Npx9wp3we3t2YuTt4e/prNQN6Lu88TLyFIjRqov
-         jmC6afk7agO0KoFGkKdNUsLX8NPz+P2hWTYEx4X/5sOUkam5GJfOK6CiMYoLQzElaB+V
-         AuKvaJ3uei5MpZ8KYQi4G4lXGffVg3WWUxM3KeyQxgk+j4bHaQBpFjct+cQ+e+p0ZS3d
-         DPiQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVhUl816s/ytgGwa52eWCga5fMR6QHKq+7Oz/QXXgUTk5aHz3ZHGUeKtjscNYlfS50rERo=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwsmUlMPi3i22/+GKzPj0gvHQTWox7/ZniO3JJwuZBDIdc7Bs1x
-	kw0/d/kpaLDjWPq1kMdtJQkxqX37coK1YLx+a7b3PFHVOq2Fv48d0dBPYHKkmds=
-X-Gm-Gg: ASbGncuS+6cnZwoe9vfWswdrjdpCHpE7/qGUTovAOM7Kx3iWznxRVBOr3mwS2mDkxI9
-	ewwF3PGAreYatS85ReTRmkZh+gVKXZr/ySrVMPGXm2EnflZ7NxAG+jeRoi3WxvCAD2wWmjaWSGK
-	UwRXVP9ER5jeqm/kQPb4oXNRKrDH++XgmxrJdZiSGdbOdUli0U8e/IlLyUJeSbruZiFtHxuH9Sp
-	CxtqXUciMpw5O8JvFw0+IEUZ5BB3NPKxBU5qexSynvLmtGxTU4wGExnpOw4QV1ChTVmGl80I4H5
-	vgJL+/cBMbIoECLz97/2+U74o3h1J8YInvNp9DEJejOoxFBUdsxgeoqZcgE=
-X-Google-Smtp-Source: AGHT+IHEwb8loYtorvEBGaqWpt3wJlMaO1x80S4rv3p5SrimoSh4/TC2550uL3aEEWUnSViQo2QLzg==
-X-Received: by 2002:a05:600c:1f14:b0:439:9737:675b with SMTP id 5b1f17b1804b1-43d9145bb08mr29097225e9.7.1743173628723;
-        Fri, 28 Mar 2025 07:53:48 -0700 (PDT)
+        bh=om5WJnI/3Srzz6KnBz+MWEytyGjHkNFH1uylSroKmIg=;
+        b=n3rUTjtTb1nw2SUSNyu+h0HEDijmWv/YlbsqD0Yj5fPYRF4O/cE6vr1y758cQN3am+
+         MEUIyG4PvQ8M6RZ8HSXsNO/wF4s1qOp5ebmATBIBWaWaEwoUX3OR1zZUVDZa/FQvgcYl
+         1Y+fFFuNsuJ+QtK1g1bL4PnlPov5LGA35KfKmxFRdW2lNJp62INV9Xlkw0p8kCdVHIlZ
+         MsY9II1EsE1lINUtvQOev3PzyDJUw0IkTTSStFBsOeq5bHdK+8JAHcnB0cF3PwOt7ua3
+         rMF6h8jYzyy6wMye0QRHDvRXKBqk8o4Q8HKEgpaoLuyqhSq0aPlzuRo1k0OVbLL8XNme
+         0emw==
+X-Forwarded-Encrypted: i=1; AJvYcCWvKUNPOSHJTJRNFXAQD3IrCoPDGcs0pfL/CMc17pbQo2sbASXVX3w/nqT8/tjoqF6BKJ4=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzb/GvPtcFIfELlEfCJxEH7yMt5utJFaA+1mBrH3auDzXhK+lvQ
+	zJA9vBDPP1Vb/LRybbnZwADfPs7EXJ4eHg40bM/LE5bfR4a9rKx1lBzodCBg0CY=
+X-Gm-Gg: ASbGncvlg2Hg+nJa6YTAtKfDuSMRnCDbbXSyZDi6Zunrcr1o4uAdl6I7ba8aQ2W3+WW
+	joyNR0EenCcd91l/JoPJ6w6Y61AJtcoPeBfPQFV6PRnCaN+Oq0Q0J2S+DF349yNM4QLQRVCqSaT
+	dfV66fSvrtczA6MweswLPM/AbVypmLfatrJIPfjzwdL4hHFy/8rF/wDZWI6+d2B23OxRCU9FWoz
+	QPQkQ0WHHnp+09qgujTVJQLIg+gprRb2isC2Eo+WNFCFur7tFK5ZlG/s1AkjtT2FGrUfaaXBcQJ
+	I4AJESD58K6VuC/OLgCtuXpI9CxNutLEbjPxQqxRdhSx5RhzItqw/577Lgk=
+X-Google-Smtp-Source: AGHT+IHxpmdIjzZ3NBy6ZKDeIo2oJ9uzZLQK6IFavRFuRv86Y+8cRv+dnKeq1VLQiY8bi9c3dCFsFQ==
+X-Received: by 2002:a05:6000:22c7:b0:391:4889:503e with SMTP id ffacd0b85a97d-39ad17503e8mr8632876f8f.33.1743173629528;
+        Fri, 28 Mar 2025 07:53:49 -0700 (PDT)
 Received: from toaster.baylibre.com ([2a01:e0a:3c5:5fb1:70c0:edf6:6897:a3f8])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-43d8314e110sm75219615e9.39.2025.03.28.07.53.47
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-43d8314e110sm75219615e9.39.2025.03.28.07.53.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Mar 2025 07:53:48 -0700 (PDT)
+        Fri, 28 Mar 2025 07:53:49 -0700 (PDT)
 From: Jerome Brunet <jbrunet@baylibre.com>
-Date: Fri, 28 Mar 2025 15:53:42 +0100
-Subject: [PATCH 1/2] PCI: endpoint: strictly apply bar fixed size to
- allocate space
+Date: Fri, 28 Mar 2025 15:53:43 +0100
+Subject: [PATCH 2/2] PCI: endpoint: pci-epf-vntb: simplify ctrl/spad space
+ allocation
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250328-pci-ep-size-alignment-v1-1-ee5b78b15a9a@baylibre.com>
+Message-Id: <20250328-pci-ep-size-alignment-v1-2-ee5b78b15a9a@baylibre.com>
 References: <20250328-pci-ep-size-alignment-v1-0-ee5b78b15a9a@baylibre.com>
 In-Reply-To: <20250328-pci-ep-size-alignment-v1-0-ee5b78b15a9a@baylibre.com>
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
@@ -99,59 +99,92 @@ Cc: Marek Vasut <marek.vasut+renesas@gmail.com>,
  linux-kernel@vger.kernel.org, ntb@lists.linux.dev, 
  Jerome Brunet <jbrunet@baylibre.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1358; i=jbrunet@baylibre.com;
- h=from:subject:message-id; bh=gUEdTnXFrxQFCubyzkt8h7MkbAD/T1O1BvGuN2YMSZk=;
- b=owEBbQKS/ZANAwAKAeb8Dxw38tqFAcsmYgBn5rf42oi1rZDSM6XrbYRStOeGfWZi4bFla10nb
- K7qwiyD9t2JAjMEAAEKAB0WIQT04VmuGPP1bV8btxvm/A8cN/LahQUCZ+a3+AAKCRDm/A8cN/La
- hQFGD/9VO5rQNfzw3OhspgPwCblFhKTlz8Qu/BP7+Qx/Qecie+/xT66l3wDwIyad6t73UH6EZh+
- NukWAUMUFVnsHzpetu6cHHxG7P4cJSiZraHpTxk71rJlqqtKNln1JZEetSZr3tzurykZtQn8IB1
- QIDGc2ZwKf+F4LCkZYdc+U8FpWGWnK19thptpoX90MTBDHL3p3IjNrIpl9dcMXta41/n7hKU0iM
- X3mKwqfDLJoAkCVksfneEjJG7SrhHsOSZqGgJ65uWAaRiWvKlffc7HPcI/efUA4mJcDOPmg5s7v
- XSmaI5ZBFx+gYypJ9WM7/NdvAc9lCboqY8NgqUOnMuQN2NmXXCDoGkKYtkcdKz2KMv/zpd5azU5
- 3SLmLc91smK/m1+aMgcSSeklGogyj/hJwXSZD4lrExrqboOvYygPI2fzXuQTFojuggTLB6KuwSR
- U4T97kNYN3Xmmwq9uraABImbwJh923AmxWLWRGwy7Sl1zNZDNirHVLPEHoxR7pfgi9k9nwmc3+E
- p2oFQ1DElCClLIRexJtriHYKtLAnTXj74AXyHwfAL+tIrfRLUzflyGtgXYOPBgC3Zt2yXrhLMdZ
- 4rJ0Py7yCIhPY6LJtTKWSTw5DNgzsnByz/UewoSMZbuG+3rfjWlIk4+XSlG2jCcyozAXCXODfHn
- W+2qbCqgSrz1bhg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2533; i=jbrunet@baylibre.com;
+ h=from:subject:message-id; bh=5oAHlbTAcauldOWi9cMUgYioWN6gScafeHZfYPLkyRw=;
+ b=owEBbQKS/ZANAwAKAeb8Dxw38tqFAcsmYgBn5rf5tteiMGeKSx358xJ2+154PVr7k7RAJ8OqE
+ x2hmwLHlNeJAjMEAAEKAB0WIQT04VmuGPP1bV8btxvm/A8cN/LahQUCZ+a3+QAKCRDm/A8cN/La
+ hX1yD/sHaWYMETTJwDgxrGxRlNsQF+Rc9Q5oMX73ZbvDomTMBb5/EiuCjNA+WGqvLAaxZPnInYb
+ gbgbOiq3WmzHn+nEp/DGRjxo8UlUCwJEE0w+E+D89smicnQpIelt4t7+C/M+ImfP/AUC7bxZfiJ
+ aJqVUT1ya+PnF0xTs2X1txWYxCtLvr1ez3Zpq7tWgPbvlZzrQgQX1Gs5NkYGemnRj4CdKAwWwc/
+ WdPQ6RD2QjKbsur4fqR5Mm5Ykd+yveBedPVUDb2otNDQSi+P+8ACxZ9wn2ZpFbQeSdWa/wrxgFS
+ uaKxglM4i8uT7qLrWJWP5we/cAKLPVTI3n11V36Zs8g2ppjfZgAwIhZckxcPGaBFNStjI3em2DX
+ y1oAkpi56w/B7itaLGgQ2OnANTCeZ74U/9RJe80a4dq7rHsZcbs8yeIxhhnIWjN/fRvO4nqpH09
+ B/XqYI18bYdgYLJ4zPvixPbtVhvoAxCpY7xJPyOhrJR27m0njeWb/dugQjI+03LABwI5PstLYYl
+ qtDWRm0pg2/TA/v5JTTzpqK2BbEG2ST+9Htlt/UeGLN54VADr9qtKB/C4PCkqs0HoHNRJpX6ufm
+ 2UoJI+sD12dRMYYnCviwxrBt7KSVPuWTN5lnUmnHqTOFDl6WfqoPgNvu3mAsPJfqPMpvduOzCNN
+ hJsCtJfdABnSOEg==
 X-Developer-Key: i=jbrunet@baylibre.com; a=openpgp;
  fpr=F29F26CF27BAE1A9719AE6BDC3C92AAF3E60AED9
 
-When trying to allocate space for an endpoint function on a BAR with a
-fixed size, that size should be used regardless of the alignment.
+When allocating the shared ctrl/spad space, epf_ntb_config_spad_bar_alloc()
+should not try to handle the size quirks for the underlying BAR, whether it
+is fixed size or alignment. This is already handled by
+pci_epf_alloc_space().
 
-Some controller may have specified an alignment, but do have a BAR with a
-fixed size smaller that alignment. In such case, pci_epf_alloc_space()
-tries to allocate a space that matches the alignment and it won't work.
+Also, when handling the alignment, this allocate more space than necessary.
+For example, with a spad size of 1024B and a ctrl size of 308B, the space
+necessary is 1332B. If the alignment is 1MB,
+epf_ntb_config_spad_bar_alloc() tries to allocate 2MB where 1MB would have
+been more than enough.
 
-When the BAR size is fixed, pci_epf_alloc_space() should not deviate
-from this fixed size.
+Just drop all the handling of the BAR size quirks and let
+pci_epf_alloc_space() handle that.
 
-Fixes: 2a9a801620ef ("PCI: endpoint: Add support to specify alignment for buffers allocated to BARs")
 Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 ---
- drivers/pci/endpoint/pci-epf-core.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 24 ++----------------------
+ 1 file changed, 2 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/pci/endpoint/pci-epf-core.c b/drivers/pci/endpoint/pci-epf-core.c
-index 394395c7f8decfa2010469655a4bd58a002993fd..cb985b172ed041c6f319c083f412e51e25b0a157 100644
---- a/drivers/pci/endpoint/pci-epf-core.c
-+++ b/drivers/pci/endpoint/pci-epf-core.c
-@@ -285,12 +285,11 @@ void *pci_epf_alloc_space(struct pci_epf *epf, size_t size, enum pci_barno bar,
- 			return NULL;
- 		}
- 		size = bar_fixed_size;
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 874cb097b093ae645bbc4bf3c9d28ca812d7689d..c20a60fcb99e6e16716dd78ab59ebf7cf074b2a6 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -408,11 +408,9 @@ static void epf_ntb_config_spad_bar_free(struct epf_ntb *ntb)
+  */
+ static int epf_ntb_config_spad_bar_alloc(struct epf_ntb *ntb)
+ {
+-	size_t align;
+ 	enum pci_barno barno;
+ 	struct epf_ntb_ctrl *ctrl;
+ 	u32 spad_size, ctrl_size;
+-	u64 size;
+ 	struct pci_epf *epf = ntb->epf;
+ 	struct device *dev = &epf->dev;
+ 	u32 spad_count;
+@@ -422,31 +420,13 @@ static int epf_ntb_config_spad_bar_alloc(struct epf_ntb *ntb)
+ 								epf->func_no,
+ 								epf->vfunc_no);
+ 	barno = ntb->epf_ntb_bar[BAR_CONFIG];
+-	size = epc_features->bar[barno].fixed_size;
+-	align = epc_features->align;
+-
+-	if ((!IS_ALIGNED(size, align)))
+-		return -EINVAL;
+-
+ 	spad_count = ntb->spad_count;
+ 
+ 	ctrl_size = sizeof(struct epf_ntb_ctrl);
+ 	spad_size = 2 * spad_count * sizeof(u32);
+ 
+-	if (!align) {
+-		ctrl_size = roundup_pow_of_two(ctrl_size);
+-		spad_size = roundup_pow_of_two(spad_size);
+-	} else {
+-		ctrl_size = ALIGN(ctrl_size, align);
+-		spad_size = ALIGN(spad_size, align);
 -	}
 -
--	if (align)
-+	} else if (align) {
- 		size = ALIGN(size, align);
--	else
-+	} else {
- 		size = roundup_pow_of_two(size);
-+	}
- 
- 	if (type == PRIMARY_INTERFACE) {
- 		epc = epf->epc;
+-	if (!size)
+-		size = ctrl_size + spad_size;
+-	else if (size < ctrl_size + spad_size)
+-		return -EINVAL;
+-
+-	base = pci_epf_alloc_space(epf, size, barno, epc_features, 0);
++	base = pci_epf_alloc_space(epf, ctrl_size + spad_size,
++				   barno, epc_features, 0);
+ 	if (!base) {
+ 		dev_err(dev, "Config/Status/SPAD alloc region fail\n");
+ 		return -ENOMEM;
 
 -- 
 2.47.2
