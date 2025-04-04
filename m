@@ -1,193 +1,148 @@
-Return-Path: <ntb+bounces-1221-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-1223-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2C02A7C2C1
-	for <lists+linux-ntb@lfdr.de>; Fri,  4 Apr 2025 19:47:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCC2BA7C4B7
+	for <lists+linux-ntb@lfdr.de>; Fri,  4 Apr 2025 22:12:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 927AF7A5D60
-	for <lists+linux-ntb@lfdr.de>; Fri,  4 Apr 2025 17:45:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BAC49880591
+	for <lists+linux-ntb@lfdr.de>; Fri,  4 Apr 2025 20:06:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1953821A440;
-	Fri,  4 Apr 2025 17:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4449321C19E;
+	Fri,  4 Apr 2025 20:00:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="ibBHaXhH"
+	dkim=pass (2048-bit key) header.d=kudzu-us.20230601.gappssmtp.com header.i=@kudzu-us.20230601.gappssmtp.com header.b="qtQQe51K"
 X-Original-To: ntb@lists.linux.dev
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-qv1-f68.google.com (mail-qv1-f68.google.com [209.85.219.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B20C219306
-	for <ntb@lists.linux.dev>; Fri,  4 Apr 2025 17:46:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7923E2E62C5
+	for <ntb@lists.linux.dev>; Fri,  4 Apr 2025 20:00:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743788799; cv=none; b=FYNzh/qleuNr6s3/vfinAcDUz2srmIznQ/tpG5GGkbAdozfj5YbwJGnEUOcux4I364liGPJYPW7OWq5DSGLiraroTA5i08up/cNOqnPcN6KB/Kw+YYwCR2g1hO4/5TtAUuxcmFldZnNB938vfGU6NY1/oWDDeDyu0EOTDG7m0jM=
+	t=1743796809; cv=none; b=TFvKxfnXmoWecyen1Q2HomEcim8t581hkyB9R5Dzut//JMjoEe5xqZ84cLg00Mq2pPgNxG16tqAshkFQKwN/GE+4cHf7Kz/my+6guqmeV4Rl6Oft09u5fT5GTUDvs6CDy0tstUfPoHbbrjYjRVTnLY8U+Fx2cBCTM58OF0n0rhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743788799; c=relaxed/simple;
-	bh=VMQRvj8CO60hVIlMMgdkTE1dtBACF+fNeO1bhBVnQsU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WbcH1FS+Z+lX3r4pFoFfxKk0xj9vwhLXZOp1VEfBg+dtu1mTgdC8FUqqSVKagPlrtH1vBs1G5RHQzzqE2paj1L+jkOEIhRvOYIsl58dcSi9dK8zSlO946sAzlXOYKMnkUj7K8ks+F1BLqMoqESvKu1Z2m6Cn1MRktH0UbdyuyZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=ibBHaXhH; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-39c13fa05ebso1421496f8f.0
-        for <ntb@lists.linux.dev>; Fri, 04 Apr 2025 10:46:36 -0700 (PDT)
+	s=arc-20240116; t=1743796809; c=relaxed/simple;
+	bh=Z+hEStOqVif7943lSI/sdGCcGpwnb6+xp/b4cL1hsyQ=;
+	h=From:Date:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=jZoLbVOuPArSoAT2xdrhfTR3vIfzscj8Eixg+SI52JicOzRqJN64g8hI4jI9dXkpWPcaZvGRVc2jaccgS0jfkUZCk5BvG9q3DRvUvNupQbmtKAwGHDlL7PbfKeEprGontnM8vovxssQstezidj6pAvDKh+Pl1FDJqceW5U0T9O0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kudzu.us; spf=none smtp.mailfrom=kudzu.us; dkim=pass (2048-bit key) header.d=kudzu-us.20230601.gappssmtp.com header.i=@kudzu-us.20230601.gappssmtp.com header.b=qtQQe51K; arc=none smtp.client-ip=209.85.219.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kudzu.us
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=kudzu.us
+Received: by mail-qv1-f68.google.com with SMTP id 6a1803df08f44-6e8fce04655so23790796d6.3
+        for <ntb@lists.linux.dev>; Fri, 04 Apr 2025 13:00:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1743788795; x=1744393595; darn=lists.linux.dev;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pxPRinaB0R9MRMHkqtzs6Jksu6ZEexxFz8Cu5WJ1Zw0=;
-        b=ibBHaXhHePSZTcIfwRDsmIwRnW7+cmcMjd4pAU0dBCbS7sJRcyZA4KTOJ6UuQQ1X7Z
-         hPtVcKdEJH9CIP5G3Spa3E0ZiySfEWeWiJfRz1v+xlGOghgXhDUxz8RJ3VZvnpkS5XNr
-         f80XQSJoyRMMhgdQDRmB4p/BV4zDPjA73a7PkC49URMxxMUoOlr/zIGpD8THAGjrqeZA
-         CKZtqvwGlJLJvuu46mXqr3Z2EMLmZTl/ssBBr3nUoW+jRlyLhK8r9Conk6FE89UW+hpt
-         CtwYCki9TbcrhqfbLiHzx+iSqduSYBfSz6Q0yuxJpFdCUXGXbH4Mfr8Wbfa71J4bxfJA
-         iZfg==
+        d=kudzu-us.20230601.gappssmtp.com; s=20230601; t=1743796806; x=1744401606; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :message-id:subject:cc:to:date:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=h5eZ3DGWv7e/HOiKc2xl6HutGoiiFu21dZ6Xc3YK3wc=;
+        b=qtQQe51KvqpAVyRA7+MBE09zfLIRV3UQdeFvTbaDMHukGxkrFUmMYh47rhSnfNiU2x
+         Wl1v8+J4X7IfKmNL1Q96MBLd3J/VhjPr+3Z3bsB5R4QI8x1otGkh3JuSG+dFBDyRYH/C
+         tL8muERIc3a1SJDku3Sg1Z6V4IMlxjSOdevlhbbkBAysggKlFEamkLZTFzdwS8s+zq/6
+         48u1BNlWIzaTMhUYLNVxfHINJ4UAj3oZKQj5g9BNnPn1F5W50PWnZoegNBocLANtit1p
+         rGhhlGTonQONBfL9Np1xy3Tlvc+ISysPJMCF97GfdUDsm3rd2ZClFU9cI7NRyzYJiFfD
+         28ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743788795; x=1744393595;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1743796806; x=1744401606;
+        h=content-transfer-encoding:content-disposition:mime-version
+         :message-id:subject:cc:to:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=pxPRinaB0R9MRMHkqtzs6Jksu6ZEexxFz8Cu5WJ1Zw0=;
-        b=lJ1nqWVI3xJZyrOvX/a/EbEHg/xwaHu0QNd9yBPOUihHZ0y5R6J5wBb+FmpN/2eHI8
-         LSz+E4FHe984SCTwIsKSbOdjHqyBFZb7gVfoeUpb5kwZbQ/b1pK1Q36HhZYQIpWNMGUP
-         aAFseC/+eohnHGBUlAbiN4j9wnBvNsS9d7YwO56y9iERB4cBEd2O6UVZ53S58eUNBR57
-         XcIxh/xnydL3SjreaZ/B8o4sqvLjp14g9tlokR5mXYL2FAW1vfwogOFMsgjYjn7KihWT
-         YXgN255tt3213X79W3rAiwz5qcOJd2+qr4gaqbSgEAZyNKlw2sEG3SxUpVzQcLG6cNoi
-         pCMg==
-X-Forwarded-Encrypted: i=1; AJvYcCX7zz/cDlJ68o2c59CGs33WXFxm/m9xjI+4e0YHhJSm6LftfNPyo+gsJoGxScGU7NT7xFI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxnuVqR3rg2qPHVB2nI6d0DLqsNzlUnaoSvwuhvCljDT6dt9mnc
-	LFpDsgikHbK+a4OOCcM6C9aVtOGOA2V1r+WY4Yani+3C15vJpxXCB7SBUs9Ijnk=
-X-Gm-Gg: ASbGncvMoEjSceor6rvQ9JoDseoothJ63VuZ92IXulPToBRjFxx8zLixzsr2vLLJP1l
-	dsA+z020Rend2ZEo8jH2iT0R5Uc31IQRFeGl6xM6fyFkiYGBnyqZ4cSx9i2cralUSP6KzhnUp2j
-	O6oZmQ0L3DipIPqXtTNH0T32ekpFF0IzYqEHuu6PX9jJjpfsZZjs0BIdlMm5uRoK1vV3TxZQ1ZN
-	ZZ3CO9IJVbkAzw00KuGuymGSlliPCa2+OneZRj/QoqO9ef1DCrq0onbBaAWEE4AWqxalsROtHsS
-	+27HCbREyWDQ1lJmx5SWnBQ9ywDwe06EbUbAbSTitXs7Bs4joswdx+0wtfHV+mxiNpXH
-X-Google-Smtp-Source: AGHT+IGJK67GjTDKDpj5bH038uXsv6Y5SZCtrTzwfFsjB58QOdWQqxfjOKhYa5MkwP/MU+TWVGqe2w==
-X-Received: by 2002:a05:6000:270e:b0:39c:1257:c96c with SMTP id ffacd0b85a97d-39cba93f966mr3020079f8f.56.1743788795236;
-        Fri, 04 Apr 2025 10:46:35 -0700 (PDT)
-Received: from toaster.baylibre.com ([2a01:e0a:3c5:5fb1:331:144d:74c3:a7a4])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-39c30226dfesm4939535f8f.97.2025.04.04.10.46.34
+        bh=h5eZ3DGWv7e/HOiKc2xl6HutGoiiFu21dZ6Xc3YK3wc=;
+        b=uZ4GCNxTwVeKVYowqxjMPXlFabQhNw3219FXA8q5aPjPaYunYIjdtJcHIJa3YmV91A
+         lEqEVJssITHSd4AhTxRa5k16hhLbEX7J2nDrp2ozw6+WpZXyHGy7ENHLVmSfjSFnKvuN
+         Kc4xXzGVhgs58n8r0LjntN+ZNchmrF7hOLiV8WEQWpjb4tn524HoRBtheGJaLq0SaK/j
+         buJAg99tj3vkIM+BILL/PhVbEeUJ3CT+TmFK44gLIibf9VsOECxl3BtQcKCmWS+NYdas
+         QmHVnZH4ZPZJ6v5/VC51SD7rX3g7AkAcPTPC2fTCFWHcHR2wMqRfl8VbltOcyh4G2boG
+         xGRA==
+X-Forwarded-Encrypted: i=1; AJvYcCXzexJZ47BhQyhJpJxsqFlKQMseLc8CeukKsCtUUVC5RKkCpb18m/PqElR2xvbEJ8TX5gg=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwRlp6a4ro7vk43MUhxK5JgzQW+48EeGnotkGjgZE/QP4Lk7HBY
+	l91zkS77W6EoH2uaMdUG2ZsJ+b3f5oqGOjeSdqyz0XGugReCNlAtaIlCiEa2YQ==
+X-Gm-Gg: ASbGnctfz29ybDC26ILW2GrOnzS6SBpVn2D3lEPbolB5SHJnRxXU7NbaBbD3tUaFVcL
+	8jG+/RFYlaEdk4wxpL626zK1UidIx9pqsx6InblWIpusxfuTWLu8UAfTh2yAar3/Przib/A3Rn9
+	Giv3JRWBpAwXrX0ssmj+/6uHSuyvcITBiU4IWnc3EfUwHWoBz5pybnWkZ6oLS4qwlzhEmxrHkdW
+	vOAlbrx5duJ5DuowiZ0M4xcuk+HxmRqG+FP0JXEt5MoE8V9t82080u/oLlYgFmZZfQcVAp286Mt
+	kv2YjLV4VmMI7Af5CFgMW0WE9okXgL0jl0bk
+X-Google-Smtp-Source: AGHT+IH1dFd1V/bERQFGbzF7wB96i6ZViPRK9J2/g7n+bkagE+I2+GWu+MCxNK2rVP98gHE179j0aQ==
+X-Received: by 2002:a05:6214:19ca:b0:6e8:f433:20a8 with SMTP id 6a1803df08f44-6f0b73f46afmr10169116d6.9.1743796806094;
+        Fri, 04 Apr 2025 13:00:06 -0700 (PDT)
+Received: from localhost ([136.56.27.188])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6ef0f138d5dsm25238936d6.92.2025.04.04.13.00.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Apr 2025 10:46:34 -0700 (PDT)
-From: Jerome Brunet <jbrunet@baylibre.com>
-Date: Fri, 04 Apr 2025 19:46:22 +0200
-Subject: [PATCH v2 3/3] PCI: endpoint: pci-epf-vntb: simplify ctrl/spad
- space allocation
+        Fri, 04 Apr 2025 13:00:05 -0700 (PDT)
+From: Jon Mason <jdmason@kudzu.us>
+X-Google-Original-From: Jon Mason <jdm@athena.kudzu.us>
+Date: Fri, 4 Apr 2025 16:00:05 -0400
+To: torvalds@linux-foundation.org
+Cc: linux-kernel@vger.kernel.org, ntb@lists.linux.dev
+Subject: [GIT PULL] NTB bug fixes for 6.15
+Message-ID: <Z_A6RauUQ2sczSMr@athena.kudzu.us>
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
 List-Subscribe: <mailto:ntb+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250404-pci-ep-size-alignment-v2-3-c3a0db4cfc57@baylibre.com>
-References: <20250404-pci-ep-size-alignment-v2-0-c3a0db4cfc57@baylibre.com>
-In-Reply-To: <20250404-pci-ep-size-alignment-v2-0-c3a0db4cfc57@baylibre.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, 
- Bjorn Helgaas <bhelgaas@google.com>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, Jon Mason <jdmason@kudzu.us>, 
- Dave Jiang <dave.jiang@intel.com>, Allen Hubbe <allenbh@gmail.com>
-Cc: Marek Vasut <marek.vasut+renesas@gmail.com>, 
- Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
- Yuya Hamamachi <yuya.hamamachi.sx@renesas.com>, linux-pci@vger.kernel.org, 
- linux-kernel@vger.kernel.org, ntb@lists.linux.dev, 
- Jerome Brunet <jbrunet@baylibre.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2649; i=jbrunet@baylibre.com;
- h=from:subject:message-id; bh=VMQRvj8CO60hVIlMMgdkTE1dtBACF+fNeO1bhBVnQsU=;
- b=owEBbQKS/ZANAwAKAeb8Dxw38tqFAcsmYgBn8Br21+RpEyu7VflBJ+7DQPDTHDsNR/iu152/c
- AfIb7ODPZ2JAjMEAAEKAB0WIQT04VmuGPP1bV8btxvm/A8cN/LahQUCZ/Aa9gAKCRDm/A8cN/La
- haVOD/94gKh4Rwrb9XZS7wgvtm4xpuUyG+eCwYuUMEyNfOou0meG7+SOlSJhtvZ1NsV6kD7V4HB
- ngGvBJwsU0P8WC5cRU9CLVrc8i3A61jPsLvNnhVrJ77uvSg2C0HRqgHw15xyRsvIZArIb8CU040
- A5JupzLwaZDYkREjQjLEBNqAuUVCwD1MT3sm61cZFKdXJoxqRr67QoUoZ10GzQTv/X28JQL5WeD
- 1IAy6A3fkHtphYdtl1vFCY5PDeijD0KzoIycqy3dDl0gFiMFKYCVBCIsOXI8ms25+GlwwlR7jmr
- KmXHh8zMIoCtoVTRXR5zeCq1lqvi/V4m7MFSpW7uC9iaTFfFYEmPDFxK2xDemp8L4++PHROmJ5u
- 7CPXSakNhZVd9WGCVQEZkifF5j1ciFeaeBmWbCoBFtVHjzioGu0Ss+9cTluMndT1YxZwhHJF9cr
- oHScr42ldiZkUIDW1DkshspaPEpv3+Y1TSIsPrvN+hztJzk+OcKTp9RlR3Y4X6f2JlAk7gBPUml
- wkrZh30XKCKDfZAQ8DYmIRGV34JTkX7GOPSSsQrfp5SOLZJ7XvcIEqTbdf+kX/GD6lHLtTfiTzN
- ZmBFc5ZcRokYQuO2ciUIO9fsoRZpg+CGU25E0E+08pGb9b45MlAvo8mc3JWcE6ql2TykQ9kl+PZ
- G6+yE31B/oorRXg==
-X-Developer-Key: i=jbrunet@baylibre.com; a=openpgp;
- fpr=F29F26CF27BAE1A9719AE6BDC3C92AAF3E60AED9
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-When allocating the shared ctrl/spad space, epf_ntb_config_spad_bar_alloc()
-should not try to handle the size quirks for underlying BAR, whether it is
-fixed size or alignment. This is already handled by pci_epf_alloc_space().
+Hello Linus,
+Here are a few NTB bug fixes and minor changes for 6.15.  Please consider pulling them.
 
-Also, when handling the alignment, this allocate more space than necessary.
-For example, with a spad size of 1024B and a ctrl size of 308B, the space
-necessary is 1332B. If the alignment is 1MB,
-epf_ntb_config_spad_bar_alloc() tries to allocate 2MB where 1MB would have
-been more than enough.
+Thanks,
+Jon
 
-Drop the handling of the BAR size quirks and let
-pci_epf_alloc_space() handle that. Just make sure the 32bits SPAD register
-are aligned on 32bits.
 
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
----
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 26 +++-----------------------
- 1 file changed, 3 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index 8f59a5b9b7adec2c05eebae71c6a246bc5a8e88c..bc4a9c7c4338db6cc89fa47de89dc704d0a03806 100644
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -413,11 +413,9 @@ static void epf_ntb_config_spad_bar_free(struct epf_ntb *ntb)
-  */
- static int epf_ntb_config_spad_bar_alloc(struct epf_ntb *ntb)
- {
--	size_t align;
- 	enum pci_barno barno;
- 	struct epf_ntb_ctrl *ctrl;
- 	u32 spad_size, ctrl_size;
--	u64 size;
- 	struct pci_epf *epf = ntb->epf;
- 	struct device *dev = &epf->dev;
- 	u32 spad_count;
-@@ -427,31 +425,13 @@ static int epf_ntb_config_spad_bar_alloc(struct epf_ntb *ntb)
- 								epf->func_no,
- 								epf->vfunc_no);
- 	barno = ntb->epf_ntb_bar[BAR_CONFIG];
--	size = epc_features->bar[barno].fixed_size;
--	align = epc_features->align;
--
--	if ((!IS_ALIGNED(size, align)))
--		return -EINVAL;
--
- 	spad_count = ntb->spad_count;
- 
--	ctrl_size = sizeof(struct epf_ntb_ctrl);
-+	ctrl_size = ALIGN(sizeof(struct epf_ntb_ctrl), sizeof(u32));
- 	spad_size = 2 * spad_count * sizeof(u32);
- 
--	if (!align) {
--		ctrl_size = roundup_pow_of_two(ctrl_size);
--		spad_size = roundup_pow_of_two(spad_size);
--	} else {
--		ctrl_size = ALIGN(ctrl_size, align);
--		spad_size = ALIGN(spad_size, align);
--	}
--
--	if (!size)
--		size = ctrl_size + spad_size;
--	else if (size < ctrl_size + spad_size)
--		return -EINVAL;
--
--	base = pci_epf_alloc_space(epf, size, barno, epc_features, 0);
-+	base = pci_epf_alloc_space(epf, ctrl_size + spad_size,
-+				   barno, epc_features, 0);
- 	if (!base) {
- 		dev_err(dev, "Config/Status/SPAD alloc region fail\n");
- 		return -ENOMEM;
+The following changes since commit 2014c95afecee3e76ca4a56956a936e23283f05b:
 
--- 
-2.47.2
+  Linux 6.14-rc1 (2025-02-02 15:39:26 -0800)
 
+are available in the Git repository at:
+
+  https://github.com/jonmason/ntb tags/ntb-6.15
+
+for you to fetch changes up to bf8a7ce7e4c7267a6f5f2b2023cfc459b330b25e:
+
+  ntb_hw_amd: Add NTB PCI ID for new gen CPU (2025-03-18 13:35:00 -0400)
+
+----------------------------------------------------------------
+Bug fixes for NTB Switchtec driver mw negative shift, Intel NTB link
+status db, ntb_perf double unmap (in error case), and MSI 64bit
+arithmetic.  Also, add new AMD NTB PCI IDs, update AMD NTB maintainer,
+and pull in patch to reduce the stack usage in IDT driver.
+
+----------------------------------------------------------------
+Arnd Bergmann (1):
+      ntb: reduce stack usage in idt_scan_mws
+
+Basavaraj Natikar (1):
+      ntb_hw_amd: Add NTB PCI ID for new gen CPU
+
+Fedor Pchelkin (1):
+      ntb: use 64-bit arithmetic for the MSI doorbell mask
+
+Markus Elfring (1):
+      ntb_perf: Delete duplicate dmaengine_unmap_put() call in perf_copy_chunk()
+
+Nikita Shubin (1):
+      ntb: intel: Fix using link status DB's
+
+Shyam Sundar S K (1):
+      MAINTAINERS: Update AMD NTB maintainers
+
+Yajun Deng (1):
+      ntb_hw_switchtec: Fix shift-out-of-bounds in switchtec_ntb_mw_set_trans
+
+ MAINTAINERS                            |  1 -
+ drivers/ntb/hw/amd/ntb_hw_amd.c        |  1 +
+ drivers/ntb/hw/idt/ntb_hw_idt.c        | 18 +++++++-----------
+ drivers/ntb/hw/intel/ntb_hw_gen3.c     |  3 +++
+ drivers/ntb/hw/mscc/ntb_hw_switchtec.c |  2 +-
+ drivers/ntb/ntb_transport.c            |  2 +-
+ drivers/ntb/test/ntb_perf.c            |  4 +---
+ 7 files changed, 14 insertions(+), 17 deletions(-)
 
