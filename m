@@ -1,80 +1,78 @@
-Return-Path: <ntb+bounces-1301-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-1303-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB752AF5F15
-	for <lists+linux-ntb@lfdr.de>; Wed,  2 Jul 2025 18:51:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58BE4AFCE36
+	for <lists+linux-ntb@lfdr.de>; Tue,  8 Jul 2025 16:52:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 053064A78D5
-	for <lists+linux-ntb@lfdr.de>; Wed,  2 Jul 2025 16:50:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0E52D581623
+	for <lists+linux-ntb@lfdr.de>; Tue,  8 Jul 2025 14:50:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C26042D94B7;
-	Wed,  2 Jul 2025 16:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D5B42DFF3F;
+	Tue,  8 Jul 2025 14:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="iD5GwRoS"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="1d8POkiu"
 X-Original-To: ntb@lists.linux.dev
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CD5288CA4
-	for <ntb@lists.linux.dev>; Wed,  2 Jul 2025 16:48:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9C320766C
+	for <ntb@lists.linux.dev>; Tue,  8 Jul 2025 14:50:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751474929; cv=none; b=CGOOBA8EvdWs0peNeMycYnyt2T25AXuqhC5uL7x0pcMCQTRoCycYVVKAFwMpIgaKLTkU1z/cb5lo0pHOh5XMMdxp0aNXYcE3umG+xnvrDL8pllSGLFztPw1NNK8jf9iHK0hM9ozz6P8VNLkfUvQvUWdYrL/TaY3+pxTYLHctrJo=
+	t=1751986216; cv=none; b=BQ9IWW+/3+r+xgII8uzmMfnJZxEmpG/oRpFgwJ6/QfpHr4DBJfCyvWEpdw/L6D+wEOIbmV3KQ3OopvIITq+fd9J6T2uLr8UEVTpxfN7EN4CKuwIVHkaS0SEGF38r2NmAD34RcSQNQA+iZH9GNJLfk/wESzGlG4hsHdNguChvgcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751474929; c=relaxed/simple;
-	bh=UVwuQqNuVkaXad1gSP5IG0Q61XDJHBqnS6AA8i/xzYQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hoamr5WFFyMmMzRUGunBOwgHCuu4MOZZbMb2uXYYvIBtEBdrDRNKL0IcDKxrDUueWby+DpKT+wTV1BVYfpoV7D4huKz2ptvbLB/JbGR9PcVPb3SJCMU2LSGadQ6LKf4Olh2RB4UxFgZELdJ3qzhtkLnjLo+s+SFcR7D6btBiGYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=iD5GwRoS; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1751986216; c=relaxed/simple;
+	bh=HEgvTY7DvqUTASXbAkoz2Cq2W+UACAG7D0XiharOkiI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BHvVzABIDcs1zInRpzGX0h1bVFbkf2HVMQV2zw7scPuZCo3Xzc64NOp0zYOKCcxZPz+2pce90hnnU7btmhDVy0KuUGj4bcST7iJ25KH2PN0DvGDRHYAnBZWqb0hncwinx6IZuLQOvWvMzpTUCnOVaKb0+7bWQ8KBeZ/Wv1fULbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=1d8POkiu; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-451d7b50815so35995125e9.2
-        for <ntb@lists.linux.dev>; Wed, 02 Jul 2025 09:48:47 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-453066fad06so31649635e9.2
+        for <ntb@lists.linux.dev>; Tue, 08 Jul 2025 07:50:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1751474926; x=1752079726; darn=lists.linux.dev;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f41VpQcQDm5IrtOyRO5moqw5pFrZWSUi6EXtMoj+mX0=;
-        b=iD5GwRoSl9CIiTXBumkZoxxLBAJHu9hK/WmrlB1Slr+31csxQvSLql2da/rGbumYrV
-         CdQoTRhnqYYHk5njoPoaeHGGaYdHoaS8qQKLYTfffsXHxehNL2t0evhAMBLXI/AwiV86
-         +eoz2p8NW+H7mCy1meZ8HnNp0itdmmxUVqOWX7Z8vnpUdjBKNiW7DpSr9JAOSfZP0Lrz
-         BQIwtud7XVsfrQhEKg0nlyzINRBq9GC/tOviQ/TdNNsScn4c5USxSVjPYmBKqkP/vnVl
-         pHweqzp/upyjnBXZO3aENf7zv0TEHP8Gu5hu4OgeH8rKp49FyUXrwGSnZHzNVrTOFNSZ
-         j/sw==
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1751986211; x=1752591011; darn=lists.linux.dev;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=p+mcJ7ZL40yfdI/6L1U2sq8kmJCRggUCq7uPF858vik=;
+        b=1d8POkiumho2WlLNndth8h4pMvU0JywEX83mt9rxx7FA+t4mlR09mbWkI4Veiit1f6
+         Bv1IfZJq+1PO+/OWRO2AW8IEhY+gkPcmEfRogujGa020k7i2D0lo1cD4dGyn7NoZonDK
+         XG8s83B8NsCstNjJBvQZas4VzWEIqXNd697cJb+RTwJO6OPl8M7o7/9BMg6LBEy1MwJu
+         6BHS9XzKTcdaU8+NZWN27Q43OWgZ5muVFKSKP6LbNUAsv7LNxhYYMtVdoBYPllLyLjqC
+         Cfh+rMdgQuMFtgqCVNzpbqbO0kS+Ku8yrhDyX1ri3CaYzhqA+mr3qwun55Q8Xtj/PllA
+         s8kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751474926; x=1752079726;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=f41VpQcQDm5IrtOyRO5moqw5pFrZWSUi6EXtMoj+mX0=;
-        b=cz5idhEOVRGZ2zkk93AKUBAqYC3mcVkJxLfVNrk3VwIJ9vg2b0abmEJeRQdPlL+A5u
-         u0oE80YLjr5/O/bOe8eFTsS8GQZ4tOjTDm3brEBzsHDv2t+y+1xQclyUHNdDjSLmvsJA
-         z3PpXwKAAuOudHaDnthcF4TZG9bVId0fpohgbgN/QvhccxLsKZLGBFSvBbhTfd8D66dE
-         9T0Arbo8iW21QsK0jzexaqKnX49+nUgme0ZICRoHb0lphaNCVn5Uo21wRFJcHO4l04fE
-         23EhNhbZKxpwtHKPiEDDrBNumbL2PosA97sgxlErlVs9x6F6aSnKS3+16TSAFnl0aQ43
-         PPTw==
-X-Gm-Message-State: AOJu0Yw0/v/5cFYKVfmTW2o0mg5rdFz6i+t8nmRm7DOZ9szsiD04OQqP
-	tKeleNkAA/T0YJAHgDxoGtnxQAtnfqOpkFfgfu+dURtiexOzpBLeVZRjEDB6vVzpmqw=
-X-Gm-Gg: ASbGncv8hLKMfRcsMETrxY1D9VxqeMtlxA1Bs2QN0/MrWP8GvIgSc0uj3/5Vxb/eKKV
-	8Fnm3ikvzQDCna0kfTM9rJ1jmqEFxmAnSsHtwxpRw8lEHUI4TkPyfGo1oVHtXY5XgPA/gG844ML
-	gj2Hl1Dsr3Q8QIGxEZ1wyIJ3dQGyh1SzRd6nwcrYFLED8PDOlnDxKhCkE/wF7WszaieBFdzHl/O
-	AQkDyos9G2ImPpFpLO7OVlZNALSovmLyyA82Kx5S7S1ZYtLYT+fZXC+elk6gj7ZMYsUcWrHLyL7
-	jzh0wq7cRyUVdCNZOA1XZ4vXLZp38RuE6lHE8B8/FdB5mgVmgenWWsqZSMbGqVZoqTO/U5JpwGH
-	y4aRht8+k5UY=
-X-Google-Smtp-Source: AGHT+IEF430UREJHH7vf0pRs8CX/hqo233o+9B3pP4zeXlWCCJogYacSw896jaCZMSOhbI2fQ/nmhw==
-X-Received: by 2002:a05:600c:3488:b0:43b:ce36:7574 with SMTP id 5b1f17b1804b1-454a9c70d55mr4198985e9.11.1751474926049;
-        Wed, 02 Jul 2025 09:48:46 -0700 (PDT)
-Received: from toaster.baylibre.com ([2a01:e0a:3c5:5fb1:5542:4bad:e07b:9489])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-454a9bac51bsm2871155e9.39.2025.07.02.09.48.45
+        d=1e100.net; s=20230601; t=1751986211; x=1752591011;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=p+mcJ7ZL40yfdI/6L1U2sq8kmJCRggUCq7uPF858vik=;
+        b=OPmFmqiv16tUZN4p8nnJGDzvLsvS40n7OOBFWuhQzZyxqBgyw6WHMXUIo+8zZ8tT/n
+         2Z+onUmf89yUHuAiyn0lMUhEjUoh7nXDAePrvsJiRtZkUeRqmxoePSPycsRhp1muTXIf
+         J3KDCsItEgsdhkIQw2CW0pvDdnirDZcmHRsnGx6oeX+BY2jt0DTGRbWXJt8Le9kXg8pn
+         Thypx7w1ntCEIjnvEEdyMZQHwE+x6DDymBHpUvXCRBcTz+ak9aHSjKcBnnZHGJxwuIPq
+         0PhkUrx9utT8fmpegvlopO4qDIa8CHtMIrwNjXrNLJghqrp3RdblT9Sfehrw0+bDP3Sj
+         3SUg==
+X-Gm-Message-State: AOJu0YyKq4mKmyiCrJtCzvFU92dNvtpciX4PAxoRE+LvGaBygieSmAsO
+	I4xGIAz4qQbpjXVmxVpNCHrXC1e2TBKxbQdcstYZ+mVZckiNYiUhCMjivZBdvtiEWL4=
+X-Gm-Gg: ASbGncsWYq1qEzOB3LhB4+NV6zpi/KXytABO9ylDtomY7yjJat79wL746QKEEZwkeP/
+	njIpSXtE9qasXTxHVnJZ8xmPCGlOOfVMFH5ro8kbzUtmBTBjWU8Po62stUPDwsiFY/o5NOCX8P3
+	YR/YdsJUX1Rwcoi4MRtlsrnerrcCkVk1kV7URT5WQvJrIHU4M1Tl1zk0Q5Cl40Pk7ZNI7uym8nk
+	URYhEsmgPSWLITNV1WLD3mQi89GgYGimXgQhmR0i5jC6X0X8lxgc5J1il7S4/wvBGmlmAJVFi7B
+	ZLxojnsEpKSmWG1L5dQRbwUwxtxn9ME6bpplMhFxM+GLidC7D9tTg0msftvueR4GEtXK2VMMtK+
+	0
+X-Google-Smtp-Source: AGHT+IH2G2zx5csQczqgTBlBit9l6rKgdpM4AL2R7/oW/cCxn22xdVAIxyhu7QXZ0RNJGTHll7v0Sw==
+X-Received: by 2002:a05:600c:8b0d:b0:43c:fe5e:f040 with SMTP id 5b1f17b1804b1-454cd5234b7mr32681735e9.23.1751986211084;
+        Tue, 08 Jul 2025 07:50:11 -0700 (PDT)
+Received: from toaster.baylibre.com ([2a01:e0a:3c5:5fb1:dfdf:dfe3:8269:12e7])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3b47030cdf5sm12988879f8f.1.2025.07.08.07.50.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 09:48:45 -0700 (PDT)
+        Tue, 08 Jul 2025 07:50:10 -0700 (PDT)
 From: Jerome Brunet <jbrunet@baylibre.com>
-Date: Wed, 02 Jul 2025 18:48:34 +0200
-Subject: [PATCH v3 2/2] NTB: epf: Add Renesas rcar support
+Date: Tue, 08 Jul 2025 16:49:57 +0200
+Subject: [PATCH] PCI: endpoint: pci-epf-vntb: fix MW2 configfs id
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
@@ -83,77 +81,70 @@ List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250702-ntb-rcar-support-v3-2-4268d9c85eb7@baylibre.com>
-References: <20250702-ntb-rcar-support-v3-0-4268d9c85eb7@baylibre.com>
-In-Reply-To: <20250702-ntb-rcar-support-v3-0-4268d9c85eb7@baylibre.com>
+Message-Id: <20250708-vntb-mw-fixup-v1-1-22da511247ed@baylibre.com>
+X-B4-Tracking: v=1; b=H4sIABQwbWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDcwML3bK8kiTd3HLdtMyK0gLdpGRjg0TjVCNLAzNDJaCegqJUoATYvOj
+ Y2loA1x0n8F8AAAA=
+X-Change-ID: 20250708-vntb-mw-fixup-bc30a3e29061
 To: Jon Mason <jdmason@kudzu.us>, Dave Jiang <dave.jiang@intel.com>, 
- Allen Hubbe <allenbh@gmail.com>
-Cc: ntb@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Frank Li <Frank.li@nxp.com>, 
- Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
- Yuya Hamamachi <yuya.hamamachi.sx@renesas.com>, 
- Jerome Brunet <jbrunet@baylibre.com>, Frank Li <Frank.Li@nxp.com>
+ Allen Hubbe <allenbh@gmail.com>, Manivannan Sadhasivam <mani@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Bjorn Helgaas <bhelgaas@google.com>, Frank Li <Frank.Li@nxp.com>
+Cc: ntb@lists.linux.dev, linux-pci@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Jerome Brunet <jbrunet@baylibre.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1368; i=jbrunet@baylibre.com;
- h=from:subject:message-id; bh=UVwuQqNuVkaXad1gSP5IG0Q61XDJHBqnS6AA8i/xzYQ=;
- b=owEBbQKS/ZANAwAKAeb8Dxw38tqFAcsmYgBoZWLqPkQ+LD2rVrcvB3II9FHT3xPQiO7pwu8rj
- 0U8zFjJPAaJAjMEAAEKAB0WIQT04VmuGPP1bV8btxvm/A8cN/LahQUCaGVi6gAKCRDm/A8cN/La
- hRe3D/914t0bWXIEhiaKx0rY8Bb1mK9VHQPQrSfCF7xX9dpRlnDBeGng8EKipRl5t6y6twhVFFj
- 7U+655hs2loVYgumvp6rnAAQlaEnXnHIn7oKxtTKr3F55qe5rdMuv97MjiVCdBJvRtvybjG1SQU
- +rq2dREWzYN40rR0kHmtEge/aenhIavHWRV0PziaqoR4wIzwKFRDimFEzSgBieqt3HaEqUYfTeU
- SNfcniEQncvHADCCXGgLZFRZazKfZ8pET3DLzihPxdL4H5SX0h13/U2fkCmcuWM7QSZeNhcNGrv
- PqYE15tCerYqrZ5fWkxygVT674pya5BsKBP66m1Dfl2mn2z/qmewZNPQ0M9rWm4qGau5gUwfMiL
- w/TWiPzJ1wDUBucNIS3HL3/VovbCTVxy+EhCE+TNcRHyiLXmVHuyVJwApWgUfNnhSXd/vogJMZn
- GD977JAkR+MXzSdI8QETyaNCnSzmVPLQnc9hfmuckTnKQWnXYm6qC4mfcWAWPk5NmOx5foNFej5
- dK0HH1EU00/LbXHXuuGO4+y3YHQTiCRqe5GLlxnmA6u6QvJJfy6kIssYbmmtFCRY+0ueHUK10J6
- dZonA8PPbLPaKjkXodCMQtbBZZ5qwupNjMTDkCtG6fa9PZ18YkggXMyIeMMr+o5gi7LjC7AADyS
- E5rBvbkvV6l2SRg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1285; i=jbrunet@baylibre.com;
+ h=from:subject:message-id; bh=HEgvTY7DvqUTASXbAkoz2Cq2W+UACAG7D0XiharOkiI=;
+ b=owEBbQKS/ZANAwAKAeb8Dxw38tqFAcsmYgBobTAdm1+n8PQLlMWBQtM3sujQ9VlXuPytqjO/b
+ RX4fjO7geCJAjMEAAEKAB0WIQT04VmuGPP1bV8btxvm/A8cN/LahQUCaG0wHQAKCRDm/A8cN/La
+ hbW9EACZxPPbx9A9N7wzBBwK+X69FdGNxhFWZa4r0v2iig7LecShid9JdCCgxxpoMTiJ4Y7h/WD
+ iepvHs56AKjPYLS3TQ1QSc0bhbHJco0KzUCQn+zJq153Oz9QNAYjSAYTXDblnUxvBHUE2TIT0nP
+ UKcKt1RKzVpbMNSoNEuONomEejyFT35evSOKpyVwRiBENRx/IJipuJu3unfu6AzvVPsTRFsVaL0
+ Lmc8lU+DFtm9eeA91jTOsStJBhdrz6ROjci+1WTlq6zdhJox60lw0FndiXEGAEI59CYsqSttzCL
+ V7e8bZcPiJ4jeqt/FhpTO9dLn6gN42Xs6u/sOBxIKp1YHhME+zTphrFXptfSJUl3qa3PJRcW0Id
+ Rz/y6L+YqCuAj3I12VWuJPloVzQZ30Iv/nQxk+zMICLF5ktrtpKQt7w7DPRbFnqR7NYF4xlIeox
+ qFgBgTF5DPamsFhI2Rb0tYLY8LnmyYK6NYOri3ZUnibpXG6D0Q7s9rteRkbyT7ZyNZWZpQSN4nV
+ 3EnS5022AvlTmNfq3FqWqmGJphqMc+udewNL1w7PZbhlCpqF+zzQ4zE2og0wHhz+HNRyaNGDC3t
+ IWg3bFShM8KgULCpQXVoiodbPpMix9DlvXjZiRvCme3UokWoxG1wc3WmNDxkNv909JVLYjrhDEi
+ oG1fcYX8ebohO8g==
 X-Developer-Key: i=jbrunet@baylibre.com; a=openpgp;
  fpr=F29F26CF27BAE1A9719AE6BDC3C92AAF3E60AED9
 
-Add virtual non-transparent bridge support for Renesas rcar platform
+The id associated with MW2 configfs entry is wrong.
+Trying to use MW2 will overwrite the existing BAR setup associated with
+MW1.
 
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Just put the correct id for MW2 to fix the situation
+
+Fixes: 4eacb24f6fa3 ("PCI: endpoint: pci-epf-vntb: Allow BAR assignment via configfs")
 Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 ---
- drivers/ntb/hw/epf/ntb_hw_epf.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ntb/hw/epf/ntb_hw_epf.c b/drivers/ntb/hw/epf/ntb_hw_epf.c
-index 2b51156e01b0f22ef282d80c08c22af92f49307b..d3ecf25a516253e4e774e3bd835745509ef128ba 100644
---- a/drivers/ntb/hw/epf/ntb_hw_epf.c
-+++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
-@@ -747,6 +747,16 @@ static const enum pci_barno mx8_map[NTB_BAR_NUM] = {
- 	[BAR_MW4]	= NO_BAR
- };
- 
-+static const enum pci_barno rcar_barno[NTB_BAR_NUM] = {
-+	[BAR_CONFIG]	= BAR_0,
-+	[BAR_PEER_SPAD]	= BAR_0,
-+	[BAR_DB]	= BAR_4,
-+	[BAR_MW1]	= BAR_2,
-+	[BAR_MW2]	= NO_BAR,
-+	[BAR_MW3]	= NO_BAR,
-+	[BAR_MW4]	= NO_BAR,
-+};
-+
- static const struct pci_device_id ntb_epf_pci_tbl[] = {
- 	{
- 		PCI_DEVICE(PCI_VENDOR_ID_TI, PCI_DEVICE_ID_TI_J721E),
-@@ -758,6 +768,11 @@ static const struct pci_device_id ntb_epf_pci_tbl[] = {
- 		.class = PCI_CLASS_MEMORY_RAM << 8, .class_mask = 0xffff00,
- 		.driver_data = (kernel_ulong_t)mx8_map,
- 	},
-+	{
-+		PCI_DEVICE(PCI_VENDOR_ID_RENESAS, 0x0030),
-+		.class = PCI_CLASS_MEMORY_RAM << 8, .class_mask = 0xffff00,
-+		.driver_data = (kernel_ulong_t)rcar_barno,
-+	},
- 	{ },
- };
- 
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 41b297b16574558e7ab99fb047204ac29f6f3391..ac83a6dc6116be190f955adc46a30d065d3724fd 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -993,8 +993,8 @@ EPF_NTB_BAR_R(db_bar, BAR_DB)
+ EPF_NTB_BAR_W(db_bar, BAR_DB)
+ EPF_NTB_BAR_R(mw1_bar, BAR_MW1)
+ EPF_NTB_BAR_W(mw1_bar, BAR_MW1)
+-EPF_NTB_BAR_R(mw2_bar, BAR_MW1)
+-EPF_NTB_BAR_W(mw2_bar, BAR_MW1)
++EPF_NTB_BAR_R(mw2_bar, BAR_MW2)
++EPF_NTB_BAR_W(mw2_bar, BAR_MW2)
+ EPF_NTB_BAR_R(mw3_bar, BAR_MW3)
+ EPF_NTB_BAR_W(mw3_bar, BAR_MW3)
+ EPF_NTB_BAR_R(mw4_bar, BAR_MW4)
 
+---
+base-commit: 38be2ac97d2df0c248b57e19b9a35b30d1388852
+change-id: 20250708-vntb-mw-fixup-bc30a3e29061
+
+Best regards,
 -- 
-2.47.2
+Jerome
 
 
