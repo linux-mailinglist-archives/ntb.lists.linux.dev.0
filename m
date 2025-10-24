@@ -1,138 +1,223 @@
-Return-Path: <ntb+bounces-1428-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-1430-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FBFEC047BF
-	for <lists+linux-ntb@lfdr.de>; Fri, 24 Oct 2025 08:21:44 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2F4DC070D1
+	for <lists+linux-ntb@lfdr.de>; Fri, 24 Oct 2025 17:45:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 0FC9E354E23
-	for <lists+linux-ntb@lfdr.de>; Fri, 24 Oct 2025 06:21:44 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7533D4FC8F2
+	for <lists+linux-ntb@lfdr.de>; Fri, 24 Oct 2025 15:45:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F7E526ED3C;
-	Fri, 24 Oct 2025 06:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FEAE32E74C;
+	Fri, 24 Oct 2025 15:45:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="GGu8agMq"
 X-Original-To: ntb@lists.linux.dev
-Received: from unicom146.biz-email.net (unicom146.biz-email.net [210.51.26.146])
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013015.outbound.protection.outlook.com [40.107.159.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7363D26E71F
-	for <ntb@lists.linux.dev>; Fri, 24 Oct 2025 06:21:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.51.26.146
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761286902; cv=none; b=Yif1dKTobOkyjNa3kRw0tp72bkEADMyCe7MMgfqGzr6q1cPeDRiB7S4O6KdZWO2Vtak9J8Cf4uTtwVYj9+egW+POywpuUraXrQhcfXp+yLib21KpNGYZvawTAzeb2PJ7jAqscmbosxFuGXGlKD/Bm2dunhvYQjtFLvUz1twaFzo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761286902; c=relaxed/simple;
-	bh=V2J2UHds0RdOipBSWFozpaRZktnF0D0uH1n1AmtJFkA=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jM/t2Iz2UYnFMrdgmdE2ZvepsHRHfmL4nf2JDNYPMYZ2+Jbndvs69/V1a+jzO8MWkqnLM4UL3gv4ztTxzbMbjXqF2BPZTnCQ224EeS4xSbLh/FzfjwRl4sOW/s+YMNnlTSoKBK1SiSqyyKAShG0eljj1XOWNaExXq1adjdUI3CE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=inspur.com; spf=pass smtp.mailfrom=inspur.com; arc=none smtp.client-ip=210.51.26.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=inspur.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=inspur.com
-Received: from Jtjnmail201617.home.langchao.com
-        by unicom146.biz-email.net ((D)) with ASMTP (SSL) id 202510241421317694;
-        Fri, 24 Oct 2025 14:21:31 +0800
-Received: from jtjnmailAR01.home.langchao.com (10.100.2.42) by
- Jtjnmail201617.home.langchao.com (10.100.2.17) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.58; Fri, 24 Oct 2025 14:21:32 +0800
-Received: from inspur.com (10.100.2.108) by jtjnmailAR01.home.langchao.com
- (10.100.2.42) with Microsoft SMTP Server id 15.1.2507.58 via Frontend
- Transport; Fri, 24 Oct 2025 14:21:32 +0800
-Received: from localhost.localdomain.com (unknown [10.94.15.147])
-	by app4 (Coremail) with SMTP id bAJkCsDwZrXrGvto2RwPAA--.3118S5;
-	Fri, 24 Oct 2025 14:21:32 +0800 (CST)
-From: Chu Guangqing <chuguangqing@inspur.com>
-To: <jdmason@kudzu.us>, <dave.jiang@intel.com>, <allenbh@gmail.com>
-CC: <ntb@lists.linux.dev>, <linux-kernel@vger.kernel.org>, Chu Guangqing
-	<chuguangqing@inspur.com>
-Subject: [PATCH for-next 1/1] net: ntb: migrate to dma_map_phys instead of map_page
-Date: Fri, 24 Oct 2025 14:20:42 +0800
-Message-ID: <20251024062042.29971-2-chuguangqing@inspur.com>
-X-Mailer: git-send-email 2.43.7
-In-Reply-To: <20251024062042.29971-1-chuguangqing@inspur.com>
-References: <20251024062042.29971-1-chuguangqing@inspur.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E7F32C957
+	for <ntb@lists.linux.dev>; Fri, 24 Oct 2025 15:45:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761320728; cv=fail; b=Fdmx0Pv4ZJjo62zmbHm+BiO+tFHD+DQu0xMF/no/ZXFiTCRLe7x3tdKYyE1ekoLdqnpSn/eJ+r2p/yq+IWyEYQl7cl2WYJnwN109bszHsJAe20ERdVSK8lEUmc5aE6h3jpIRlOuuiQ80ZkUNDFsN/FGp08J2zVnGbxEgxyxWnVw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761320728; c=relaxed/simple;
+	bh=lgrhiVjEy8zotws1tgbNi37gg5k7V/q9hvVrCF2cmEQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=IjIfh8k+W03P8+W+u/EK64BoNvQ4rF/c+/CWuv8iaVPy+8Q7NDbjQ5zt4CUCwpo9F5FXk4ZKPvXn0+lts7hn+UJptcCEjfrCe60VU8cRxlQH5oCDqttQc+bVyvvZeYU2F4n97seNb48Sbvq1ygcnuPZ5Y3bkbFo4HLjxODCp5YQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=GGu8agMq; arc=fail smtp.client-ip=40.107.159.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pAcBKN6zvmwrnQb/UBi0r9H1QE1O3+xMiY9jMmb778SCKMqXqwIeadoybcg3NvJsmhETpAGqv4pHW6TAwNbPuW0taXkWL42PESkUJXGya7S373zPEXdV7gMshyCcbdqF9AB/4O9S8rF7D910A2jcXUPj+5VYcnVXYFvD3MyF12mUvDcOiZNgf4jxuFq6SdxirZrvhzGSWjDPAAr3pfjny8UhvTNyIjsY07zkdGMvFI4Jd8EaUt674X4OXxQYTkcK1F2FffXqhBnfkmy85Mjnu3feFrXM/1rxImzJwTVSj/hQeDyab58JRarrQ1WHPqcDtTj5kB9Foa8ay9Pc6+wUSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=d9k7aXSjrD40x0FBf31ippeHnSHkHlxNapv9FPo1Frg=;
+ b=r19QNTu4cQDH3e6u2r2ItSd2Wnw6QkgFmn929Xrmn/dQ6e3v/4k5bhmpW/7sp4kcRHQSMCTESM9AXtntDuHfzW28MbSqV9v3aXh0tNhAsGRNWjYM1CMsbpN/+Y99nYXKgtMkB+fLX+pSEO60XkyLByNjyGsstoibGqGWfFmxlph7SgAymTVQE/0KtHXnhugS887QGPH5wT4wHzjarbpuqbe3pxQQxWoPvCNqCY6Qy/FpbuXHrKYnGOHcqNFRN2SSUHti4dfPwpu+JPMDMn+NnAY2q2pWUl0LFn04y9rw5P+Lq/rr0xJTSvM1GI2dU6cRdunXt1J1WjBDW3yB0sasYQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=d9k7aXSjrD40x0FBf31ippeHnSHkHlxNapv9FPo1Frg=;
+ b=GGu8agMqUv/X/4BQds1UXf5MMqBBBgw1aXra71jk7fN0FgZ+VuyJHymx+jm/XE+SrmgXxLMT5Q/65OPmsyiJz21jmYyd8F+emt9sPjBD24xo84182jZjehzpF/LeD7R+HAl+oLzQ8v9o5mVV5U/tfntxjH9eh2RGUXiweuFcJPAnq5QJaDfs3NbvebIF2Whw4zjpsrqLvd8hAG/ChNrE2OEehiTGMdaqaz5qSUxS7gFzbewbvhF6sMroadyVA2GLpmI2C9OQvqEDjk1aec4beStLSEMz6x9u235X27+7zH3fQ2x8l4e30NM3fypVNvAJXYcKl0a07ETLCPzXqZYY6g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from DB9PR04MB9626.eurprd04.prod.outlook.com (2603:10a6:10:309::18)
+ by VI0PR04MB10095.eurprd04.prod.outlook.com (2603:10a6:800:246::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9253.13; Fri, 24 Oct
+ 2025 15:45:22 +0000
+Received: from DB9PR04MB9626.eurprd04.prod.outlook.com
+ ([fe80::55ef:fa41:b021:b5dd]) by DB9PR04MB9626.eurprd04.prod.outlook.com
+ ([fe80::55ef:fa41:b021:b5dd%4]) with mapi id 15.20.9253.011; Fri, 24 Oct 2025
+ 15:45:21 +0000
+Date: Fri, 24 Oct 2025 11:45:12 -0400
+From: Frank Li <Frank.li@nxp.com>
+To: Koichiro Den <den@valinux.co.jp>
+Cc: ntb@lists.linux.dev, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, jdmason@kudzu.us,
+	dave.jiang@intel.com, allenbh@gmail.com, mani@kernel.org,
+	kwilczynski@kernel.org, kishon@kernel.org, bhelgaas@google.com,
+	jbrunet@baylibre.com, lpieralisi@kernel.org, yebin10@huawei.com,
+	geert+renesas@glider.be, arnd@arndb.de
+Subject: Re: [PATCH 1/6] NTB: epf: Avoid pci_iounmap() with offset when
+ PEER_SPAD and CONFIG share BAR
+Message-ID: <aPufCHOKK7WrBKR+@lizhi-Precision-Tower-5810>
+References: <20251023071757.901181-1-den@valinux.co.jp>
+ <20251023071757.901181-2-den@valinux.co.jp>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251023071757.901181-2-den@valinux.co.jp>
+X-ClientProxiedBy: BYAPR03CA0032.namprd03.prod.outlook.com
+ (2603:10b6:a02:a8::45) To DB9PR04MB9626.eurprd04.prod.outlook.com
+ (2603:10a6:10:309::18)
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
 List-Subscribe: <mailto:ntb+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: bAJkCsDwZrXrGvto2RwPAA--.3118S5
-X-Coremail-Antispam: 1UD129KBjvJXoW7WFW5Zw1kZw45Wr1rXw1DWrg_yoW8WFWkpF
-	95JFW5Kr4Iqr45Z397Jw48Zry5Aayvq34IkFWxK3sIkFZ3Xr9ak3WrKayktrs7Gr48XayF
-	qrWUA3WrC348C37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUmY14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jr4l82xGYIkIc2
-	x26xkF7I0E14v26r1I6r4UM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
-	Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_GcCE3s1l84
-	ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1le2I2
-	62IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcV
-	AFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG
-	0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc7CjxVAaw2AFwI0_JF0_Jw1l42
-	xK82IYc2Ij64vIr41l4c8EcI0Ec7CjxVAaw2AFwI0_JF0_Jw1l4I8I3I0E4IkC6x0Yz7v_
-	Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1V
-	AY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAI
-	cVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42
-	IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIev
-	Ja73UjIFyTuYvjfUemhwUUUUU
-X-CM-SenderInfo: 5fkxw35dqj1xlqj6x0hvsx2hhfrp/
-X-CM-DELIVERINFO: =?B?P1z5VpRRTeOiUs3aOqHZ50hzsfHKF9Ds6CbXmDm38RucXu3DYXJR7Zlh9zE0nt/Iac
-	D+Ka5/cslaGy953u1/jgndaEeL0IFV8HUJ6FIoYir7oYNEFrFd9ewyYrxBRY3r7zmrRFP8
-	xHpvJK+5EwWCfDe4RvY=
-Content-Type: text/plain
-tUid: 20251024142131952affa8520047863c47f16539000d50
-X-Abuse-Reports-To: service@corp-email.com
-Abuse-Reports-To: service@corp-email.com
-X-Complaints-To: service@corp-email.com
-X-Report-Abuse-To: service@corp-email.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DB9PR04MB9626:EE_|VI0PR04MB10095:EE_
+X-MS-Office365-Filtering-Correlation-Id: bf12c6e7-97a4-40aa-7572-08de1314573b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|376014|7416014|52116014|1800799024|366016|38350700014|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?OpKTlybuSwByP2ZDhnKPRNiSyaFreDypzs5KQkNNn2s56Xvoc1KRCDETvXdK?=
+ =?us-ascii?Q?snVaSn6uSEANeslypsRJSwdb79QhGQKZ5+3jL9IRTla3Nl7zbPdeTc1Yl2NJ?=
+ =?us-ascii?Q?zsSNqsR+DYy/HTEArJTcT0tCgMZ/F7rQecb3Ybcct2hgQgSteh+J7/1MPbMD?=
+ =?us-ascii?Q?GJ+7swUVh+V5e+wAdX63am4W6BZK++anj0a7lPHLGK9+ZNczzR5HacsprOjQ?=
+ =?us-ascii?Q?AqKPQDJ/VkKLzS6Waw9z33FEYG1IP2Jtt08wCg5DZXkw68k/HImXXFy29Y+2?=
+ =?us-ascii?Q?DlXC/xRI+cpOc0DThwNjgjuqCoI8c4VyVk5k0PDTWKlY+SCF5hU95Ok7gQ1f?=
+ =?us-ascii?Q?osjcr2mXVEyyidhl14y0QnN4LE/z+bXxgzPUNQ14glWuDN3hnseJwcZ7pqME?=
+ =?us-ascii?Q?+FHzUkfk2bxv1JJgrxlVWVt/qMuwd3yGOQkRveNWHsByi+QDbGcJb9pkF7O4?=
+ =?us-ascii?Q?zuE9zr9OkiUD8T3U23BJJM8S+7t8efS9kUHxklkZtmsamjlOXH8Dk95geGkj?=
+ =?us-ascii?Q?8EQKKwsx+mTZUjcYwxgRQ3pmd/FBxPnzFG6tWDA7aSKesdN7uwaECJ1UNTzY?=
+ =?us-ascii?Q?FTt9SwYt3wFuipUDkZdyKaMPxPvG0URM8/oKVIInUB5XpI+XCjTeNGo6hc04?=
+ =?us-ascii?Q?m6H3Ybkb/NVbM+SCPYvsMJleqVumXsrMJcqgdjnGlDVCJYD6QRmlFf6Np/1a?=
+ =?us-ascii?Q?fYQvPyxJsCkaxcWWMAi11vY0hLmlP3/YqMSDsmlRNQkpYkmRfQDcahECYSye?=
+ =?us-ascii?Q?AzbVWMEusKB177oLoNcG3qezUUrjWsZlF4CTlAZcEPUoeWVuUsHIBgEm+jMa?=
+ =?us-ascii?Q?9Hbe6xn+uXZB1sTQliG88H1DbKFEDm4QoLS+W/RpGk/gpgg8cnX+KpRvbsIr?=
+ =?us-ascii?Q?RAXwIC2kRInPz66cY1Qx1fGxwmmLN5K1YtXQ7DcxEFur+0TkNPYRJF5cBh9i?=
+ =?us-ascii?Q?OwDWRhzrczWcYd5a/LbzLNGHRifim/CfudH7u2MPUgGz7BJE4ocRnULK2RQh?=
+ =?us-ascii?Q?IiskPV94hoL/IJ+GP31Q3yd0ZLBVFXjMDVYWnRkpDEn+AmuSEyA2pWx0JiZ+?=
+ =?us-ascii?Q?1xkXNVeZCA7LnUD7EUWdPlsGvIJQDTPcLfjgPMJvpsHfCwwNHCRGpikYS1A/?=
+ =?us-ascii?Q?mJW/h2w+CIwd/kjMHIZXBMCvg4aN5bOmkvREGg073Ng6mQ9nRgbRc1Ij5ocQ?=
+ =?us-ascii?Q?Y4l7PMc42Z+tSlnq3lCkUI7TCTwh4z928SRKfUekls3JiDtLj72CRYAsvFeG?=
+ =?us-ascii?Q?0ogep7XnclQVT1nazogrOQCuT9xlwNC8tw9lmKSJngxX2fyzduYNjHuV7UPs?=
+ =?us-ascii?Q?nD5YqP7Plii0NARHlVpldqkF8+Y6KKVNQO6rrU8oC0bTlTnm8VrxTsdB9TG0?=
+ =?us-ascii?Q?3TXN2WYt8a6ThUnNTbyDSHba2RkOZH6HjYYLOvfxUb1rvIHVS/WKCWTvukCP?=
+ =?us-ascii?Q?jleI8CZnqwGkeg22d2abXifke4LCHsky6EWJSY/Hk1BZiKcG+927GRnCgCeW?=
+ =?us-ascii?Q?IutM6hOkWHKKf2FEILARpXhvyQ/CDyM40IC/?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB9PR04MB9626.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(376014)(7416014)(52116014)(1800799024)(366016)(38350700014)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?57LyX22u26UaLyd3Sd5lzMH+k+pd7sbL2WnK114Q834PAFeP4XxCOXHzJ1U4?=
+ =?us-ascii?Q?nnfClnGDQCiR4lZPwy/2+ChuFN/MiJpWZGh0oDPQG0wQXT4Zn0AmTcVIVuBk?=
+ =?us-ascii?Q?q+mtKYzUxzS+zLrchO8BrKlLVYvw0Ho8cVhEZV94Eq0AuCSJoQXRSI3CW13X?=
+ =?us-ascii?Q?8pfwJ90yZpR9ifTTd0YOewnRhXqmw+2UI+hzK8L1+XqL+ybIj/L0TP/6g9eo?=
+ =?us-ascii?Q?0BZku9UiM5hfkeQuiC9oU4w4Jn+wj+AUFaftdqsVVSwL3eS1ibFUHMsCXip+?=
+ =?us-ascii?Q?+0aFJWzHzK2sOBMnn6NlZXvUl1Xb5Z27xkD0B14sJ+HToXyENshj3TOTAIYp?=
+ =?us-ascii?Q?hPC8wWM2i3r/rVlzLIjpPd2dkbqUvJO4a3OHSuevQVrjH+wrEUefzwki2nmV?=
+ =?us-ascii?Q?FVw1EhUTvyE41rHfMOouXflMHbHm/+oQPz88WZp2UwgB8f5Gjtqg7YFqmC9P?=
+ =?us-ascii?Q?W1HjNJeCgDpV0r6E3NMqDeLYuUW/i18ru2YENmb7IvbAESX7d8SN83j0Jp5T?=
+ =?us-ascii?Q?8xtLTNY3zA3nQzF1neTmvwtVXDGi45ujUMSv55H6aQE0A9SOHJX20kHDJx4M?=
+ =?us-ascii?Q?edkSFd7l6Ju8H96w+B0epAbh4tyV1o8+4aup/RWHP/i1xi525fDP78oJavMq?=
+ =?us-ascii?Q?ze3JSyuAMunUpkZGBq4AMyT7oiJ9wQd8673JjTfbKd3anJUlxtO8eIgERZ34?=
+ =?us-ascii?Q?YsZiE8XgW4SIfY8wzDAQ4QS+xJCIgFfGffl6yxTtzHQxpWx+FdWPnJUslci+?=
+ =?us-ascii?Q?qeBAliro7x5nZvVYlF861K/EhaP1ihItyQvF1IakQR3aWzw4KvvpwUWRKsNP?=
+ =?us-ascii?Q?LKu4nStoRFI1/Ju4N0/bYOCqxKpNFp0mtBkyM44jAKrdO4Y+UC9Gv2eLRL85?=
+ =?us-ascii?Q?bPAVVqM4CkA6nubeH2AdvKQCBIGcEQ8lewMEb7Ic2kVw3gbTT5VXfkHYOu/U?=
+ =?us-ascii?Q?IXmFRSizvVz5Hkh6BuXqXcy0VUikUbPqZ2FE+kbzRNpw6l8kSNY5CJnbqG8d?=
+ =?us-ascii?Q?HhrpyqZlswp89DxcrRNDp+CnaYFOIlqEqe3CavZQhwt5n9/sm9mF1EPxgH2a?=
+ =?us-ascii?Q?ls6nqvtChaAWkbyTX/TWs0wlrtHrSV3KmX8pRLa7OT2rtI5W0bR6DDeaJE5j?=
+ =?us-ascii?Q?12lTyt+B7mNIDWSldZP7/Uskg+w8+7qyco+Z7QSf1OO4IjeIwgqJwxD2rw3j?=
+ =?us-ascii?Q?IWO7Jt45H5rAsblS+Y4c5t/omofu4kTTfuPDJ1Q9efFF/5qZGpwQ8RSsukT7?=
+ =?us-ascii?Q?jQQheZPYb0iS1soe6wm5DhG6XZE8ddBV1E5vA9L5rf1x0Kw4S7vKKfwC/Wv/?=
+ =?us-ascii?Q?4gJuh9fmgdOBTS1PEMyrp0ppzTRQy1qvXpca8PFQOlsjMWoX2CgiyyNTWdQP?=
+ =?us-ascii?Q?EyHUFcG9JgZn9GhIq6kyxTlVMCM32oCunDQ1N8atfDPW2i004wORxzsUyWAW?=
+ =?us-ascii?Q?94CptZSHhLB7deXa4ReJ54gNJCkMj5Re5fDEd/3r9EIq+/JCQ8PvsWSmJza2?=
+ =?us-ascii?Q?aHBt2KfuyHN6EqQ3rlMz52xYiy9l1BEwtOceq78U3t6bQlQ8aQcQTvrlFlRA?=
+ =?us-ascii?Q?nN6FIrMG615pslhYDj7Ls99z6w72BmUps85aP+KY?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bf12c6e7-97a4-40aa-7572-08de1314573b
+X-MS-Exchange-CrossTenant-AuthSource: DB9PR04MB9626.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Oct 2025 15:45:21.9152
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: LO46TbaDkk972Vhff7cEqK+sbHEFmMHSuJqrdXtB+VqngsKPOf/z1eAtmEvTklQcSb4muQDZ2eoxJzwhigC1og==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB10095
 
-After introduction of dma_map_phys(), there is no need to convert
-from physical address to struct page in order to map page. So let's
-use it directly.
+On Thu, Oct 23, 2025 at 04:17:52PM +0900, Koichiro Den wrote:
 
-Signed-off-by: Chu Guangqing <chuguangqing@inspur.com>
----
- drivers/ntb/ntb_transport.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+NTB: epf: Avoid pci_iounmap() twice when PEER_SPAD and CONFIG share one BAR.
 
-diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
-index eb875e3db2e3..f7121a517021 100644
---- a/drivers/ntb/ntb_transport.c
-+++ b/drivers/ntb/ntb_transport.c
-@@ -1570,15 +1570,15 @@ static int ntb_async_rx_submit(struct ntb_queue_entry *entry, void *offset)
- 		goto err;
- 
- 	unmap->len = len;
--	unmap->addr[0] = dma_map_page(device->dev, virt_to_page(offset),
--				      pay_off, len, DMA_TO_DEVICE);
-+	unmap->addr[0] = dma_map_phys(device->dev, virt_to_phys(offset),
-+				      len, DMA_TO_DEVICE, 0);
- 	if (dma_mapping_error(device->dev, unmap->addr[0]))
- 		goto err_get_unmap;
- 
- 	unmap->to_cnt = 1;
- 
--	unmap->addr[1] = dma_map_page(device->dev, virt_to_page(buf),
--				      buff_off, len, DMA_FROM_DEVICE);
-+	unmap->addr[1] = dma_map_phys(device->dev, virt_to_phys(buf),
-+				      len, DMA_FROM_DEVICE, 0);
- 	if (dma_mapping_error(device->dev, unmap->addr[1]))
- 		goto err_get_unmap;
- 
-@@ -1851,8 +1851,8 @@ static int ntb_async_tx_submit(struct ntb_transport_qp *qp,
- 		goto err;
- 
- 	unmap->len = len;
--	unmap->addr[0] = dma_map_page(device->dev, virt_to_page(buf),
--				      buff_off, len, DMA_TO_DEVICE);
-+	unmap->addr[0] = dma_map_phys(device->dev, virt_to_phys(buf),
-+				      len, DMA_TO_DEVICE, 0);
- 	if (dma_mapping_error(device->dev, unmap->addr[0]))
- 		goto err_get_unmap;
- 
--- 
-2.43.7
+> When BAR_PEER_SPAD equals BAR_CONFIG,
 
+When BAR_PEER_SPAD and BAR_CONFIG share one PCI BAR, ...
+> the module teardown path ends up
+> calling pci_iounmap() on the same iomem with some offset, which is
+> unnecessary and triggers a kernel warning like the following:
+>
+>   Trying to vunmap() nonexistent vm area (0000000069a5ffe8)
+>   WARNING: mm/vmalloc.c:3470 at vunmap+0x58/0x68, CPU#5: modprobe/2937
+>   [...]
+>   Call trace:
+>    vunmap+0x58/0x68 (P)
+>    iounmap+0x34/0x48
+>    pci_iounmap+0x2c/0x40
+>    ntb_epf_pci_remove+0x44/0x80 [ntb_hw_epf]
+>    pci_device_remove+0x48/0xf8
+>    device_remove+0x50/0x88
+>    device_release_driver_internal+0x1c8/0x228
+>    driver_detach+0x50/0xb0
+>    bus_remove_driver+0x74/0x100
+>    driver_unregister+0x34/0x68
+>    pci_unregister_driver+0x34/0xa0
+>    ntb_epf_pci_driver_exit+0x14/0xfe0 [ntb_hw_epf]
+>   [...]
+>
+> Fix it by unmapping only once and only the base mapping when the two
+> windows share the same BAR.
+
+Fix it by unmapping only when PEER_SPAD and CONFIG use difference bars.
+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+
+>
+> Cc: <stable@vger.kernel.org>
+> Fixes: e75d5ae8ab88 ("NTB: epf: Allow more flexibility in the memory BAR map method")
+> Signed-off-by: Koichiro Den <den@valinux.co.jp>
+> ---
+>  drivers/ntb/hw/epf/ntb_hw_epf.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/ntb/hw/epf/ntb_hw_epf.c b/drivers/ntb/hw/epf/ntb_hw_epf.c
+> index d3ecf25a5162..9935da48a52e 100644
+> --- a/drivers/ntb/hw/epf/ntb_hw_epf.c
+> +++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
+> @@ -646,7 +646,8 @@ static void ntb_epf_deinit_pci(struct ntb_epf_dev *ndev)
+>  	struct pci_dev *pdev = ndev->ntb.pdev;
+>
+>  	pci_iounmap(pdev, ndev->ctrl_reg);
+> -	pci_iounmap(pdev, ndev->peer_spad_reg);
+> +	if (ndev->barno_map[BAR_PEER_SPAD] != ndev->barno_map[BAR_CONFIG])
+> +		pci_iounmap(pdev, ndev->peer_spad_reg);
+>  	pci_iounmap(pdev, ndev->db_reg);
+>
+>  	pci_release_regions(pdev);
+> --
+> 2.48.1
+>
 
