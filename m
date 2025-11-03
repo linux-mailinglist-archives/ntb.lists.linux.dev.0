@@ -1,68 +1,60 @@
-Return-Path: <ntb+bounces-1471-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-1473-lists+linux-ntb=lfdr.de@lists.linux.dev>
 X-Original-To: lists+linux-ntb@lfdr.de
 Delivered-To: lists+linux-ntb@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id A314BC2A533
-	for <lists+linux-ntb@lfdr.de>; Mon, 03 Nov 2025 08:30:34 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id D55DCC2A63B
+	for <lists+linux-ntb@lfdr.de>; Mon, 03 Nov 2025 08:45:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3B3E34EBA68
-	for <lists+linux-ntb@lfdr.de>; Mon,  3 Nov 2025 07:28:52 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 81630340F65
+	for <lists+linux-ntb@lfdr.de>; Mon,  3 Nov 2025 07:45:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 347A929D280;
-	Mon,  3 Nov 2025 07:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E1B42C0277;
+	Mon,  3 Nov 2025 07:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tkos.co.il header.i=@tkos.co.il header.b="vq53pz0H"
+	dkim=pass (2048-bit key) header.d=tkos.co.il header.i=@tkos.co.il header.b="BltxVg70"
 X-Original-To: ntb@lists.linux.dev
-Received: from mail.tkos.co.il (golan.tkos.co.il [84.110.109.230])
+Received: from mail.tkos.co.il (guitar.tkos.co.il [84.110.109.230])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B02E28725C
-	for <ntb@lists.linux.dev>; Mon,  3 Nov 2025 07:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D80A2BE63A
+	for <ntb@lists.linux.dev>; Mon,  3 Nov 2025 07:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.110.109.230
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762154927; cv=none; b=SXWwJnCe3jr84tL6Ig+m/X6SfM4+BKOI4ytHiLcXcIJ7ky3cqtKUMavwokkI/P6GGBgTj3bUfrUccSruxSjXSRZZeL3T4fZxkJPWLIr86KLGtmZLkLAya1kH3HSmUemTV8hLv0BBOi36qXW1kU7TSIaIBcTlD6alujz3fPzIkRI=
+	t=1762155923; cv=none; b=hJcVncIJMCfNNkm5dc2jNOP3KxnLmbQ2i4Z1euGRoU7VKmXqsht46uFA9R+aO5rRnLY3R6TYU3BhVxLIOSqwlFf0lQcy2cvDspU3Gbkknw5PXDh1EtzO2q+ADPlouO3LK8/jUsshwD5INFmF5VNy63LfTd4h7eVC6NRFlyhw6gU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762154927; c=relaxed/simple;
-	bh=aWP/1DnmAt6yZotpsPuloZKtxkeL5p9NcK/wJv2hS/8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dwWT01yuzqboS8/LVvg990rDD8PWPOmE0yGbEmwEQzTiNkuw0+SHyy8vszBktND1xtQKH620biqcwFXHonpxTNyMD5Qy5CUjppKwY9Ke4qlRKVZylT85yEoQi572EXJov6SoXW2iQ72iF9uQRqrfpBLEf1b3PRi48dO9zTJUnTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tkos.co.il; spf=pass smtp.mailfrom=tkos.co.il; dkim=pass (2048-bit key) header.d=tkos.co.il header.i=@tkos.co.il header.b=vq53pz0H; arc=none smtp.client-ip=84.110.109.230
+	s=arc-20240116; t=1762155923; c=relaxed/simple;
+	bh=WN3XM1IqSMBLFAW4B0wIfhGc+jipKWuvmVHo10mu5D0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NNom8hHbn4K8e3JGnM/KFQVutG0RNGVMEYex+eZWeKwYw/by3ff70HOsKnphMbbohtdhWifxnuylycSQ9BG9AYuX0QVRBjSBp+4Cum32Ck8wy++fjU9BBiJTamIcQSEjq/gmqwgsaBPIBF3aC0oEUf2BuUrTAlv88Y3JCe+40Sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tkos.co.il; spf=pass smtp.mailfrom=tkos.co.il; dkim=pass (2048-bit key) header.d=tkos.co.il header.i=@tkos.co.il header.b=BltxVg70; arc=none smtp.client-ip=84.110.109.230
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tkos.co.il
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tkos.co.il
 Received: from tarshish.tkos.co.il (unknown [10.0.8.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.tkos.co.il (Postfix) with ESMTPS id 124D8440F4B;
-	Mon,  3 Nov 2025 09:27:05 +0200 (IST)
+	by mail.tkos.co.il (Postfix) with ESMTPS id 0BB69440F4B;
+	Mon,  3 Nov 2025 09:43:48 +0200 (IST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tkos.co.il;
-	s=default; t=1762154825;
-	bh=aWP/1DnmAt6yZotpsPuloZKtxkeL5p9NcK/wJv2hS/8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vq53pz0HLW69oxk63SLB01mYpEDA8iu7yLb3bTLLdVWNVwyE6qD6NqZuFMu+uAlA2
-	 4kywb82rFTxY9Jf7zTMHj7Sa0DrpzADlnEwJkGn0/i38l88O79L2rEDA/28CEblxUR
-	 NcLFWrQcRN8rupVd+6FpB0aEiGSFeXx1CsevYQAdGkF3LzML3rZcH7zxBb/JW7sg+K
-	 evNpiZMacbpcvWx7Br0UNsQjdmnbRfLFMlTTbhYPijsuGZ8nS0Cfutgm89kOhRmpV5
-	 EWEIN834F17+nW/xE9xtbrq/FQDozpYy93kOq5hSSQewb0W4UAfC7OH1M/u4Fvgxie
-	 qScA0+dAqzdIw==
+	s=default; t=1762155828;
+	bh=WN3XM1IqSMBLFAW4B0wIfhGc+jipKWuvmVHo10mu5D0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=BltxVg70Xn9Ixm/vmCBY14zy8KNVpBmphLrfqpNYdPP/fYH8SZ/nsL1bECGo1RWYE
+	 sK+XH3fhJlCkp/C9MTZjRMLCvpKU9+9RN6fgKT8/Ku/qgOnHkKqlKCRaufoNoTRunE
+	 XF60cGIg4OFxj9x3zMUE4a7UYxNOpn2HVu4ZflbYVXAH+2WJUIpIQ9BlKSutq11j5d
+	 13qx+FQmOWOPF1deRnGkVFzxQs8nUolTNeyWzqGi2QXmq3BK5LS3orvnxnpX42/734
+	 /2kv5F9SurwgQNpmaObYqYS45q0XBLujbQJ98RDIZ+hD9PBKxldmjadCrc1iJXECAA
+	 TcIGAn5Gz4YEg==
 From: Baruch Siach <baruch@tkos.co.il>
-To: Manivannan Sadhasivam <mani@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: linux-pci@vger.kernel.org,
-	ntb@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Jon Mason <jdmason@kudzu.us>,
+To: Jon Mason <jdmason@kudzu.us>,
 	Dave Jiang <dave.jiang@intel.com>,
-	Allen Hubbe <allenbh@gmail.com>,
+	Allen Hubbe <allenbh@gmail.com>
+Cc: ntb@lists.linux.dev,
 	Baruch Siach <baruch@tkos.co.il>
-Subject: [PATCH 2/2] Documentation: PCI: endpoint: fix section cross reference name
-Date: Mon,  3 Nov 2025 09:28:31 +0200
-Message-ID: <f53830741db9d0351d1290fdf8f250bc685620c1.1762154911.git.baruch@tkos.co.il>
+Subject: [PATCH] NTB: epf: allow built-in build
+Date: Mon,  3 Nov 2025 09:44:55 +0200
+Message-ID: <514bd0fb18e83026af0a3e90683f8a2469564e06.1762155895.git.baruch@tkos.co.il>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <b51c2a69ffdbfa2c359f5cf33f3ad2acc3db87e4.1762154911.git.baruch@tkos.co.il>
-References: <b51c2a69ffdbfa2c359f5cf33f3ad2acc3db87e4.1762154911.git.baruch@tkos.co.il>
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
@@ -71,36 +63,25 @@ List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Refer to the correct name on section in this document.
+ntb_hw_epf works just as well when built into the kernel image. Don't
+force module build.
 
-Fixes: 4ac8c8e52cd9 ("Documentation: PCI: Add specification for the PCI vNTB function device")
 Signed-off-by: Baruch Siach <baruch@tkos.co.il>
 ---
- Documentation/PCI/endpoint/pci-vntb-howto.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ntb/hw/epf/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/Documentation/PCI/endpoint/pci-vntb-howto.rst b/Documentation/PCI/endpoint/pci-vntb-howto.rst
-index 72b7a71b2e64..18146155c350 100644
---- a/Documentation/PCI/endpoint/pci-vntb-howto.rst
-+++ b/Documentation/PCI/endpoint/pci-vntb-howto.rst
-@@ -139,7 +139,7 @@ lspci Output at Host side
- -------------------------
- 
- Note that the devices listed here correspond to the values populated in
--"Creating pci-epf-ntb Device" section above::
-+"Creating pci-epf-vntb Device" section above::
- 
- 	# lspci
-         00:00.0 PCI bridge: Freescale Semiconductor Inc Device 0000 (rev 01)
-@@ -152,7 +152,7 @@ lspci Output at EP Side / Virtual PCI bus
- -----------------------------------------
- 
- Note that the devices listed here correspond to the values populated in
--"Creating pci-epf-ntb Device" section above::
-+"Creating pci-epf-vntb Device" section above::
- 
-         # lspci
-         10:00.0 Unassigned class [ffff]: Dawicontrol Computersysteme GmbH Device 1234 (rev ff)
+diff --git a/drivers/ntb/hw/epf/Kconfig b/drivers/ntb/hw/epf/Kconfig
+index 6197d1aab344..314485574bf8 100644
+--- a/drivers/ntb/hw/epf/Kconfig
++++ b/drivers/ntb/hw/epf/Kconfig
+@@ -1,6 +1,5 @@
+ config NTB_EPF
+ 	tristate "Generic EPF Non-Transparent Bridge support"
+-	depends on m
+ 	help
+ 	  This driver supports EPF NTB on configurable endpoint.
+ 	  If unsure, say N.
 -- 
 2.51.0
 
