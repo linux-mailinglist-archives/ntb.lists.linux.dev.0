@@ -1,108 +1,176 @@
-Return-Path: <ntb+bounces-1936-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-1937-lists+linux-ntb=lfdr.de@lists.linux.dev>
 Delivered-To: lists+linux-ntb@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QOJvMRPDn2nkdgQAu9opvQ
-	(envelope-from <ntb+bounces-1936-lists+linux-ntb=lfdr.de@lists.linux.dev>)
-	for <lists+linux-ntb@lfdr.de>; Thu, 26 Feb 2026 04:50:43 +0100
+	id QFjgIn75n2n3fAQAu9opvQ
+	(envelope-from <ntb+bounces-1937-lists+linux-ntb=lfdr.de@lists.linux.dev>)
+	for <lists+linux-ntb@lfdr.de>; Thu, 26 Feb 2026 08:42:54 +0100
 X-Original-To: lists+linux-ntb@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58D631A0B09
-	for <lists+linux-ntb@lfdr.de>; Thu, 26 Feb 2026 04:50:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E4C041A1F89
+	for <lists+linux-ntb@lfdr.de>; Thu, 26 Feb 2026 08:42:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2A7843020A71
-	for <lists+linux-ntb@lfdr.de>; Thu, 26 Feb 2026 03:50:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A4DDF30075DB
+	for <lists+linux-ntb@lfdr.de>; Thu, 26 Feb 2026 07:42:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A09E3876AD;
-	Thu, 26 Feb 2026 03:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47BE538F938;
+	Thu, 26 Feb 2026 07:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jeRQCogR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hd+UG/jP"
 X-Original-To: ntb@lists.linux.dev
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4545B2C08C4;
-	Thu, 26 Feb 2026 03:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24ADC38F933;
+	Thu, 26 Feb 2026 07:42:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772077806; cv=none; b=SFV1dSJCD6AUzcKTfYrS+tf5iIcLtiBe1+KcIZlPWuN2cBIvVTrRAzLvSWNnbHltOCcH2Emfr+0M47IcXuzv2p53KNszL/G1lxs6gayD1YBvRKU4VITIR/0J9LnZj8tCpBAtvEZBMLcUaVhIWHNC3NLcVCGLrRbmqFEFSiLHuQE=
+	t=1772091772; cv=none; b=EWdFXwdM7aL7Nawdag54n6CZAU5YTY8j+zbRy8wKFjBySLPOPtIrOlgWsz4SZ/8XUZy/A7SVS+tvackRhLBVRyuNFD5cVqXqBfvbQ5kiaE+92W31/rT2AV1LZLsYNPaT92iB2ZrUYH/4WRWKuF4TbK8SCGCCEd1B31DgyYRf2sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772077806; c=relaxed/simple;
-	bh=xxHKk4q36A/mXOTAolHsUTG9EkGS8bqo95HONHTr6K4=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gYzXrIvltHa1pN97JGReVW8Ri5+5mL/tr4+AO3ZOTBmDVSw7FLHnHXhxiZGkThFffMbHf75F5w8Z8AP2iKlKym4B+7N6JQoUXzl9fswu5ObFNSo0p2zvlKpoQsP5b3L1w0noh3WaWFk1hwhxJMVUVoPX7bz3faFAG9MdJ+rEwjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jeRQCogR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D01C116C6;
-	Thu, 26 Feb 2026 03:50:05 +0000 (UTC)
+	s=arc-20240116; t=1772091772; c=relaxed/simple;
+	bh=42JJgJXHDprNmz7eMBbUd9LtRDq0lfzNn/GUy/i9fOk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kGyhCCw8xplNcfa9x8fg1SfVyUv4y7lN9xN6wJYEMfIlMIU94gd4IeIJvo6s7CaxP1Ladt1Rbzitg5j1LfZdYMqs+EERgW5KFKIXl/7VY6gU86D1BQFdndyfZa9oaJE3Sy+iF+9RzbEkArPCB/x5b3V12kC6giVVqzbnxZHlX50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hd+UG/jP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CECC5C19422;
+	Thu, 26 Feb 2026 07:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772077806;
-	bh=xxHKk4q36A/mXOTAolHsUTG9EkGS8bqo95HONHTr6K4=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=jeRQCogRYffBWqKh4OgzlrBJlyTnCOuPaYCdt2oF4B1/Q069D3p3lYcrRyUplT76V
-	 D8ybdk6SR6KcSlHu6DbVHqfGkDr9xvNtHEnQIkaksLPqCoPrz8Uukv0cdg+HnjTB9/
-	 X3eg1Shf8wh3mhqVic8iyz96sT1dbIn0BMOcAWMs+DzXIsAZwJhIr4FjAXZ4rop5qR
-	 wC2oGU7K5RXT2NZf/DRVA53SZOTCqBo7JKGQGdi5oe4YPSBwognG7twhfSUG2qqPq4
-	 WIWCDbKmRhEyEG4bJH3V6oeLfYDguYq6A8nIem6ZVl61JNiyK8bmD0UijiKn3hZEBV
-	 Y/9YGvVId6oIQ==
-Date: Wed, 25 Feb 2026 19:50:04 -0800
-From: Jakub Kicinski <kuba@kernel.org>
+	s=k20201202; t=1772091771;
+	bh=42JJgJXHDprNmz7eMBbUd9LtRDq0lfzNn/GUy/i9fOk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Hd+UG/jPypv+sizldrSxuZo1HmVigf3zTtE8Zl4rdpXXOt4KSSjKD715TF7upVzx8
+	 Hsv6rvNN98IY/v4ovHt2i0t3HFIRyDqE5t48BjhBFk4uWnvQDVEj9oiZxjQPiVooxO
+	 63ceccOgTOv8BVlbq1DAr7yKQFmKucllW+3wT2kr1iykthSaLlY+CJyWQP/DQYfZVG
+	 qaEzgNJkwQng9ZsRxKocyg/aC0851Ne24B+P00xvcVXYICwc7nZT1Y/fdB18qxUsBD
+	 T/BT4mFzhZtettLIprlhBtuJTRYH+egQjyDRLz+QZNGqf6/1Qvqu9YjacG+38xos8q
+	 SRLfxMDQwMmwg==
+Date: Thu, 26 Feb 2026 13:12:42 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
 To: Koichiro Den <den@valinux.co.jp>
-Cc: Jon Mason <jdmason@kudzu.us>, Dave Jiang <dave.jiang@intel.com>, Allen
- Hubbe <allenbh@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>, "David S.
- Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo
- Abeni <pabeni@redhat.com>, ntb@lists.linux.dev, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] net: ntb_netdev: Add Multi-queue support
-Message-ID: <20260225195004.7e9c8b3a@kernel.org>
-In-Reply-To: <20260224152809.1799199-1-den@valinux.co.jp>
-References: <20260224152809.1799199-1-den@valinux.co.jp>
+Cc: ntb@lists.linux.dev, linux-pci@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Frank.Li@nxp.com, jdmason@kudzu.us, dave.jiang@intel.com, 
+	allenbh@gmail.com, kwilczynski@kernel.org, kishon@kernel.org, bhelgaas@google.com, 
+	jbrunet@baylibre.com, lpieralisi@kernel.org, yebin10@huawei.com, 
+	geert+renesas@glider.be, arnd@arndb.de
+Subject: Re: [PATCH v4 0/7] PCI: endpoint/NTB: Harden vNTB resource management
+Message-ID: <o35hfok2oegyxoajfhu3vwm2sstrykpuz3aytmrpy47popwhba@2ps7icbkx7e3>
+References: <20251202072348.2752371-1-den@valinux.co.jp>
+ <7hqhqbtqvrw6bqraykdbccllags6gyal6rekb6yehcfx2tzhet@lex46cqheta5>
+ <ap43e4jypppkpavrhf4ewgeivwnfrlldykkqyf3oqk6i4ckbhx@cg47vhgjzbrc>
+ <zet2ktcxydgsbf5ij4476vqqrb4apwfk2iag737ht5htphobhs@3dbc6i4vl26y>
+ <eazctmg7ptxadg4oq34e2ydib2frm4x76f6jpzm763uswocufl@uwpz5zhkd7sr>
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
 List-Id: <ntb.lists.linux.dev>
 List-Subscribe: <mailto:ntb+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <eazctmg7ptxadg4oq34e2ydib2frm4x76f6jpzm763uswocufl@uwpz5zhkd7sr>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kudzu.us,intel.com,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,lists.linux.dev,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-1936-lists,linux-ntb=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-1937-lists,linux-ntb=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kuba@kernel.org,ntb@lists.linux.dev];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[lists.linux.dev,vger.kernel.org,nxp.com,kudzu.us,intel.com,gmail.com,kernel.org,google.com,baylibre.com,huawei.com,glider.be,arndb.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-ntb,netdev];
-	RCPT_COUNT_SEVEN(0.00)[11];
 	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.997];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,ntb@lists.linux.dev];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-ntb,renesas];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 58D631A0B09
+X-Rspamd-Queue-Id: E4C041A1F89
 X-Rspamd-Action: no action
 
-On Wed, 25 Feb 2026 00:28:06 +0900 Koichiro Den wrote:
-> Usage (example):
->   - modprobe ntb_netdev ntb_num_queues=<N> # Patch 2 takes care of it
->   - ethtool -l <ifname> # Patch 3 takes care of it
+On Wed, Feb 18, 2026 at 10:09:13PM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Feb 19, 2026 at 01:36:16AM +0900, Koichiro Den wrote:
+> > On Wed, Feb 18, 2026 at 09:52:08PM +0530, Manivannan Sadhasivam wrote:
+> > > On Wed, Feb 18, 2026 at 09:45:22PM +0530, Manivannan Sadhasivam wrote:
+> > > > On Tue, Dec 02, 2025 at 04:23:41PM +0900, Koichiro Den wrote:
+> > > > > The vNTB endpoint function (pci-epf-vntb) can be configured and reconfigured
+> > > > > through configfs (link/unlink functions, start/stop the controller, update
+> > > > > parameters). In practice, several pitfalls present: double-unmapping when two
+> > > > > windows share a BAR, wrong parameter order in .drop_link leading to wrong
+> > > > > object lookups, duplicate EPC teardown that leads to oopses, a work item
+> > > > > running after resources were torn down, and inability to re-link/restart
+> > > > > fundamentally because ntb_dev was embedded and the vPCI bus teardown was
+> > > > > incomplete.
+> > > > > 
+> > > > > This series addresses those issues and hardens resource management across NTB
+> > > > > EPF and PCI EP core:
+> > > > > 
+> > > > > - Avoid double iounmap when PEER_SPAD and CONFIG share the same BAR.
+> > > > > - Fix configfs .drop_link parameter order so the correct groups are used during
+> > > > >   unlink.
+> > > > > - Remove duplicate EPC resource teardown in both pci-epf-vntb and pci-epf-ntb,
+> > > > >   avoiding crashes on .allow_link failures and during .drop_link.
+> > > > > - Stop the delayed cmd_handler work before clearing BARs/doorbells.
+> > > > > - Manage ntb_dev as a devm-managed allocation and implement .remove() in the
+> > > > >   vNTB PCI driver. Switch to pci_scan_root_bus().
+> > > > > 
+> > > > > With these changes, the controller can now be stopped, a function unlinked,
+> > > > > configfs settings updated, and the controller re-linked and restarted
+> > > > > without rebooting the endpoint, as long as the underlying pci_epc_ops
+> > > > > .stop() is non-destructive and .start() restores normal operation.
+> > > > > 
+> > > > > Patches 1-5 carry Fixes tags and are candidates for stable.
+> > > > > Patch 6 is a preparatory one for Patch 7.
+> > > > > Patch 7 is a behavioral improvement that completes lifetime management for
+> > > > > relink/restart scenarios.
+> > > > > 
+> > > > 
+> > > > Are there any dependencies between pci-epf-vntb and ntb-epf drivers? If they are
+> > > > not dependent, you should always post them separately.
+> > 
+> > I'll make sure to be more careful.
+> > 
+> > > > For this series, I can
+> > > > merge the endpoint patches (except patch 4 which got merged in other form).
+> > > > 
+> > > 
+> > > Sry, patch 2.
+> > 
+> > There are no dependencies between Patch 1 and Patch 3-7.
+> > 
+> > One minor note: I just realized that the Patch 5 subject is inconsistent.
+> > 
+> >   NTB: epf: vntb: Stop cmd_handler work in epf_ntb_epc_cleanup
+> > 
+> > should have been
+> > 
+> >   PCI: endpoint: pci-epf-vntb: Stop cmd_handler work in epf_ntb_epc_cleanup
+> > 
+> > If possible, could you please adjust the subject when applying?
+> > 
+> 
+> Will do.
+> 
 
-Module parameters are not a very user friendly choice for uAPI.
-You use ethtool -l for GET, what's the challenge with implementing SET
-via ethtool -L?
+This series fails to apply cleanly on top of pci/endpoint branch. Can you please
+rebase and send the endpoint patches separately (with all changes)?
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
