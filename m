@@ -1,48 +1,48 @@
-Return-Path: <ntb+bounces-1976-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-1977-lists+linux-ntb=lfdr.de@lists.linux.dev>
 Delivered-To: lists+linux-ntb@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EKHNEq2to2kmJwUAu9opvQ
-	(envelope-from <ntb+bounces-1976-lists+linux-ntb=lfdr.de@lists.linux.dev>)
-	for <lists+linux-ntb@lfdr.de>; Sun, 01 Mar 2026 04:08:29 +0100
+	id YB7kM1ivo2kmJwUAu9opvQ
+	(envelope-from <ntb+bounces-1977-lists+linux-ntb=lfdr.de@lists.linux.dev>)
+	for <lists+linux-ntb@lfdr.de>; Sun, 01 Mar 2026 04:15:36 +0100
 X-Original-To: lists+linux-ntb@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A48561CE3E8
-	for <lists+linux-ntb@lfdr.de>; Sun, 01 Mar 2026 04:08:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AA99E1CE5C9
+	for <lists+linux-ntb@lfdr.de>; Sun, 01 Mar 2026 04:15:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DB369304CEA0
-	for <lists+linux-ntb@lfdr.de>; Sun,  1 Mar 2026 01:59:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 61DAB335A07E
+	for <lists+linux-ntb@lfdr.de>; Sun,  1 Mar 2026 02:06:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E094B2E7164;
-	Sun,  1 Mar 2026 01:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCA722EE262;
+	Sun,  1 Mar 2026 02:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nz6Guyov"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vxc6f2su"
 X-Original-To: ntb@lists.linux.dev
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9762D9EFF;
-	Sun,  1 Mar 2026 01:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA136273D77;
+	Sun,  1 Mar 2026 02:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772330325; cv=none; b=OiAyW7M4xsjviiymRzg4Msx8gCDtHELrGfb7Q9dSiNRqc5p2mUF0Dc4YZeYN2qXdgqElggb6NQUWpzXlk0O7zkv9kqRu0PqlTvnVDxfWIENmAtB0D0H/J2ev69+2aUg+y+9IGa1nczZ3t8dUQTiJuKW7nNkYQS5pF5eHU1jx7cI=
+	t=1772330753; cv=none; b=Aon3siv4Y3oamuCVXsrvzaO5yYeaK6zzA553UQJwXmPgKObp/CwCnS52ivaErYlV/5nWPZVs4nE6Hdsz6vFRQY61ygVYZ229KAhjpHhPvzkn0iK6nH1UTmkb7DJMasN/nQi46mwsxJms1N3A0TXmeRGnr4VPnaBLnDaQV/knGUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772330325; c=relaxed/simple;
-	bh=jjQsGJzZIdXuKSGmbymMAftWK8PbGeFSQuhz1M3uBJg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZU5WZLEngj7Y07IXR/fU1kwTXdyUfSznpTOYyiHErajefwFOo3TD88hgBtzvHIdIH8+bc9gkMbnAt961o70gBTQWRGwLj+WVe8b62eSjrzr0u5311X5A3c6TWfSky9zfzn6x0MnxrRRz6yaqPL15M64gsUQiMM0oyD5FP0DwbEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nz6Guyov; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9F5C19424;
-	Sun,  1 Mar 2026 01:58:44 +0000 (UTC)
+	s=arc-20240116; t=1772330753; c=relaxed/simple;
+	bh=KgQCxdZohFyJ8LaaVOXU0cS1MeqPQQt5jSy9Q7V3Ed4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=k/GEhK41U9ZwF5sqKUQDQzkPHaUL+CDcXAfSdZHjAfjpHmh0y0AuhUeXgmFqdZY0mSGco+oZu/KmKg7VrfLxoMfJWmrcfesphBk6H5tOHRhasuk7TgzDFpTc5SwQOfjDujy5fRbNyMBPTQxapPr/AOcHenDZOgeIvtPFcmQOqLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vxc6f2su; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2EF3C19421;
+	Sun,  1 Mar 2026 02:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772330325;
-	bh=jjQsGJzZIdXuKSGmbymMAftWK8PbGeFSQuhz1M3uBJg=;
+	s=k20201202; t=1772330753;
+	bh=KgQCxdZohFyJ8LaaVOXU0cS1MeqPQQt5jSy9Q7V3Ed4=;
 	h=From:To:Cc:Subject:Date:From;
-	b=nz6GuyovywMtMLvcxCz4Asnk4ILP5lJHZLY1ALgmYJ04JdwYj0AfaEQU6KIC4u+P9
-	 7+hofqvzBHGluckqNYR59lLLeSN3THTnMOA9vG5afkwLMyQ60ze7jHg3av3sxvDvor
-	 pf2NptIq8wEVRscWvy7KZ4Ibm0BNYoc+DBh0+W6E/+XZoaSJP9+vvxzpbVbH0WIS+B
-	 KwzMgo9axgxeiJ7taBYdN2QkJOTY5cW5/gwabdlmX5VERPMnfqqGsjw30XvmiPxklO
-	 E5R12ifHAbr8Tg0T42igBgClwJM20EqwQTk+/Cg6yL+ohXxAZXz3ZhQOaxFYFued/v
-	 ogwCoJHMde+YA==
+	b=Vxc6f2suvQPgblquw4c/IY+g/sXf31iGNapUdLEXyqldHOv63sU4OkUAju2Jz1JP0
+	 hFcBSIFZs5eiVn+tiIiyTbDhV0PZRTKzSPkOVZWGM8K0a+3k5V2ggPSwPWpLpa2DH8
+	 7FDSpHvi7L1MXl746e6BAuHhE3ApDejXpPgW/MrnvkovJzaS+FNc59hxD1PpqCZziH
+	 AbY4Ox2g+0DSTJlsqj3pzxaDo6DDr02A2iKvtTyy+A4QVohkgjnMSmB4fapNzCLjD2
+	 Qoa9w5bNt9Ae7tIEoNtDjH2wiqN1YFRfatjxlwpeC48ctbbh5tdZyRD+g2/gcprwM7
+	 gMrWArHDQ2yWQ==
 From: Sasha Levin <sashal@kernel.org>
 To: stable@vger.kernel.org,
 	den@valinux.co.jp
@@ -50,9 +50,9 @@ Cc: Frank Li <Frank.Li@nxp.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Jon Mason <jdmason@kudzu.us>,
 	ntb@lists.linux.dev
-Subject: FAILED: Patch "NTB: ntb_transport: Fix too small buffer for debugfs_name" failed to apply to 5.15-stable tree
-Date: Sat, 28 Feb 2026 20:58:43 -0500
-Message-ID: <20260301015843.1724298-1-sashal@kernel.org>
+Subject: FAILED: Patch "NTB: ntb_transport: Fix too small buffer for debugfs_name" failed to apply to 5.10-stable tree
+Date: Sat, 28 Feb 2026 21:05:51 -0500
+Message-ID: <20260301020551.1734713-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
@@ -75,7 +75,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-1976-lists,linux-ntb=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-1977-lists,linux-ntb=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	TO_DN_SOME(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
@@ -90,11 +90,11 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-ntb];
 	RCPT_COUNT_FIVE(0.00)[6];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[kudzu.us:email,valinux.co.jp:email,intel.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,nxp.com:email]
-X-Rspamd-Queue-Id: A48561CE3E8
+	DBL_BLOCKED_OPENRESOLVER(0.00)[valinux.co.jp:email,intel.com:email,nxp.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,kudzu.us:email]
+X-Rspamd-Queue-Id: AA99E1CE5C9
 X-Rspamd-Action: no action
 
-The patch below does not apply to the 5.15-stable tree.
+The patch below does not apply to the 5.10-stable tree.
 If someone wants it applied there, or to any other stable or longterm
 tree, then please email the backport, including the original git commit
 id to <stable@vger.kernel.org>.
