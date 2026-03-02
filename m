@@ -1,53 +1,54 @@
-Return-Path: <ntb+bounces-1987-lists+linux-ntb=lfdr.de@lists.linux.dev>
+Return-Path: <ntb+bounces-1989-lists+linux-ntb=lfdr.de@lists.linux.dev>
 Delivered-To: lists+linux-ntb@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +Oz8HcCjpWngCwAAu9opvQ
-	(envelope-from <ntb+bounces-1987-lists+linux-ntb=lfdr.de@lists.linux.dev>)
-	for <lists+linux-ntb@lfdr.de>; Mon, 02 Mar 2026 15:50:40 +0100
+	id eLxrGeGjpWngCwAAu9opvQ
+	(envelope-from <ntb+bounces-1989-lists+linux-ntb=lfdr.de@lists.linux.dev>)
+	for <lists+linux-ntb@lfdr.de>; Mon, 02 Mar 2026 15:51:13 +0100
 X-Original-To: lists+linux-ntb@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAFBF1DB2C7
-	for <lists+linux-ntb@lfdr.de>; Mon, 02 Mar 2026 15:50:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B2A371DB2EB
+	for <lists+linux-ntb@lfdr.de>; Mon, 02 Mar 2026 15:51:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3D6533037980
-	for <lists+linux-ntb@lfdr.de>; Mon,  2 Mar 2026 14:45:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 952AA3086044
+	for <lists+linux-ntb@lfdr.de>; Mon,  2 Mar 2026 14:45:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8308E33F8BA;
-	Mon,  2 Mar 2026 14:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 569F54014A4;
+	Mon,  2 Mar 2026 14:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="aFWc1AwZ"
+	dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="n/kT+yEi"
 X-Original-To: ntb@lists.linux.dev
 Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021129.outbound.protection.outlook.com [40.107.74.129])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8B11D0DEE
-	for <ntb@lists.linux.dev>; Mon,  2 Mar 2026 14:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6351D0DEE
+	for <ntb@lists.linux.dev>; Mon,  2 Mar 2026 14:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.129
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772462740; cv=fail; b=n0ntMrgEw3RA1nKoymXoq3hfq3jKq7jMAlBzau74dP79Dz55hm1PqQwM3F4ROLTE6IVbbiNc2dITXA6/SdvgcJXAuQqQ3BNG4IzEpionxtl/u7S01gEqfNt3+G7EfrwKtip93Rv3+26HMMOAYGKrvy/KpbDRBikKA7cOe4M0DAc=
+	t=1772462743; cv=fail; b=SbiQdzfiCH0nU+bHOGC6tjgJWH6hhTQoJRN0eIgb+zYP8//LPPhWpGLAUmrLvKCGcKJUT3WqbPJDzJa6J+BXxSSaD3nDxdfyCsGVN4Y8ivPGoxBs16pQTT3mIWVdgGvuguh3bwK3cCIZH9vzNY/j+GMKusKLf8dYq8eunS/iQ4Q=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772462740; c=relaxed/simple;
-	bh=e1puYdwIW/fzthIG6HzMDcIBVF7E69UFW5SiuPFep0E=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=T2VmHnaNz+uZkgUcXYsfdHdK1Nc/xVHsgPvBLCTITfrmlB9tE9Fqe9QLhM9OLhxb32Ys3GM/v1SI9C05rpMB1YsXmpv5yP8FvsoFusxrXNYVPzDUdaD7ivhmVQiXfzzDPXLk5BldaayrX9p+BqRoyFyusHanvjN0FGncWzHHWos=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=aFWc1AwZ; arc=fail smtp.client-ip=40.107.74.129
+	s=arc-20240116; t=1772462743; c=relaxed/simple;
+	bh=6W9eAwv7JL9SIBTmoSKAMVIx6d+AklrbOxZdv1ioRU8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=IHivHWc8LaBZ17KOrOTJB4ePVWPSdxy40mlxolAEHRjw1QPE6lkBPyjPt+F1dj5+/lqEOvLcvNIvfpqrERi6Jzt2OL0Mx6KFwucXgo4mNC0WgSR3cLQpJbjSFi5PwCDOo6A7isImWaYAgz1Im4IgO3jTi+fftXJp5IEZgrcE+xY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=pass (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=n/kT+yEi; arc=fail smtp.client-ip=40.107.74.129
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=K+zFRPAPI05YlVZwsTZIXehQ04Yy39NNqwtHtNofosDZBIgmfFSnw/AfmJFkqSyQ04l2g90fFR9RGN15VtkT1iDL3iT9BACg9My4eTd4hAYLOB1T94FWyLEV3hwXv2cGaPi+YnIak+ikXupbR04Q/u2g4rhY3uTa7pnYcxz3Baoyg4iFC5dRtR6evZaFeJHIdZvkSx5eDuui6Iqq1GqUJCJ6SLM8QZOYiD/NoHOzV/V8ONH3n8FMpntQxYS3gPdO2ZjdEky8El2w2IifrPe/5tv6xWCLOPvG2SNW7oAVn9KmW5hk62ff5X2vZM8ZyJqzHA5B0q7hdqw5nAj6B7iRpQ==
+ b=Z4PEkidLdQVLrUJcZAQ0tLWgz+Z3qwfAsSEf72DOGOS4t+r6SFtxpucwIcOYjwkClmLspcKaXJwbbpQkp4K50UIBZljJhRiJKijjFd1rjwOFG53H5fnSJbHK9wbtS+nJyMaQIe97BngFMN/mUH6inVBO/hOokS6vNhtsPDYIqbxZmPFLMoy13DpYa1z5gLCC8XXlws8NylvAE2Ti63iFXnICRKu/+VOlbtDk/yfi88b24SDi40c+EAicckPZ8XG0tC7dtEHnQkOFlS9s9EXxdm0XmBBH11yypUooz5xP9RwTxW/KZ0ALAI+CTBF9gKfJuJCDFUc0NPRu00n+utKeGw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ph8XTGz4ELawyVovV+4LKgzxdNRqmCogJ7L2KW6ojfo=;
- b=Prf/HHj+Z2QkDtyovP50XP0pVVZ4EXYWcX8G6E5PcED61yEKE2KNBDVTdupP5QWUlwUWqiUGYEq5XITWnWxfnxKhpv/X0BUoz09GgQ9Terg1WfGcYURBt91uIRidQKRV2ZSV3kIOXHoa5fuouwEuRGZvKMGnxwaobuYliEfMe7Z/MX1C9prYoIvN0Nm6VYyjb1va9krD4slrGtOpfXrvjp+XzLLgygu6ucRwJapeXUI5NyEtldxrmzQ2ZH1Ygq3iJDJatGHWuv23wMFzbW6G4JAnWEeHH7a3kO8/UAGhsyr0FUGDGvHeuEFTpbOYohp8Fij8y9n8eYstdZf2v6OQZw==
+ bh=PHJlKD1TJZ7dqmu8A7RGGigAkD9aNSLdAcn6wv5UkeA=;
+ b=TamMAW+n8OfMsS+AOwjdEI6xJb16+ii/EBnHcQnmyQlUIW5a8Lgws6CrR3gXmrAbAu5ZXRiDmrgBz2g3di8u4lj7O3b4MVxf9g1qiRaa0WoCZFsrbCf/TTI4pURzCQKHFj7DCZP1M+66IZN9nAF9WUZ6TNgjJosG4BQDQr9GlXnQnT1fIn/wyfsAEdTlzyIixOUtP+WvO0BFt2BSp0T6FFUsc2eLkQRsYWsF7eGI9gsu09yznUbp6GOOjkCH851pskkZraMUXqLdl1bf2b65dyBJvxtLc1ncs2zKlAHZTiOLXMSTLl+iZGwcNVEBJYSH/vVeDFGj8O36wcwc8f8f2A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
  header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ph8XTGz4ELawyVovV+4LKgzxdNRqmCogJ7L2KW6ojfo=;
- b=aFWc1AwZzbUUAUZyz4sY4ZShvFa9NzSWEL9KKx5jTxWlTcBGus+g55ZUBmZytizKBtof/D4m/zLuutWpLMKPm1+rg3/cRcQ8Ifk/5bENz+BgcXb7aV5lzfOxsKneJ5l9jM9cB5LHW3HvyCucloiMKHjBhMWLsLTwt2RJ4EJvKOY=
+ bh=PHJlKD1TJZ7dqmu8A7RGGigAkD9aNSLdAcn6wv5UkeA=;
+ b=n/kT+yEiSFjNncEFm5ixftDQYSXlIsDGhrzR9VtVIm3CVO3NkTL6S2Srwzi40qE/s8P+8YQY324Fn1yUTjbbbWLufJIXwmlgR+yBi/ml0ImdnQAck5IezGnUMIpVx1nV0F5NNIVnGXAPM+iPomEg7kI4fMtHsHew3yBqT3XQdx0=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=valinux.co.jp;
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
@@ -58,7 +59,7 @@ Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
 Received: from TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32]) by TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
  ([fe80::2305:327c:28ec:9b32%5]) with mapi id 15.20.9654.015; Mon, 2 Mar 2026
- 14:45:35 +0000
+ 14:45:36 +0000
 From: Koichiro Den <den@valinux.co.jp>
 To: Jon Mason <jdmason@kudzu.us>,
 	Dave Jiang <dave.jiang@intel.com>,
@@ -67,13 +68,15 @@ To: Jon Mason <jdmason@kudzu.us>,
 Cc: Niklas Cassel <cassel@kernel.org>,
 	ntb@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 0/2] NTB: Allow drivers to provide DMA mapping device
-Date: Mon,  2 Mar 2026 23:45:20 +0900
-Message-ID: <20260302144522.750620-1-den@valinux.co.jp>
+Subject: [PATCH 1/2] NTB: core: Add .get_dma_dev() callback to ntb_dev_ops
+Date: Mon,  2 Mar 2026 23:45:21 +0900
+Message-ID: <20260302144522.750620-2-den@valinux.co.jp>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260302144522.750620-1-den@valinux.co.jp>
+References: <20260302144522.750620-1-den@valinux.co.jp>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: TYCPR01CA0001.jpnprd01.prod.outlook.com (2603:1096:405::13)
+X-ClientProxiedBy: TYCPR01CA0004.jpnprd01.prod.outlook.com (2603:1096:405::16)
  To TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:38f::10)
 Precedence: bulk
 X-Mailing-List: ntb@lists.linux.dev
@@ -83,58 +86,58 @@ List-Unsubscribe: <mailto:ntb+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TY7P286MB7722:EE_|OS9P286MB4192:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7708785a-37e3-45e6-0943-08de786a5ca0
+X-MS-Office365-Filtering-Correlation-Id: 26610aec-0962-4b1d-488f-08de786a5d22
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|10070799003|366016|1800799024|376014;
 X-Microsoft-Antispam-Message-Info:
-	4N1p9XJZPZgiPG7MeNfaxtysQQRqu2iopl3kJK5jXZJcQJnBq72oTx7QLzF3ifbgzycpFJV2QvPI6UDUpyBauXhxXKsz91PYnvIvYDyMOdpvKVfoSDaGQZxiON8CKaX9nlraiOHI25Bb53/0uPVl6zuWpEh/wSuWgAal65qjS8b3CAZMoHgv+KzVVdMk2eY1kzYIEshvWTnqgqIlUTGX0OST4Rey/lb0a7CC1n1SfADVsRoJIsIMB+KP6zjULFYGxvLjZWn5HcerF9GK3sll3vhd2CDY4PC0W5+6jFKHzH0VOiLvPUFr+L3BUNj5lc/g0B5IT58cAmTqrVh0Z9/WSTlso3YMVv73ezKLSux6cal2oX8GL2tFtbfn47G6TKnc2t+krYJZ/6ovT/LzJ/pIaX4btSLv9m6HGJVz/sPwmDfDWInuUQdd5aSDSPlDnh65bXr9+61tPwsbAOwUNi/1Dnh/tjB/DjGB7POhaG4DJhCKZu423e4LnKhjObSwY3chOIoF4l27E0HaU1pWPYoCsVsF3laxH6zL0Zxduj3StWxwmQxCOGgQZfdcrhdDHdkLWFBHehNVcdIvhBkR/jzoT15Rc/bizZOhoDh8lJi5udSt9JNzxdlKPBEobYzR+It2aI+2ktYnVzwZanC+EjMp+fZ5A+uy0jsTcMDi7fp8ZHZuKNrAsMcLohUOMxi+8RTj1aHJN3C1a6POeZPTrQKRhVisoznIWdKfqfLrViKB49I=
+	n7NRLzM8bboYcmuYCH9ZEzcDB76Isl2B0PlzyPGpBExKvMOPvjFtb1I18gd8HGqtS38qCwjb6c48LImKuI/P07spfYi7ut+lT6h537uMIrl2Mbl3w0nxutBlnmxjLPvWD4q2z4Vzki+kIZj8eF6UNkXgI4TA/iMN9CXnAk84Fa+qTaqlG3R3kSZKCqEtS10agjOjwZLxHRAVDkq7ZunfwfuVB1d8fOrFxWPr8E0pW0/1ImsHFKFIiJcwLdgmejz563LuU6Sqi+l2RMQdkO/jfPh+QYc0FSR47l/zZCHGXodlRhKx7kuUIC8Ybq5/xPQD/LUBPqn8G+1CQOBWO+FN5LQpbnWg3kEGKsOSVFI/TuICyoME78sQtpvaFS9ogEZX1Aq4vrO+iVMQ9JBZm94j3JajzPlRA8G6uapmDrWbGqNxNYolV4FplP3bClk2NjK/Gsu/JVriNstJTR4QBH4p8APsdp52+SYnDQg/3EXMTMQrNHhpnZvlJe82zPlhAInFrd7x1KDyEbnqAEN/aL3RDDa15qbwMO6tFWkpvmAw3OS6qFssKRTd+3IiQmVPZEmnCdmW7yesh91zPoBbyZ2KsBhjrjLxled++LeAGyM553KZVB9yEtU0g0ETeeccK9xB7XQfStjN/i2TV9IDQuH3k3hhV+r/7TGG4kBYJ4BNKeNkDdnroQfhzWYzIZ7DFMlHY5Yq9x9O0wpmqpjIZRm8HiMIX57THSgKxUQRGL6qKMI=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(366016)(1800799024)(376014);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?AVW7soFGyx9gzxQyLVQEMBDAxhlGBtCfQQOHTYyvba9+JJPdgMZ3O2bJ6N8l?=
- =?us-ascii?Q?8ijFOSjStQEaxt1u3pHXr8RRfBtCwGaSRW3LQZGmZVZthMAUk6axMlpNpGwf?=
- =?us-ascii?Q?nbgC4nhFbg7pdFTDJcmdHxFsrDGQEI6LmNnfel+a7isVO/LtId5MKtYkl0Pr?=
- =?us-ascii?Q?ymNjcls1pyZIABf97OK5Q/1FuSNAUjl/6zJDP126jJ0cGVVmNTQVGwTqQ7Qa?=
- =?us-ascii?Q?OnQ+Py+uvNAMnBrrqrMKzOhqgOkCiOmhFEIAUtLwXbJbGHxGIbTyad/i0dmW?=
- =?us-ascii?Q?zCvh6bBoP8FlzDPZxuTzbKplELeZ/uX8mje2cVR3y9Mykr5IexGMJgEBiHmd?=
- =?us-ascii?Q?lUsibhWjhPPtlJDU+iA5o4TnmQ/mHiJji2DX3rlyWDMLECYJrm1QGTtBF4UL?=
- =?us-ascii?Q?+EC46F5vWpS33E/ijNb66DtaKA4X5WgmS7x3j3MLcGSvHKUJyWIo9B52RzbZ?=
- =?us-ascii?Q?ew84pgzvq0/PIZZruV8waq/ZZhSpTce19NGe77pD1QkwpjyjzHHY/ptDAd7g?=
- =?us-ascii?Q?aXx9gsX3/kU/Hg/Pj1r3A9JxLutguLggCY5z99TK+/21o/J0oodcQ35TUytO?=
- =?us-ascii?Q?kEg0LOGkFJh8IjVR6qbGMVJFLcczLDiS095t6dXIT3je9aezuru/6kEGl5gp?=
- =?us-ascii?Q?PTqNFheushYt1Ge8Ndb5jYrJJMKqxwAxwsdYX84sUPc49lzH6I1bb1qm1YUw?=
- =?us-ascii?Q?+0tjnKM0So1/O4aXWacxicNS/wUtz/pnpgVs02K2CUZ2yNr29EfCDyOW0rAj?=
- =?us-ascii?Q?mIbEMgH3sL2urnRIeEbi1WFYP6nw13b0jOTzlifGkv5H4dMxDdf7mw+VP4JC?=
- =?us-ascii?Q?aLP+5EhZxdk6sxjsxSW9pt2SoAUGR9XKqoAV6PNz15dIcRsRYTQ1ztT2ELef?=
- =?us-ascii?Q?eA/SzcZ6ucwdRr65F5VJHIqhrA57z/3MLlv5hTikWBgb1jlRHxcogZF+0mjd?=
- =?us-ascii?Q?NOawpwYq5JSgv54GRPC/nm3pMGsIGqjbb2yudhbxjglLrelVOHusB7NKgDnB?=
- =?us-ascii?Q?SIyziqxYhP89xpK0TbDt4+oWPNH7df7D8/PvHBO/b+8abcAxPy+AkhQAcBQ9?=
- =?us-ascii?Q?Y+coWiuW0DWX9riLUbsJfHhk0xZip1QCdlDGCWFG1dqTrCkDxKf5H6GQq9+a?=
- =?us-ascii?Q?iUdHnjzRdS14s8nTDz3Op739nLMf5oXCTTR/lvBNdBOhUoNUT1D2ZUIWPjLI?=
- =?us-ascii?Q?HQe5Ez+UoH59XmUv125twDlrF1oPd0rPRZfapEy1B7QaubBJJdgdWohrpZJT?=
- =?us-ascii?Q?jEAQsN5QXtX95YlaPH2V8JQ94bfalnRyBHZFQF/OpPMfH6P7ZIPgT/itdQaV?=
- =?us-ascii?Q?ow+OXVz8V1TMVlSzyjVZWk961ACQ1c7V+iF4g6tr1JyNMFLf/1YMs5g+KYN9?=
- =?us-ascii?Q?wUz0ezTIK/APZyR4/fS0xqkpJ7O2MMc0aMABAMQHeNg15Qz85MaN52dkyCwn?=
- =?us-ascii?Q?8nhr76VM9+zTFxHm0rI60x3esVvGavZgu+AL7whuD5mwsCvspDX973qvHzL+?=
- =?us-ascii?Q?XyOLHdp9n/08tfcgmj/OCo/zVqrrhFJnB7To+PbSAzXx95zf+g+DWJf7ZAkp?=
- =?us-ascii?Q?2kTS1wkNi3L0YxGdhro6pwN9k/Irjwb9XZl/XKrQAvoJz1eAHzml4DYAep9r?=
- =?us-ascii?Q?oV4ci1yVJCt+SyxlvEKsMzYU2z1VFkhH63oUY7xW/3PfroVV7Xxhrq8uIr0A?=
- =?us-ascii?Q?FZ9tWAfoKNsG6xf5Y94zK19FHETgDdMaBAx9jEGwOuGEennvhL7qCzdELFSV?=
- =?us-ascii?Q?0iQlRr9l5akMNIK2/PAxc65Wgus5GjO2KGIgD6UaMPxGqWbI/moL?=
+	=?us-ascii?Q?vT6Qa3421JwKWUa5m/t9YUv/HAlDto7jrFqeLH+d2dtypK1gMtlrlTZ8T39O?=
+ =?us-ascii?Q?WSKWEXAbnsI40RsH6lzNEYVbajkTzXBCfMJxuag1tIiTUnRoiuaMuNodMA/t?=
+ =?us-ascii?Q?JbPLLj3VL5x3O5CoLM9tWy5Hd8LR6uHc+h3Pa676t2pD8Tjr7QhNjKDTkZVe?=
+ =?us-ascii?Q?cWKeIQ1vtthzs62GYHt6DmWMhBrxph0+ykmIq1C2cSlMT1xoDyP0zJI8Ah+8?=
+ =?us-ascii?Q?EacePtwfFmharoJK/hM4SEqLiZJRQ197p+DympHlza/ReeJkBlGFT4Su2r+B?=
+ =?us-ascii?Q?W01s3CnvjPYNMJvH9moGOpoHoV1R3POlgXJCHEO5zcVf2WE20ZAOQNtjUfZj?=
+ =?us-ascii?Q?dYFtAcc2MhAMl55FIKXWMzs3UMtouOTh7nuDf4NK+4nxH3VsD0cAMWNFNxPO?=
+ =?us-ascii?Q?D/KGM7bu2cK6Dbgw/00hsmhpisQAdzdeUyRtMmg5ZwYc6j8VxTBflD9RmprV?=
+ =?us-ascii?Q?rxaZs3oWeU8VG46EtdxsNvZFkqn6VcVqe5RhZcl6cSLTA7cQINfIY7ekIQ4h?=
+ =?us-ascii?Q?v+r2OZepPNyN8tdXVoyYljlQ6for9PRRLdKFxOzvfX4CNR+q1S92VXJQ2O6I?=
+ =?us-ascii?Q?Dwx2c41vGPgQL2aXsB2WM6Pg5SJbIwgrY3FTfJaPB9M9PuzPRiN/dhfXuj6A?=
+ =?us-ascii?Q?YYTFtfD1f3gStSnBEKuDlKo9sLoCuxvMstRPw8S/oNAznzxngZ5XMbJPBSFN?=
+ =?us-ascii?Q?muSuoA3/Vsr5LG7L5HyUvDkscUZo324SG3QLldIgwVJaWQjhTYplMt2n6QE0?=
+ =?us-ascii?Q?CHMX6/dS8NSRQ6swjPwDfK/jEBeynXAeES8G7fsLS8I6dFs0jM04Yx+dq4Te?=
+ =?us-ascii?Q?sQuOBbEtK+Y/UMYnozy199psgflDlg4ao8NI7ov2SQiP90pSFVb9UIzkp9PP?=
+ =?us-ascii?Q?U/UrzvB2e2myukFTrzDPZPzMwqBYpEEOTG3eHjRF/ZGJqOHnrPd5Ko+GhiG0?=
+ =?us-ascii?Q?20LZUszbeR/nAuylXZkP3qzH+V6vzCXXECedMk8ZQPa2d2rMxbXbCsNxEvDP?=
+ =?us-ascii?Q?fkFzcy6Zve1gapLzflVxmAsxvAYALpKaYDymFUaqA7NjiiGoj3/0WNDHEDEg?=
+ =?us-ascii?Q?6sL0dy4MDagulRGRvEpu+tkaWePoEGdDe0Y1+m0fzL0RE9ffL/ui+wf/LPn0?=
+ =?us-ascii?Q?g4bYb4r3leJUavegbJdKgXqurCFYGs3M58xeyP828ObjaLaCoJYtOQSiIBme?=
+ =?us-ascii?Q?SNCoxsK4v0neOTb9cHDl5cb7L7SfXlbLTpv43wNB7YoCvEA937gL6KiHIJRh?=
+ =?us-ascii?Q?zRkBjQOl/WvCCDLthSqkn9ccOYFcOSOlOkkYRJyP70xyJXzz25RL8N9MnupS?=
+ =?us-ascii?Q?z/Cg2zdbswBiA4JXPlsyJ6jrD2kofjufiyYqIpOz0GLy5etj48rku/k8wnQZ?=
+ =?us-ascii?Q?KD74GHFQxruycu/b/zhcvTmtxvAoJLE3uLv2XWoKljEHPjwNih0F9oOo8p99?=
+ =?us-ascii?Q?LIjhv9DRsOEIJraU/Wa++hG+SHrzh5u/QS7PZZKkbuRklKfII9rb9gSRQLGY?=
+ =?us-ascii?Q?QWyVjtZzky8GZ+9QrrQKAkCcaWv3LNtmvp6dX+u8TE9ORAda1LRrj9DFX79E?=
+ =?us-ascii?Q?KZyQJ/UcvC5MZsOL1/TbM8qmaJLfiTy6FxT5ar12nUG6ypqOCm9kt1issr3g?=
+ =?us-ascii?Q?ctB6Q77DtbwFd9kegnKAFNc56m1Bw5Wrcdh7oCXYpZpWGdrKLXBnsbp5TVQV?=
+ =?us-ascii?Q?FqPd+w4UnrGalUu8g24LWvUrYmXhiyARimE68gtoMDWGYlALAL/Fvba8RWPy?=
+ =?us-ascii?Q?JlmeCTiWvsYpwWbBH+m6mI+ptf8t2Z9SuMm7ZeHOKVe1qCQZPYlL?=
 X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7708785a-37e3-45e6-0943-08de786a5ca0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 26610aec-0962-4b1d-488f-08de786a5d22
 X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB7722.JPNP286.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 14:45:34.9736
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 14:45:35.8054
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZzQgHB1iyKrV+Rw1SgKdbgOSJbhwbK1eSM1S/jP9q4VuUDA8ZeCjT/m8f7qYkp1Hnynjsl0YgDNoRQ7ex2bC+w==
+X-MS-Exchange-CrossTenant-UserPrincipalName: 08jQTInV0Z7KWzWmjcDMQxxMHGucFe3VrcNeh4zuXjQxTZVUVYV5B5IiS6k3bOoiIwl+yRzORxEgThJ1/CO7lQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS9P286MB4192
-X-Rspamd-Queue-Id: AAFBF1DB2C7
+X-Rspamd-Queue-Id: B2A371DB2EB
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [1.34 / 15.00];
 	ARC_REJECT(1.00)[cv is fail on i=2];
@@ -142,7 +145,7 @@ X-Spamd-Result: default: False [1.34 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[valinux.co.jp,none];
 	R_DKIM_ALLOW(-0.20)[valinux.co.jp:s=selector1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
@@ -150,7 +153,7 @@ X-Spamd-Result: default: False [1.34 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FREEMAIL_TO(0.00)[kudzu.us,intel.com,gmail.com,nxp.com];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-1987-lists,linux-ntb=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-1989-lists,linux-ntb=lfdr.de];
 	DKIM_TRACE(0.00)[valinux.co.jp:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
@@ -162,52 +165,82 @@ X-Spamd-Result: default: False [1.34 / 15.00];
 	RCPT_COUNT_SEVEN(0.00)[7];
 	NEURAL_HAM(-0.00)[-0.997];
 	TAGGED_RCPT(0.00)[linux-ntb];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,valinux.co.jp:dkim,valinux.co.jp:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[valinux.co.jp:dkim,valinux.co.jp:email,valinux.co.jp:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,nxp.com:email]
 X-Rspamd-Action: no action
 
-Some NTB implementations are backed by a "virtual" PCI device, while the
-actual DMA mapping context (IOMMU domain) belongs to a different device.
+Some NTB implementations are backed by a PCI funnction that is not the
+right struct device to use with DMA API helpers (e.g. due to IOMMU
+topology, or because the NTB device is virtual).
 
-One example is vNTB, where the NTB device is represented as a virtual
-PCI endpoint function, but DMA operations must be performed against the
-EPC parent device, which owns the IOMMU context.
+Add an optional .get_dma_dev() callback to struct ntb_dev_ops and
+provide a helper, ntb_get_dma_dev(), so NTB clients can use the
+appropriate struct device for DMA allocations and mappings.
 
-Today, ntb_transport implicitly relies on the NTB device's parent device
-as the DMA mapping device. This works for most PCIe NTB hardware, but
-breaks implementations where the NTB PCI function is not the correct
-device to use for DMA API operations.
+If the callback is not implemented, ntb_get_dma_dev() returns the
+current default (ntb->dev.parent). Drivers that implement .get_dma_dev()
+must return a non-NULL device.
 
-This small series introduces an optional .get_dma_dev() callback in
-struct ntb_dev_ops, together with a helper ntb_get_dma_dev(). If the
-callback is not implemented, the helper falls back to the existing
-default behavior. Drivers that implement .get_dma_dev() must return a
-non-NULL struct device.
+Suggested-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+---
+ include/linux/ntb.h | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-- Patch 1/2: Add .get_dma_dev() to struct ntb_dev_ops and provide
-             ntb_get_dma_dev().
-
-- Patch 2/2: Switch ntb_transport coherent allocations and frees to use
-             ntb_get_dma_dev().
-
-No functional changes are intended by this series itself.
-
-A follow-up patch implementing .get_dma_dev() for the vNTB EPF driver
-(drivers/pci/endpoint/functions/pci-epf-vntb.c) will be submitted
-separately to the PCI Endpoint subsystem tree. That will enable
-ntb_transport to work correctly in IOMMU-backed EPC setups.
-
-Best regards,
-Koichiro
-
-
-Koichiro Den (2):
-  NTB: core: Add .get_dma_dev() callback to ntb_dev_ops
-  NTB: ntb_transport: Use ntb_get_dma_dev() for DMA buffers
-
- drivers/ntb/ntb_transport.c | 14 +++++++-------
- include/linux/ntb.h         | 23 +++++++++++++++++++++++
- 2 files changed, 30 insertions(+), 7 deletions(-)
-
+diff --git a/include/linux/ntb.h b/include/linux/ntb.h
+index 8ff9d663096b..99209f957eb9 100644
+--- a/include/linux/ntb.h
++++ b/include/linux/ntb.h
+@@ -256,6 +256,7 @@ static inline int ntb_ctx_ops_is_valid(const struct ntb_ctx_ops *ops)
+  * @msg_clear_mask:	See ntb_msg_clear_mask().
+  * @msg_read:		See ntb_msg_read().
+  * @peer_msg_write:	See ntb_peer_msg_write().
++ * @get_dma_dev:	See ntb_get_dma_dev().
+  */
+ struct ntb_dev_ops {
+ 	int (*port_number)(struct ntb_dev *ntb);
+@@ -329,6 +330,7 @@ struct ntb_dev_ops {
+ 	int (*msg_clear_mask)(struct ntb_dev *ntb, u64 mask_bits);
+ 	u32 (*msg_read)(struct ntb_dev *ntb, int *pidx, int midx);
+ 	int (*peer_msg_write)(struct ntb_dev *ntb, int pidx, int midx, u32 msg);
++	struct device *(*get_dma_dev)(struct ntb_dev *ntb);
+ };
+ 
+ static inline int ntb_dev_ops_is_valid(const struct ntb_dev_ops *ops)
+@@ -391,6 +393,8 @@ static inline int ntb_dev_ops_is_valid(const struct ntb_dev_ops *ops)
+ 		/* !ops->msg_clear_mask == !ops->msg_count	&& */
+ 		!ops->msg_read == !ops->msg_count		&&
+ 		!ops->peer_msg_write == !ops->msg_count		&&
++
++		/* ops->get_dma_dev is optional */
+ 		1;
+ }
+ 
+@@ -1563,6 +1567,25 @@ static inline int ntb_peer_msg_write(struct ntb_dev *ntb, int pidx, int midx,
+ 	return ntb->ops->peer_msg_write(ntb, pidx, midx, msg);
+ }
+ 
++/**
++ * ntb_get_dma_dev() - get the device to use for DMA allocations/mappings
++ * @ntb:	NTB device context.
++ *
++ * Return a struct device suitable for DMA API allocations and mappings.
++ * This is typically the parent of the NTB device, but may be overridden by a
++ * driver by implementing .get_dma_dev().
++ * Drivers that implement .get_dma_dev() must return a non-NULL pointer.
++ *
++ * Return: device pointer to use for DMA operations.
++ */
++static inline struct device *ntb_get_dma_dev(struct ntb_dev *ntb)
++{
++	if (!ntb->ops->get_dma_dev)
++		return ntb->dev.parent;
++
++	return ntb->ops->get_dma_dev(ntb);
++}
++
+ /**
+  * ntb_peer_resource_idx() - get a resource index for a given peer idx
+  * @ntb:	NTB device context.
 -- 
 2.51.0
 
